@@ -1,0 +1,10 @@
+@import "./components/all";
+@import "./pages/all";
+@import "./variables/all";
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "IRANYekanFN" !important;
+}
