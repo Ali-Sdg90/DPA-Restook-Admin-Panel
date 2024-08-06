@@ -15,7 +15,7 @@ const Login = () => {
     });
 
     const { setUserData } = useContext(AuthContext);
-    const { setToastifyObj } = useContext(CommonContext);
+    const { setToastifyObj, setLocalToken } = useContext(CommonContext);
 
     const navigate = useNavigate();
 
@@ -33,8 +33,10 @@ const Login = () => {
                     user: res.data.user,
                 }));
 
+                setLocalToken(res.data.access_token);
+
                 setToastifyObj(() => ({
-                    title: `سلام ${res.data.user.firstName} خیلی خوش اومدی!`,
+                    title: `سلام ${res.data.user.firstName} خوش اومدی!`,
                     mode: "success",
                 }));
 
