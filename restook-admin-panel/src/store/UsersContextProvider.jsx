@@ -1,9 +1,9 @@
 import React, { createContext } from "react";
 
-const usersContext = createContext();
+export const UsersContext = createContext();
 
 const UsersContextProvider = ({ children }) => {
-    return <usersContext.Provider value={{}}>{children}</usersContext.Provider>;
+    return <UsersContext.Provider value={{}}>{children}</UsersContext.Provider>;
 };
 
 export default UsersContextProvider;

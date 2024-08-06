@@ -1,9 +1,22 @@
-import React, { createContext } from "react";
+import React, { createContext, useEffect, useState } from "react";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
-    return <AuthContext.Provider value={{}}>{children}</AuthContext.Provider>;
+    const [userData, setUserData] = useState({
+        access_token: "",
+        user: "",
+    });
+
+    // useEffect(() => {
+    //     console.log("userData >>", userData);
+    // }, [userData]);
+
+    return (
+        <AuthContext.Provider value={{ userData, setUserData }}>
+            {children}
+        </AuthContext.Provider>
+    );
 };
 
 export default AuthContextProvider;
