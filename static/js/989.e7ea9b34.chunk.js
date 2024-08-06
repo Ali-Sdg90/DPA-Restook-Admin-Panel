@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkrestook_admin_panel=self.webpackChunkrestook_admin_panel||[]).push([[989],{1989:(e,s,a)=>{a.r(s),a.d(s,{default:()=>d});a(5043);var n=a(579);const d=()=>(0,n.jsx)("div",{children:(0,n.jsx)("h1",{children:"Home Page"})})}}]);
+//# sourceMappingURL=989.e7ea9b34.chunk.js.map

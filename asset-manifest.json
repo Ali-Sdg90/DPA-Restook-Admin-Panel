@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.css": "/DPA-Restook-Admin-Panel/static/css/main.429b0ca3.css",
+    "main.js": "/DPA-Restook-Admin-Panel/static/js/main.b4a3520f.js",
+    "static/js/682.c606499e.chunk.js": "/DPA-Restook-Admin-Panel/static/js/682.c606499e.chunk.js",
+    "static/js/989.e7ea9b34.chunk.js": "/DPA-Restook-Admin-Panel/static/js/989.e7ea9b34.chunk.js",
+    "static/js/817.fc6d0bf6.chunk.js": "/DPA-Restook-Admin-Panel/static/js/817.fc6d0bf6.chunk.js",
+    "static/js/841.6cbae474.chunk.js": "/DPA-Restook-Admin-Panel/static/js/841.6cbae474.chunk.js",
+    "static/media/IRANYekanFN-Thin.ttf": "/DPA-Restook-Admin-Panel/static/media/IRANYekanFN-Thin.8848d9cd79e7afcc6afe.ttf",
+    "static/media/IRANYekanFN-Light.ttf": "/DPA-Restook-Admin-Panel/static/media/IRANYekanFN-Light.69e0283b3565ef71d7c7.ttf",
+    "static/media/IRANYekanFN.ttf": "/DPA-Restook-Admin-Panel/static/media/IRANYekanFN.c60f52a9c7ded0f426e5.ttf",
+    "static/media/IRANYekanFN-Medium.ttf": "/DPA-Restook-Admin-Panel/static/media/IRANYekanFN-Medium.007b49e993db13942de5.ttf",
+    "static/media/IRANYekanFN-ExtraBold.ttf": "/DPA-Restook-Admin-Panel/static/media/IRANYekanFN-ExtraBold.163c5c7ff5721eefa766.ttf",
+    "static/media/IRANYekanFN-Bold.ttf": "/DPA-Restook-Admin-Panel/static/media/IRANYekanFN-Bold.2e024cad6c04465db87c.ttf",
+    "static/media/IRANYekanFN-Black.ttf": "/DPA-Restook-Admin-Panel/static/media/IRANYekanFN-Black.fbfa0aeb0b19e3f92114.ttf",
+    "static/media/Restook Logo.svg": "/DPA-Restook-Admin-Panel/static/media/Restook Logo.1a9d1df6a93b1ee1db26c35fa26b6439.svg",
+    "static/media/Lock.svg": "/DPA-Restook-Admin-Panel/static/media/Lock.afb9c567cfbcb8640edf7937ebc63d69.svg",
+    "index.html": "/DPA-Restook-Admin-Panel/index.html",
+    "static/media/User.svg": "/DPA-Restook-Admin-Panel/static/media/User.02c970a0942709fb3c6c07d1341933f6.svg",
+    "main.429b0ca3.css.map": "/DPA-Restook-Admin-Panel/static/css/main.429b0ca3.css.map",
+    "main.b4a3520f.js.map": "/DPA-Restook-Admin-Panel/static/js/main.b4a3520f.js.map",
+    "682.c606499e.chunk.js.map": "/DPA-Restook-Admin-Panel/static/js/682.c606499e.chunk.js.map",
+    "989.e7ea9b34.chunk.js.map": "/DPA-Restook-Admin-Panel/static/js/989.e7ea9b34.chunk.js.map",
+    "817.fc6d0bf6.chunk.js.map": "/DPA-Restook-Admin-Panel/static/js/817.fc6d0bf6.chunk.js.map",
+    "841.6cbae474.chunk.js.map": "/DPA-Restook-Admin-Panel/static/js/841.6cbae474.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.429b0ca3.css",
+    "static/js/main.b4a3520f.js"
+  ]
+}
