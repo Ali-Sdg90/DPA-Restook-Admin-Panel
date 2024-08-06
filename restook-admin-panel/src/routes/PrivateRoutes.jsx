@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Store = () => {
+const PrivateRoutes = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const Store = () => {
     );
 };
 
-export default Store;
+export default PrivateRoutes;

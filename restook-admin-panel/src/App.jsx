@@ -1,10 +1,15 @@
 import React from "react";
+import { HashRouter } from "react-router-dom";
+import AppRoutes from "./routes/AppRoutes";
+import StoreProvider from "./store/StoreProvider";
 
 const App = () => {
     return (
-        <div>
-            <h1>Hello</h1>
-        </div>
+        <HashRouter>
+            <StoreProvider>
+                <AppRoutes />
+            </StoreProvider>
+        </HashRouter>
     );
 };
 
