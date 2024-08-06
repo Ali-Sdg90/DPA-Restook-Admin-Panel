@@ -1,0 +1,107 @@
+.login-page {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    background: #ebedef;
+
+    .loginSection {
+        border: 1px solid #989898;
+        width: 850px;
+        border-radius: 8px;
+        margin: 10px;
+        background-color: white;
+        overflow: hidden;
+
+        .leftSide {
+            height: 322px !important;
+            width: min(50%, 400px);
+            height: 100%;
+            background: #5d6af2;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .rightSide {
+            height: 322px;
+            width: 100%;
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 0 45px;
+
+            .sectionHeader {
+                font-size: 36px;
+                font-weight: 500;
+                line-height: 62.18px;
+                color: black;
+                margin-bottom: 16px;
+            }
+
+            .ant-form {
+                width: 100%;
+
+                .ant-form-item {
+                    margin-bottom: 8px;
+
+                    .ant-form-item-control-input {
+                        min-height: 0;
+                    }
+
+                    .ant-input-affix-wrapper {
+                        background-color: #ebedef;
+                        border-radius: 0;
+                        border: 1px solid #989898;
+                        padding: 0;
+
+                        .ant-input {
+                            padding: 7px 10px 7px 0;
+                            font-size: 16px;
+                        }
+
+                        .ant-input-suffix {
+                            width: 48px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            background-color: #9da5b1;
+                        }
+                    }
+
+                    .submit-btn {
+                        background-color: #321fdb;
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: normal;
+                        width: 78px;
+                        height: 40px;
+                    }
+
+                    .ant-form-item-explain-error {
+                        height: 25px;
+                        display: flex;
+                        align-items: center;
+                        font-size: 12px;
+                    }
+                }
+            }
+
+            .forget-pass {
+                color: #321fdb;
+                font-family: IRANYekanFN;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                padding: 0;
+            }
+        }
+    }
+}
