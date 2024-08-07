@@ -33,8 +33,9 @@
             display: flex;
             flex-flow: column;
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
             padding: 0 45px;
+            overflow: auto;
 
             .sectionHeader {
                 font-size: 36px;
@@ -95,13 +96,83 @@
 
             .forget-pass {
                 color: #321fdb;
-                font-family: IRANYekanFN;
                 font-size: 12px;
                 font-style: normal;
                 font-weight: 400;
                 line-height: normal;
                 padding: 0;
             }
+
+            .login-mode {
+                width: 100%;
+            }
+
+            .forgot-pass-mode {
+                .confirmHeader {
+                    color: #000;
+                    font-size: 32px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                    margin-bottom: 8px;
+                }
+
+                .ant-form-item-label {
+                    overflow: hidden;
+
+                    label {
+                        color: #808690;
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: normal;
+                        white-space: nowrap;
+                    }
+                }
+
+                .ant-otp {
+                    column-gap: 20px;
+
+                    input {
+                        width: 56px;
+                        height: 56px;
+                        border: 1px solid #989898;
+                        margin: 8px 0 8px;
+                        font-size: 26px;
+                    }
+                }
+
+                .ant-form-item-explain {
+                    margin-bottom: 8px;
+                    color: #ff4d4f;
+                    display: flex;
+                    align-items: center;
+                    font-size: 12px;
+                    transition: all 0.2s;
+                }
+
+                .forget-pass {
+                    .time-span {
+                        width: 34px;
+                        text-align: center;
+                        display: inline-block;
+                    }
+
+                    &:disabled {
+                        color: #9da5b1;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .rightSide {
+        align-items: unset !important;
+
+        .ant-form-item-label {
+            overflow: visible !important;
         }
     }
 }

@@ -13,7 +13,7 @@ const Login = () => {
         phoneNumber: "09901283916",
         password: "",
     });
-    const [pageLoginMode, setPageLoginMode] = useState(false);
+    const [pageLoginMode, setPageLoginMode] = useState(true);
     const [OTPCode, setOTPcode] = useState("");
     const [isForgetFormSubmit, setIsForgetFormSubmit] = useState(false);
     const [sendAgainCounter, setSendAgainCounter] = useState(0);
@@ -76,9 +76,8 @@ const Login = () => {
             }));
         } else {
             if (regex.test(formData.phoneNumber)) {
-                console.log("YES");
                 setPageLoginMode(false);
-                setSendAgainCounter(10);
+                // Send Code
             } else {
                 setToastifyObj(() => ({
                     title: "لطفا شماره تلفن را درست وارد کنید",
@@ -129,17 +128,22 @@ const Login = () => {
             .padStart(2, "0")}`;
     };
 
+    const sendAgainHandler = () => {
+        setSendAgainCounter(120);
+        // Send Code
+    };
+
     return (
         <div className="login-page">
             <Row className="loginSection">
                 <Col
                     xs={{ span: 24, order: 2 }}
                     sm={{ span: 24, order: 2 }}
-                    md={{ span: 12, order: 1 }}
+                    md={{ span: 13, order: 1 }}
                     className="rightSide"
                 >
                     {pageLoginMode ? (
-                        <>
+                        <div className="login-mode">
                             <div className="sectionHeader">ورود</div>
                             <Form
                                 name="login"
@@ -189,7 +193,7 @@ const Login = () => {
                                 <Form.Item />
 
                                 <Form.Item>
-                                    <Flex justify="space-between">
+                                    <Flex justify="space-between" gap={10}>
                                         <Button
                                             type="primary"
                                             htmlType="submit"
@@ -207,9 +211,9 @@ const Login = () => {
                                     </Flex>
                                 </Form.Item>
                             </Form>
-                        </>
+                        </div>
                     ) : (
-                        <>
+                        <div className="forgot-pass-mode">
                             <div className="confirmHeader">کد تأیید</div>
 
                             <Form
@@ -243,7 +247,7 @@ const Login = () => {
                                 </Form.Item>
 
                                 <Form.Item>
-                                    <Flex justify="space-between">
+                                    <Flex justify="space-between" gap={10}>
                                         <Button
                                             type="primary"
                                             htmlType="submit"
@@ -254,7 +258,7 @@ const Login = () => {
                                         <Button
                                             type="link"
                                             className="forget-pass"
-                                            onClick={forgetPassBtn}
+                                            onClick={sendAgainHandler}
                                             disabled={sendAgainCounter}
                                         >
                                             {sendAgainCounter ? (
@@ -268,20 +272,20 @@ const Login = () => {
                                                     دیگر
                                                 </>
                                             ) : (
-                                                "رمز عبور خود را فراموش کرده‌اید؟"
+                                                "دریافت مجدد کد"
                                             )}
                                         </Button>
                                     </Flex>
                                 </Form.Item>
                             </Form>
-                        </>
+                        </div>
                     )}
                 </Col>
 
                 <Col
                     xs={{ span: 24, order: 1 }}
                     sm={{ span: 24, order: 1 }}
-                    md={{ span: 12, order: 2 }}
+                    md={{ span: 11, order: 2 }}
                     className="leftSide"
                 >
                     <RestookLogo />
