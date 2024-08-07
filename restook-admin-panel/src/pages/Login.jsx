@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { Button, Col, Flex, Form, Input, Row } from "antd";
+import React, { useContext, useEffect, useState } from "react";
+import { Button, Col, ConfigProvider, Flex, Form, Input, Row } from "antd";
 import { ReactComponent as UserNameIcon } from "../assets/images/login/User.svg";
 import { ReactComponent as PasswordIcon } from "../assets/images/login/Lock.svg";
 import { ReactComponent as RestookLogo } from "../assets/images/login/Restook Logo.svg";
@@ -10,16 +10,20 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
     const [formData, setFormData] = useState({
-        phoneNumber: "",
+        phoneNumber: "09901283916",
         password: "",
     });
+    const [pageLoginMode, setPageLoginMode] = useState(false);
+    const [OTPCode, setOTPcode] = useState("");
+    const [isForgetFormSubmit, setIsForgetFormSubmit] = useState(false);
+    const [sendAgainCounter, setSendAgainCounter] = useState(0);
 
     const { setUserData } = useContext(AuthContext);
     const { setToastifyObj, setLocalToken } = useContext(CommonContext);
 
     const navigate = useNavigate();
 
-    const formSubmit = async () => {
+    const loginFormSubmit = async () => {
         try {
             console.log("formData >>", formData);
 
@@ -61,6 +65,70 @@ const Login = () => {
         }));
     };
 
+    const forgetPassBtn = () => {
+        console.log("forgetPassBtn");
+        const regex = /^\d{11}$/;
+
+        if (!!!formData.phoneNumber.length) {
+            setToastifyObj(() => ({
+                title: "لطفا شماره تلفن را وارد کنید",
+                mode: "error",
+            }));
+        } else {
+            if (regex.test(formData.phoneNumber)) {
+                console.log("YES");
+                setPageLoginMode(false);
+                setSendAgainCounter(10);
+            } else {
+                setToastifyObj(() => ({
+                    title: "لطفا شماره تلفن را درست وارد کنید",
+                    mode: "error",
+                }));
+            }
+        }
+    };
+
+    const onChange = (text) => {
+        console.log("onChange:", text);
+        setOTPcode(text);
+    };
+
+    const sharedProps = {
+        onChange,
+    };
+
+    const forgetFormSubmit = () => {
+        console.log("forgetFormSubmit");
+        setIsForgetFormSubmit(true);
+
+        console.log(OTPCode);
+    };
+
+    useEffect(() => {
+        let interval;
+        if (sendAgainCounter > 0) {
+            interval = setInterval(() => {
+                setSendAgainCounter((prevCounter) => {
+                    if (prevCounter > 0) {
+                        return prevCounter - 1;
+                    } else {
+                        clearInterval(interval);
+                        return 0;
+                    }
+                });
+            }, 1000);
+        }
+        return () => clearInterval(interval);
+    }, [sendAgainCounter]);
+
+    const formatTime = (seconds) => {
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        return `${minutes.toString().padStart(2, "0")}:${remainingSeconds
+            .toString()
+            .padStart(2, "0")}`;
+    };
+
     return (
         <div className="login-page">
             <Row className="loginSection">
@@ -70,67 +138,144 @@ const Login = () => {
                     md={{ span: 12, order: 1 }}
                     className="rightSide"
                 >
-                    <div className="sectionHeader">ورود</div>
-                    <Form
-                        name="login"
-                        initialValues={{
-                            remember: true,
-                        }}
-                        onFinish={formSubmit}
-                        autoComplete="off"
-                    >
-                        <Form.Item
-                            name="phoneNumber"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "لطفا شماره تماس خود را وارد کنید",
-                                },
-                            ]}
-                        >
-                            <Input
-                                value={formData.phoneNumber}
-                                onChange={(e) => inputChangeHandler(e)}
-                                suffix={<UserNameIcon />}
-                                name="phoneNumber"
-                            />
-                        </Form.Item>
-
-                        <Form.Item
-                            name="password"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "لطفا رمز خود را وارد کنید",
-                                },
-                            ]}
-                        >
-                            <Input
-                                type="password"
-                                suffix={<PasswordIcon />}
-                                value={formData.password}
-                                onChange={(e) => inputChangeHandler(e)}
-                                name="password"
-                            />
-                        </Form.Item>
-
-                        <Form.Item />
-
-                        <Form.Item>
-                            <Flex justify="space-between">
-                                <Button
-                                    type="primary"
-                                    htmlType="submit"
-                                    className="submit-btn"
+                    {pageLoginMode ? (
+                        <>
+                            <div className="sectionHeader">ورود</div>
+                            <Form
+                                name="login"
+                                initialValues={{
+                                    remember: true,
+                                }}
+                                onFinish={loginFormSubmit}
+                                autoComplete="off"
+                            >
+                                <Form.Item
+                                    name="phoneNumber"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message:
+                                                "لطفا شماره تماس خود را وارد کنید",
+                                        },
+                                    ]}
                                 >
-                                    ورود
-                                </Button>
-                                <Button type="link" className="forget-pass">
-                                    رمز عبور خود را فراموش کرده‌اید؟
-                                </Button>
-                            </Flex>
-                        </Form.Item>
-                    </Form>
+                                    <Input
+                                        value={formData.phoneNumber}
+                                        onChange={(e) => inputChangeHandler(e)}
+                                        suffix={<UserNameIcon />}
+                                        name="phoneNumber"
+                                    />
+                                </Form.Item>
+
+                                <Form.Item
+                                    name="password"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message:
+                                                "لطفا رمز خود را وارد کنید",
+                                        },
+                                    ]}
+                                >
+                                    <Input
+                                        type="password"
+                                        suffix={<PasswordIcon />}
+                                        value={formData.password}
+                                        onChange={(e) => inputChangeHandler(e)}
+                                        name="password"
+                                    />
+                                </Form.Item>
+
+                                <Form.Item />
+
+                                <Form.Item>
+                                    <Flex justify="space-between">
+                                        <Button
+                                            type="primary"
+                                            htmlType="submit"
+                                            className="submit-btn"
+                                        >
+                                            ورود
+                                        </Button>
+                                        <Button
+                                            type="link"
+                                            className="forget-pass"
+                                            onClick={forgetPassBtn}
+                                        >
+                                            رمز عبور خود را فراموش کرده‌اید؟
+                                        </Button>
+                                    </Flex>
+                                </Form.Item>
+                            </Form>
+                        </>
+                    ) : (
+                        <>
+                            <div className="confirmHeader">کد تأیید</div>
+
+                            <Form
+                                name="forgot-pass"
+                                initialValues={{
+                                    remember: true,
+                                }}
+                                onFinish={forgetFormSubmit}
+                                autoComplete="off"
+                                layout="vertical"
+                                requiredMark={false}
+                            >
+                                <Form.Item
+                                    name="otpCode"
+                                    label={`کد 5 رقمی ارسال شده به ${formData.phoneNumber} را وارد کنید`}
+                                    help={
+                                        OTPCode.length !== 5 &&
+                                        isForgetFormSubmit
+                                            ? "لطفا کد ارسال شده را وارد کنید"
+                                            : ""
+                                    }
+                                >
+                                    <ConfigProvider direction="ltr">
+                                        <Input.OTP
+                                            dir="ltr"
+                                            length={5}
+                                            {...sharedProps}
+                                            size="large"
+                                        />
+                                    </ConfigProvider>
+                                </Form.Item>
+
+                                <Form.Item>
+                                    <Flex justify="space-between">
+                                        <Button
+                                            type="primary"
+                                            htmlType="submit"
+                                            className="submit-btn"
+                                        >
+                                            ورود
+                                        </Button>
+                                        <Button
+                                            type="link"
+                                            className="forget-pass"
+                                            onClick={forgetPassBtn}
+                                            disabled={sendAgainCounter}
+                                        >
+                                            {sendAgainCounter ? (
+                                                <>
+                                                    دریافت مجدد کد در
+                                                    <span className="time-span">
+                                                        {formatTime(
+                                                            sendAgainCounter
+                                                        )}
+                                                    </span>
+                                                    دیگر
+                                                </>
+                                            ) : (
+                                                "رمز عبور خود را فراموش کرده‌اید؟"
+                                            )}
+                                        </Button>
+                                    </Flex>
+                                </Form.Item>
+                            </Form>
+                        </>
+                    )}
                 </Col>
 
                 <Col
