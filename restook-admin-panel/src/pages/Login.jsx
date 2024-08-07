@@ -3,31 +3,35 @@ import { Button, Col, ConfigProvider, Flex, Form, Input, Row } from "antd";
 import { ReactComponent as UserNameIcon } from "../assets/images/login/User.svg";
 import { ReactComponent as PasswordIcon } from "../assets/images/login/Lock.svg";
 import { ReactComponent as RestookLogo } from "../assets/images/login/Restook Logo.svg";
-import { login } from "../services/apiService";
+import { postRequest } from "../services/apiService";
 import { AuthContext } from "../store/AuthContextProvider";
 import { CommonContext } from "../store/CommonContextProvider";
 import { useNavigate } from "react-router-dom";
+import { formatTime } from "../utils/formatTime";
+import { convertFAtoEN } from "../utils/convertFAtoENNumbers";
 
 const Login = () => {
     const [formData, setFormData] = useState({
-        phoneNumber: "09901283916",
+        phoneNumber: "09039618464", // Temp
         password: "",
     });
     const [pageLoginMode, setPageLoginMode] = useState(true);
     const [OTPCode, setOTPcode] = useState("");
     const [isForgetFormSubmit, setIsForgetFormSubmit] = useState(false);
     const [sendAgainCounter, setSendAgainCounter] = useState(0);
+    const [isSubmitBtnLoading, setIsSubmitBtnLoading] = useState(false);
+    const [isForgetBtnLoading, setIsForgetBtnLoading] = useState(false);
 
     const { setUserData } = useContext(AuthContext);
     const { setToastifyObj, setLocalToken } = useContext(CommonContext);
 
     const navigate = useNavigate();
 
-    const loginFormSubmit = async () => {
+    const checkLoginValidation = async (endpoint, data) => {
         try {
-            console.log("formData >>", formData);
+            const res = await postRequest(endpoint, data);
 
-            const res = await login(formData);
+            setIsSubmitBtnLoading(false);
 
             if (res.success) {
                 console.log("login_data >>", res.data);
@@ -49,24 +53,37 @@ const Login = () => {
                 throw new Error();
             }
         } catch (error) {
-            console.log("ERROR in formSubmit >>", error);
+            console.log("ERROR >>", error);
+
+            let title = "شماره تلفن یا رمز اشتباه است";
+
+            if (endpoint === "/auth/verifyCode") {
+                title = "کد تایید اشتباه است";
+            }
 
             setToastifyObj(() => ({
-                title: "شماره تلفن یا رمز اشتباه است",
+                title: title,
                 mode: "error",
             }));
         }
     };
 
+    const loginFormSubmit = async () => {
+        console.log("formData >>", formData);
+        setIsSubmitBtnLoading(true);
+
+        checkLoginValidation("/auth/login", formData);
+    };
+
     const inputChangeHandler = (e) => {
         setFormData((prevState) => ({
             ...prevState,
-            [e.target.name]: e.target.value,
+            [e.target.name]: convertFAtoEN(e.target.value),
         }));
     };
 
-    const forgetPassBtn = () => {
-        console.log("forgetPassBtn");
+    const forgetPassBtn = async () => {
+        setIsForgetBtnLoading(true);
         const regex = /^\d{11}$/;
 
         if (!!!formData.phoneNumber.length) {
@@ -76,8 +93,26 @@ const Login = () => {
             }));
         } else {
             if (regex.test(formData.phoneNumber)) {
-                setPageLoginMode(false);
-                // Send Code
+                const res = await postRequest("/auth/forgetPass", {
+                    phoneNumber: formData.phoneNumber,
+                });
+
+                setIsForgetBtnLoading(false);
+                console.log("res", res);
+
+                if (
+                    res &&
+                    res.response &&
+                    res.response.data &&
+                    res.response.data.message
+                ) {
+                    setToastifyObj(() => ({
+                        title: res.response.data.message,
+                        mode: "error",
+                    }));
+                } else {
+                    setPageLoginMode(false);
+                }
             } else {
                 setToastifyObj(() => ({
                     title: "لطفا شماره تلفن را درست وارد کنید",
@@ -88,19 +123,27 @@ const Login = () => {
     };
 
     const onChange = (text) => {
-        console.log("onChange:", text);
-        setOTPcode(text);
+        setOTPcode(convertFAtoEN(text));
+
+        console.log("OTPCode >>", OTPCode);
+
+        forgetFormSubmit();
     };
 
     const sharedProps = {
         onChange,
     };
 
-    const forgetFormSubmit = () => {
-        console.log("forgetFormSubmit");
+    const forgetFormSubmit = async () => {
         setIsForgetFormSubmit(true);
+        setIsSubmitBtnLoading(true);
 
-        console.log(OTPCode);
+        console.log("OTPCode >>", OTPCode);
+
+        checkLoginValidation("/auth/verifyCode", {
+            phoneNumber: formData.phoneNumber,
+            code: OTPCode,
+        });
     };
 
     useEffect(() => {
@@ -120,17 +163,13 @@ const Login = () => {
         return () => clearInterval(interval);
     }, [sendAgainCounter]);
 
-    const formatTime = (seconds) => {
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = seconds % 60;
-        return `${minutes.toString().padStart(2, "0")}:${remainingSeconds
-            .toString()
-            .padStart(2, "0")}`;
-    };
-
     const sendAgainHandler = () => {
-        setSendAgainCounter(120);
+        setSendAgainCounter(10); // 120
+
         // Send Code
+        postRequest("/auth/forgetPass", {
+            phoneNumber: formData.phoneNumber,
+        });
     };
 
     return (
@@ -159,7 +198,7 @@ const Login = () => {
                                         {
                                             required: true,
                                             message:
-                                                "لطفا شماره تماس خود را وارد کنید",
+                                                "لطفا شماره تلفن خود را وارد کنید",
                                         },
                                     ]}
                                 >
@@ -198,6 +237,7 @@ const Login = () => {
                                             type="primary"
                                             htmlType="submit"
                                             className="submit-btn"
+                                            loading={isSubmitBtnLoading}
                                         >
                                             ورود
                                         </Button>
@@ -205,6 +245,7 @@ const Login = () => {
                                             type="link"
                                             className="forget-pass"
                                             onClick={forgetPassBtn}
+                                            loading={isForgetBtnLoading}
                                         >
                                             رمز عبور خود را فراموش کرده‌اید؟
                                         </Button>
@@ -252,8 +293,9 @@ const Login = () => {
                                             type="primary"
                                             htmlType="submit"
                                             className="submit-btn"
+                                            loading={isSubmitBtnLoading}
                                         >
-                                            ورود
+                                            تأیید
                                         </Button>
                                         <Button
                                             type="link"

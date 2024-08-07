@@ -1,13 +1,14 @@
 import axios from "axios";
 import { API_BASE_URL } from "../constants/apiConstants";
 
-export const login = async (formData) => {
+export const postRequest = async (endpoint, data) => {
     try {
-        const res = await axios.post(API_BASE_URL, formData, {
+        const res = await axios.post(`${API_BASE_URL}${endpoint}`, data, {
             headers: {
                 "Content-Type": "application/json",
             },
         });
+
         return res.data;
     } catch (error) {
         if (error.response) {
@@ -17,6 +18,6 @@ export const login = async (formData) => {
         } else {
             console.error("Error message:", error.message);
         }
-        throw error;
+        return error;
     }
 };
