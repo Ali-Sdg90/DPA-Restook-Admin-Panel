@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/DPA-Restook-Admin-Panel/static/css/main.57f33e2d.css",
-    "main.js": "/DPA-Restook-Admin-Panel/static/js/main.d8675bf8.js",
-    "static/js/786.68ee5075.chunk.js": "/DPA-Restook-Admin-Panel/static/js/786.68ee5075.chunk.js",
+    "main.js": "/DPA-Restook-Admin-Panel/static/js/main.4531bd55.js",
+    "static/js/786.684f66a5.chunk.js": "/DPA-Restook-Admin-Panel/static/js/786.684f66a5.chunk.js",
     "static/js/989.e7ea9b34.chunk.js": "/DPA-Restook-Admin-Panel/static/js/989.e7ea9b34.chunk.js",
     "static/js/817.fc6d0bf6.chunk.js": "/DPA-Restook-Admin-Panel/static/js/817.fc6d0bf6.chunk.js",
     "static/js/841.6cbae474.chunk.js": "/DPA-Restook-Admin-Panel/static/js/841.6cbae474.chunk.js",
@@ -18,14 +18,14 @@
     "index.html": "/DPA-Restook-Admin-Panel/index.html",
     "static/media/User.svg": "/DPA-Restook-Admin-Panel/static/media/User.02c970a0942709fb3c6c07d1341933f6.svg",
     "main.57f33e2d.css.map": "/DPA-Restook-Admin-Panel/static/css/main.57f33e2d.css.map",
-    "main.d8675bf8.js.map": "/DPA-Restook-Admin-Panel/static/js/main.d8675bf8.js.map",
-    "786.68ee5075.chunk.js.map": "/DPA-Restook-Admin-Panel/static/js/786.68ee5075.chunk.js.map",
+    "main.4531bd55.js.map": "/DPA-Restook-Admin-Panel/static/js/main.4531bd55.js.map",
+    "786.684f66a5.chunk.js.map": "/DPA-Restook-Admin-Panel/static/js/786.684f66a5.chunk.js.map",
     "989.e7ea9b34.chunk.js.map": "/DPA-Restook-Admin-Panel/static/js/989.e7ea9b34.chunk.js.map",
     "817.fc6d0bf6.chunk.js.map": "/DPA-Restook-Admin-Panel/static/js/817.fc6d0bf6.chunk.js.map",
     "841.6cbae474.chunk.js.map": "/DPA-Restook-Admin-Panel/static/js/841.6cbae474.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.57f33e2d.css",
-    "static/js/main.d8675bf8.js"
+    "static/js/main.4531bd55.js"
   ]
 }
