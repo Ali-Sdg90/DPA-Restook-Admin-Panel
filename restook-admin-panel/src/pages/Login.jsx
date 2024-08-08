@@ -89,6 +89,8 @@ const Login = () => {
         const regex = /^\d{11}$/;
 
         if (!!!formData.phoneNumber.length) {
+            setIsForgetBtnLoading(false);
+
             setToastifyObj(() => ({
                 title: "لطفا شماره تلفن را وارد کنید",
                 mode: "error",
