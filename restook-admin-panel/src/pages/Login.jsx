@@ -12,7 +12,7 @@ import { convertFAtoEN } from "../utils/convertFAtoENNumbers";
 
 const Login = () => {
     const [formData, setFormData] = useState({
-        phoneNumber: "09039618464", // Temp
+        phoneNumber: "", // Temp "09039618464"
         password: "",
     });
     const [pageLoginMode, setPageLoginMode] = useState(true);
@@ -59,6 +59,8 @@ const Login = () => {
 
             if (endpoint === "/auth/verifyCode") {
                 title = "کد تایید اشتباه است";
+
+                setOTPcode("");
             }
 
             setToastifyObj(() => ({
@@ -114,6 +116,8 @@ const Login = () => {
                     setPageLoginMode(false);
                 }
             } else {
+                setIsForgetBtnLoading(false);
+
                 setToastifyObj(() => ({
                     title: "لطفا شماره تلفن را درست وارد کنید",
                     mode: "error",
@@ -126,8 +130,6 @@ const Login = () => {
         setOTPcode(convertFAtoEN(text));
 
         console.log("OTPCode >>", OTPCode);
-
-        forgetFormSubmit();
     };
 
     const sharedProps = {
@@ -136,15 +138,26 @@ const Login = () => {
 
     const forgetFormSubmit = async () => {
         setIsForgetFormSubmit(true);
-        setIsSubmitBtnLoading(true);
 
-        console.log("OTPCode >>", OTPCode);
+        if (OTPCode) {
+            setIsSubmitBtnLoading(true);
 
-        checkLoginValidation("/auth/verifyCode", {
-            phoneNumber: formData.phoneNumber,
-            code: OTPCode,
-        });
+            const sendData = {
+                phoneNumber: formData.phoneNumber,
+                code: OTPCode,
+            };
+
+            console.log("sendData >>", sendData);
+
+            checkLoginValidation("/auth/verifyCode", sendData);
+        }
     };
+
+    useEffect(() => {
+        if (OTPCode) {
+            forgetFormSubmit();
+        }
+    }, [OTPCode]);
 
     useEffect(() => {
         let interval;
@@ -164,7 +177,7 @@ const Login = () => {
     }, [sendAgainCounter]);
 
     const sendAgainHandler = () => {
-        setSendAgainCounter(10); // 120
+        setSendAgainCounter(120); // 10
 
         // Send Code
         postRequest("/auth/forgetPass", {
@@ -283,6 +296,7 @@ const Login = () => {
                                             length={5}
                                             {...sharedProps}
                                             size="large"
+                                            value={OTPCode}
                                         />
                                     </ConfigProvider>
                                 </Form.Item>
