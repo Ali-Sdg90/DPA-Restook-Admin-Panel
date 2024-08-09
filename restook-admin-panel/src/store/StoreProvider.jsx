@@ -1,6 +1,6 @@
 import React from "react";
 import AuthContextProvider from "./AuthContextProvider";
-import UsersContextProvider from "./UsersContextProvider";
+import UsersContextProvider from "./UserContextProvider";
 import CommonContextProvider from "./CommonContextProvider";
 
 const StoreProvider = ({ children }) => {

@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Layout, Menu } from "antd";
 
 import { SIDER_ITEMS } from "../constants/menuItems";
 
 import { ReactComponent as MainLogo } from "../assets/images/sider/main-logo.svg";
+import { UserContext } from "../store/UserContextProvider";
 
 const { Sider: AntSider } = Layout;
 
 const Sider = ({ collapsed, setCollapsed }) => {
+    const { userPlace } = useContext(UserContext);
+
+    useEffect(() => {
+        console.log("userPlace >>", userPlace);
+    }, [userPlace]);
+
     return (
         <Layout style={{ minHeight: "100vh" }}>
             <AntSider

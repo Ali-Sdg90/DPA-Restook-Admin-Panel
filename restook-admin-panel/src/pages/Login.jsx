@@ -11,6 +11,7 @@ import { CommonContext } from "../store/CommonContextProvider";
 import { useNavigate } from "react-router-dom";
 import { formatTime } from "../utils/formatTime";
 import { convertFAtoEN } from "../utils/convertFAtoENNumbers";
+import { UserContext } from "../store/UserContextProvider";
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -26,6 +27,7 @@ const Login = () => {
 
     const { setUserData } = useContext(AuthContext);
     const { setToastifyObj, setLocalToken } = useContext(CommonContext);
+    const { setUserPlace } = useContext(UserContext);
 
     const navigate = useNavigate();
 
@@ -51,6 +53,7 @@ const Login = () => {
                 }));
 
                 navigate("/home-page");
+                setUserPlace("/home-page-p1");
             } else {
                 throw new Error();
             }
