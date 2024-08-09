@@ -1,0 +1,90 @@
+.ant-layout-sider {
+    // flex: none !important;
+    // // max-width: 20 !important;
+    // min-width: 0 !important;
+    // width: fit-content !important;
+
+    .ant-layout-sider-children {
+        background-color: #5d6af2 !important;
+
+        .ant-menu {
+            background-color: #5d6af2 !important;
+
+            .ant-menu-item {
+                border-radius: 0 !important;
+                margin: 0 !important;
+                padding-left: 4px !important;
+                border-bottom: 1px solid #313e53 !important;
+                width: 100% !important;
+                height: 60px !important;
+                transition: background-color 0.15s !important;
+
+                .ant-menu-item-icon {
+                    transition: none !important;
+                }
+
+                .ant-menu-title-content {
+                    color: #fff !important;
+                    font-size: 16px !important;
+                    font-style: normal !important;
+                    font-weight: 400 !important;
+                    line-height: normal !important;
+                    transition: none !important;
+                }
+
+                &:active {
+                    background-color: #3847eb !important;
+                }
+            }
+
+            .ant-menu-item-selected {
+                background-color: #3847eb !important;
+            }
+
+            .ant-menu-item-divider {
+                background-color: #313e53;
+                height: 16px;
+                margin: 0;
+            }
+        }
+    }
+}
+
+.ant-layout-sider-collapsed {
+    .ant-menu-item-icon {
+        margin-top: 18px !important;
+    }
+
+    .admin-panel {
+        padding-right: 12px;
+
+        div {
+            display: none !important;
+        }
+    }
+}
+
+.admin-panel {
+    color: #fff;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    height: 114px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-flow: row nowrap;
+    gap: 18px;
+    padding-right: 18px;
+    transition: padding-right 0.15s;
+
+    div {
+        white-space: nowrap;
+    }
+
+    .admin-panel-icon {
+        width: 43px;
+        flex-shrink: 0;
+    }
+}

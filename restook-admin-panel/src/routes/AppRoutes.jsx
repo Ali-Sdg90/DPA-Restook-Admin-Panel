@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import { routes } from "../constants/routeConstants";
+import LayoutWrapper from "../components/LayoutWrapper";
 
 const AppRoutes = () => {
     return (
@@ -12,7 +13,15 @@ const AppRoutes = () => {
                         <Route
                             key={index}
                             path={route.path}
-                            element={route.element}
+                            element={
+                                route.path === "/login" ? (
+                                    route.element
+                                ) : (
+                                    <LayoutWrapper>
+                                        {route.element}
+                                    </LayoutWrapper>
+                                )
+                            }
                         />
                     ))}
                 </Routes>

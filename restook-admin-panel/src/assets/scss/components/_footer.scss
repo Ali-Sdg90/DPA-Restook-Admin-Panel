@@ -1,0 +1,17 @@
+.ant-layout-footer {
+    height: 37px !important;
+    border-top: 1px solid #989898;
+    padding: 0 24px !important;
+
+    .footer-flex {
+        height: 100%;
+
+        div {
+            color: #000;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 300;
+            line-height: normal;
+        }
+    }
+}

@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Col, ConfigProvider, Flex, Form, Input, Row } from "antd";
-import { ReactComponent as UserNameIcon } from "../assets/images/login/User.svg";
-import { ReactComponent as PasswordIcon } from "../assets/images/login/Lock.svg";
-import { ReactComponent as RestookLogo } from "../assets/images/login/Restook Logo.svg";
+
+import { ReactComponent as UserNameIcon } from "../assets/images/login-page/User.svg";
+import { ReactComponent as PasswordIcon } from "../assets/images/login-page/Lock.svg";
+import { ReactComponent as RestookLogo } from "../assets/images/login-page/Restook Logo.svg";
+
 import { postRequest } from "../services/apiService";
 import { AuthContext } from "../store/AuthContextProvider";
 import { CommonContext } from "../store/CommonContextProvider";

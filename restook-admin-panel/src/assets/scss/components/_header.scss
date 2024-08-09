@@ -1,0 +1,38 @@
+.ant-layout-header {
+    background-color: white !important;
+    padding-left: 40px !important;
+    padding-right: 10px !important;
+
+    .header-container {
+        background-color: white !important;
+        height: 100% !important;
+
+        .ant-flex {
+            height: 100%;
+        }
+
+        .ant-btn {
+            padding: 4px;
+        }
+
+        .left-section {
+            .ant-btn-icon {
+                display: flex;
+                align-items: center;
+            }
+
+            .ant-btn {
+                padding: 4px 3px 4px 10px;
+                margin-left: 6px;
+            }
+
+            span {
+                color: #000;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+            }
+        }
+    }
+}
