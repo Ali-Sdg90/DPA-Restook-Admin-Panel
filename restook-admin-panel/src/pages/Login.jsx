@@ -12,8 +12,8 @@ import { convertFAtoEN } from "../utils/convertFAtoENNumbers";
 
 const Login = () => {
     const [formData, setFormData] = useState({
-        phoneNumber: "", // Temp "09039618464"
-        password: "",
+        phoneNumber: "09039618464", // Temp "09039618464"
+        password: "123456789", // Temp "123456789"
     });
     const [pageLoginMode, setPageLoginMode] = useState(true);
     const [OTPCode, setOTPcode] = useState("");
@@ -29,7 +29,7 @@ const Login = () => {
 
     const checkLoginValidation = async (endpoint, data) => {
         try {
-            const res = await postRequest(endpoint, data);
+            const res = await postRequest(endpoint, data, false);
 
             setIsSubmitBtnLoading(false);
 
@@ -97,9 +97,13 @@ const Login = () => {
             }));
         } else {
             if (regex.test(formData.phoneNumber)) {
-                const res = await postRequest("/auth/forgetPass", {
-                    phoneNumber: formData.phoneNumber,
-                });
+                const res = await postRequest(
+                    "/auth/forgetPass",
+                    {
+                        phoneNumber: formData.phoneNumber,
+                    },
+                    false
+                );
 
                 setIsForgetBtnLoading(false);
                 console.log("res", res);
@@ -182,9 +186,13 @@ const Login = () => {
         setSendAgainCounter(120); // 10
 
         // Send Code
-        postRequest("/auth/forgetPass", {
-            phoneNumber: formData.phoneNumber,
-        });
+        postRequest(
+            "/auth/forgetPass",
+            {
+                phoneNumber: formData.phoneNumber,
+            },
+            false
+        );
     };
 
     return (
