@@ -1,12 +1,5 @@
-.gray-circle {
-    width: 40px;
-    height: 40px;
-    background: #d9d9d9;
-    border-radius: 50%;
-}
-
 .content {
-    padding: 29px 31px 19px;
+    padding: 29px 19px 19px;
     background-color: #ebedef;
 
     .ant-card-head {
@@ -83,6 +76,7 @@
     .table-section {
         .ant-card-body {
             padding: 40px 0 0;
+            overflow: auto;
 
             th.ant-table-cell {
                 padding: 5px 0px;
@@ -98,10 +92,15 @@
             }
 
             tr td.ant-table-cell:first-child {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 56px;
+                height: 100%;
+
+                .gray-circle {
+                    width: 40px;
+                    height: 40px;
+                    background: #d9d9d9;
+                    border-radius: 50%;
+                    margin: auto;
+                }
             }
 
             td.ant-table-cell {
@@ -110,6 +109,10 @@
                 font-style: normal;
                 font-weight: 400;
                 line-height: normal;
+            }
+
+            .ant-table-container::before {
+                box-shadow: none;
             }
 
             .ant-table-cell {
@@ -151,7 +154,7 @@
                 height: 56px !important;
 
                 .ant-table-cell {
-                    padding: 0;
+                    padding: 5px;
                 }
 
                 &:nth-child(even) {
@@ -170,10 +173,6 @@
             .details-btn {
                 padding: 6px 10px 6px 1px;
             }
-        }
-
-        .ant-table-content {
-            overflow: auto;
         }
 
         .ant-pagination {

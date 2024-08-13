@@ -10,23 +10,7 @@ const Header = ({ setCollapsed }) => {
     const items = [
         {
             key: "1",
-            label: "سلام",
-            icon: <SmileOutlined />,
-        },
-        {
-            key: "2",
-            label: "چطوری؟",
-            icon: <SmileOutlined />,
-            children: [
-                {
-                    key: "21",
-                    label: "خوبم",
-                },
-                {
-                    key: "22",
-                    label: "خوب ترم",
-                },
-            ],
+            label: "خروج از حساب کاربری",
         },
     ];
 

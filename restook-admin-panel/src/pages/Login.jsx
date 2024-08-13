@@ -15,8 +15,8 @@ import { UserContext } from "../store/UserContextProvider";
 
 const Login = () => {
     const [formData, setFormData] = useState({
-        phoneNumber: "09039618464", // Temp "09039618464"
-        password: "123456789", // Temp "123456789"
+        phoneNumber: "", // "09039618464"
+        password: "", // "123456789"
     });
     const [pageLoginMode, setPageLoginMode] = useState(true);
     const [OTPCode, setOTPcode] = useState("");

@@ -32,7 +32,7 @@ const LayoutWrapper = ({ children }) => {
                 <AntHeader>
                     <Header setCollapsed={setCollapsed} />
                 </AntHeader>
-                <AntContent>{children}</AntContent>
+                <AntContent className="ant-content">{children}</AntContent>
                 <AntFooter>
                     <Footer />
                 </AntFooter>

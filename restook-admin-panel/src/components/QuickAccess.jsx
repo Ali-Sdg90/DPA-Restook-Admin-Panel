@@ -11,7 +11,7 @@ const QuickAccess = () => {
         <Col span={24} className="quick-access-section">
             <Card title="دسترسی سریع">
                 <Row gutter={[23, 23]}>
-                    <Col span={8}>
+                    <Col lg={8} md={12} sm={24} xs={24}>
                         <Card className="quick-access-1 quick-access-btns">
                             <Row>
                                 <Col span={5}>
@@ -40,7 +40,7 @@ const QuickAccess = () => {
                         </Card>
                     </Col>
 
-                    <Col span={8}>
+                    <Col lg={8} md={12} sm={24} xs={24}>
                         <Card className="quick-access-2 quick-access-btns">
                             <Row>
                                 <Col span={5}>
@@ -69,7 +69,7 @@ const QuickAccess = () => {
                         </Card>
                     </Col>
 
-                    <Col span={8}>
+                    <Col lg={8} md={12} sm={24} xs={24}>
                         <Card className="quick-access-3 quick-access-btns">
                             <Row>
                                 <Col span={5}>
