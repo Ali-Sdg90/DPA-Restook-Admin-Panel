@@ -7,12 +7,19 @@ import { ReactComponent as Ellipse } from "../assets/images/header/Ellipse 2.svg
 import { LogoutOutlined } from "@ant-design/icons";
 import { AuthContext } from "../store/AuthContextProvider";
 import ImageWithFallback from "./ImageWithFallback";
+import { useNavigate } from "react-router-dom";
+import { CommonContext } from "../store/CommonContextProvider";
+import { UserContext } from "../store/UserContextProvider";
 
 const Header = ({ setCollapsed }) => {
-    const { userData } = useContext(AuthContext);
+    const { userData, setUserData } = useContext(AuthContext);
+    const { setLocalToken } = useContext(CommonContext);
+    const { setUserPlace } = useContext(UserContext);
 
     const [userName, setUserName] = useState("");
     const [userImg, setUserImg] = useState("");
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (
@@ -30,11 +37,19 @@ const Header = ({ setCollapsed }) => {
         }
     }, [userData]);
 
+    const logoutHandler = () => {
+        setLocalToken("");
+        setUserData({});
+        setUserPlace("/login");
+        navigate("/login");
+    };
+
     const items = [
         {
             key: "1",
             label: "خروج از حساب کاربری",
             icon: <LogoutOutlined />,
+            onClick: logoutHandler,
         },
     ];
 

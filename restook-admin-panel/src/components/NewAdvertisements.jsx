@@ -1,17 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 
 import { Button, Card, Col, Input, Table, DatePicker, Pagination } from "antd";
 import QuickAccess from "../components/QuickAccess";
 
 import { ReactComponent as Arrow } from "../assets/images/home-page/Chevron - Left.svg";
 import { ReactComponent as Calender } from "../assets/images/home-page/Calendar - Dates (1).svg";
-import { API_BASE_IMG } from "../constants/apiConstants";
 import { sortIcon } from "../utils/tableIconSort";
 import useTableData from "../hooks/useTableData";
 import { getTableData } from "../services/getTableData";
 import ImageWithFallback from "./ImageWithFallback";
+import { UserContext } from "../store/UserContextProvider";
 
 const NewAdvertisements = () => {
+    const { userPlace } = useContext(UserContext);
+
     const {
         pageFilter,
         tableData,
@@ -182,7 +184,7 @@ const NewAdvertisements = () => {
 
     return (
         <>
-            <QuickAccess />
+            {userPlace === "home-page" && <QuickAccess />}
 
             <Col span={24} className="table-section">
                 <Card title="لیست آگهی جدید">

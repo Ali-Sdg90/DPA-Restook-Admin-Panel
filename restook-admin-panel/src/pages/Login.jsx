@@ -52,8 +52,8 @@ const Login = () => {
                     mode: "success",
                 }));
 
+                setUserPlace("home-page");
                 navigate("/home-page");
-                setUserPlace("/home-page-p1");
             } else {
                 throw new Error();
             }

@@ -1,11 +1,12 @@
 import { Card, Col, Flex, Row, Skeleton } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { ReactComponent as Cutlery } from "../assets/images/quick-access/cutlery 2 (1).svg";
 import { ReactComponent as Note } from "../assets/images/quick-access/Note - Text (2).svg";
 import { ReactComponent as Hat } from "../assets/images/quick-access/chef's hat (1).svg";
 import { ReactComponent as Arrow } from "../assets/images/quick-access/Chevron - Left.svg";
 import { getRequest } from "../services/apiService";
+import { UserContext } from "../store/UserContextProvider";
 
 const QuickAccess = () => {
     const [quickAccessData, setQuickAccessData] = useState({
@@ -13,6 +14,8 @@ const QuickAccess = () => {
         newAdsFormat: "",
         newUsersFormat: "",
     });
+
+    const { userPlace, setUserPlace } = useContext(UserContext);
 
     useEffect(() => {
         const getData = async () => {
@@ -37,7 +40,10 @@ const QuickAccess = () => {
                 {quickAccessData.newUsersFormat ? (
                     <Row gutter={[23, 23]}>
                         <Col lg={8} md={12} sm={24} xs={24}>
-                            <Card className="quick-access-1 quick-access-btns">
+                            <Card
+                                className="quick-access-1 quick-access-btns"
+                                onClick={() => setUserPlace("new-restaurants")}
+                            >
                                 <Row>
                                     <Col span={5}>
                                         <Flex justify="center" align="center">
@@ -68,7 +74,12 @@ const QuickAccess = () => {
                         </Col>
 
                         <Col lg={8} md={12} sm={24} xs={24}>
-                            <Card className="quick-access-2 quick-access-btns">
+                            <Card
+                                className="quick-access-2 quick-access-btns"
+                                onClick={() =>
+                                    setUserPlace("new-advertisements")
+                                }
+                            >
                                 <Row>
                                     <Col span={5}>
                                         <Flex justify="center" align="center">
@@ -97,7 +108,10 @@ const QuickAccess = () => {
                         </Col>
 
                         <Col lg={8} md={12} sm={24} xs={24}>
-                            <Card className="quick-access-3 quick-access-btns">
+                            <Card
+                                className="quick-access-3 quick-access-btns"
+                                onClick={() => setUserPlace("new-users")}
+                            >
                                 <Row>
                                     <Col span={5}>
                                         <Flex justify="center" align="center">
