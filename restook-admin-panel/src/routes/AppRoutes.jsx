@@ -14,12 +14,12 @@ const AppRoutes = () => {
                             key={index}
                             path={route.path}
                             element={
-                                route.path === "/login" ? (
-                                    route.element
-                                ) : (
+                                route.needWrapper ? (
                                     <LayoutWrapper>
                                         {route.element}
                                     </LayoutWrapper>
+                                ) : (
+                                    route.element
                                 )
                             }
                         />

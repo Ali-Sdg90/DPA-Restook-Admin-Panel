@@ -25,6 +25,8 @@ const LayoutWrapper = ({ children }) => {
                 width={270}
                 collapsedWidth={70}
                 trigger={null}
+                breakpoint="lg"
+                onBreakpoint={(broken) => setCollapsed(broken)}
             >
                 <Sider collapsed={collapsed} setCollapsed={setCollapsed} />
             </AntSider>

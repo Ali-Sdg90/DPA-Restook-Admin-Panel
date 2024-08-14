@@ -38,7 +38,7 @@
             overflow: auto;
 
             .sectionHeader {
-                font-size: 36px;
+                font-size: 3.6rem;
                 font-weight: 500;
                 line-height: 62.18px;
                 color: black;
@@ -63,7 +63,7 @@
 
                         .ant-input {
                             padding: 7px 10px 7px 0;
-                            font-size: 16px;
+                            font-size: 1.6rem;
                         }
 
                         .ant-input-suffix {
@@ -77,7 +77,7 @@
 
                     .submit-btn {
                         background-color: #321fdb;
-                        font-size: 16px;
+                        font-size: 1.6rem;
                         font-style: normal;
                         font-weight: 400;
                         line-height: normal;
@@ -89,14 +89,14 @@
                         height: 25px;
                         display: flex;
                         align-items: center;
-                        font-size: 12px;
+                        font-size: 1.2rem;
                     }
                 }
             }
 
             .forget-pass {
                 color: #321fdb;
-                font-size: 12px;
+                font-size: 1.2rem;
                 font-style: normal;
                 font-weight: 400;
                 line-height: normal;
@@ -110,7 +110,7 @@
             .forgot-pass-mode {
                 .confirmHeader {
                     color: #000;
-                    font-size: 32px;
+                    font-size: 3.2rem;
                     font-style: normal;
                     font-weight: 700;
                     line-height: normal;
@@ -122,7 +122,7 @@
 
                     label {
                         color: #808690;
-                        font-size: 16px;
+                        font-size: 1.6rem;
                         font-style: normal;
                         font-weight: 400;
                         line-height: normal;
@@ -138,7 +138,7 @@
                         height: 56px;
                         border: 1px solid #989898;
                         margin: 8px 0 8px;
-                        font-size: 26px;
+                        font-size: 2.6rem;
                     }
                 }
 
@@ -147,7 +147,7 @@
                     color: #ff4d4f;
                     display: flex;
                     align-items: center;
-                    font-size: 12px;
+                    font-size: 1.2rem;
                     transition: all 0.2s;
                 }
 

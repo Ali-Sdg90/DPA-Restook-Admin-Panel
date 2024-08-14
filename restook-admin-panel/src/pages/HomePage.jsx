@@ -3,7 +3,18 @@ import { CommonContext } from "../store/CommonContextProvider";
 import { getRequest } from "../services/apiService";
 import { AuthContext } from "../store/AuthContextProvider";
 
-import { Button, Card, Col, Input, Row, Table, DatePicker } from "antd";
+import {
+    Button,
+    Card,
+    Col,
+    Input,
+    Row,
+    Table,
+    DatePicker,
+    Pagination,
+    Select,
+    Image,
+} from "antd";
 import QuickAccess from "../components/QuickAccess";
 
 import { ReactComponent as Arrow } from "../assets/images/home-page/Chevron - Left.svg";
@@ -11,10 +22,21 @@ import { ReactComponent as Swap } from "../assets/images/home-page/swap-icon.svg
 // import { ReactComponent as Up } from "../assets/images/home-page/up-arrow.svg";
 // import { ReactComponent as Down } from "../assets/images/home-page/down-arrow.svg";
 import { ReactComponent as Calender } from "../assets/images/home-page/Calendar - Dates (1).svg";
+import { API_BASE_IMG, API_BASE_URL } from "../constants/apiConstants";
 
 const HomePage = () => {
     const { localToken } = useContext(CommonContext);
     const { userData, setUserData } = useContext(AuthContext);
+
+    const [page1Filter, setPage1Filter] = useState({
+        sortBy: "jobTitle",
+        sortOrder: "ASC",
+        page: "1",
+        search: "",
+        date: "",
+    });
+    const [tableData, setTableData] = useState([{}]);
+    const [totalPage, setTotalPage] = useState(0);
 
     useEffect(() => {
         const getProfile = async () => {
@@ -37,40 +59,33 @@ const HomePage = () => {
         }
     }, [localToken, setUserData, userData]);
 
-    const [isLoading, setIsLoading] = useState(false);
-
-    const [data, setData] = useState([
-        {
-            name: "",
-            title: "",
-            phoneNumber: "",
-            date: "",
-        },
-    ]);
-
-    useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 1000);
-    }, []);
-
     const handleInputChange = (e, key, column) => {
-        const newData = [...data];
-        const index = newData.findIndex((item) => key === item.key);
-        if (index > -1) {
-            const item = newData[index];
-            newData.splice(index, 1, { ...item, [column]: e.target.value });
-            setData(newData);
-        }
+        setPage1Filter((prevState) => ({
+            ...prevState,
+            [column]: e.target.value,
+        }));
     };
 
     const columns = [
         {
             title: "",
-            dataIndex: "profile-img",
-            key: "profileImg",
+            dataIndex: "imageUrl",
+            key: "imageUrl",
             width: "10.1%",
-            render: (_, record, index) => index !== 0 && record.profileImg,
+            render: (_, record, index) =>
+                index !== 0 &&
+                (record.imageUrl ? (
+                    <img
+                        src={`${API_BASE_IMG}${record.imageUrl}`}
+                        className="table-image"
+                    />
+                ) : (
+                    // <Image
+                    //     src={`${API_BASE_IMG}${record.imageUrl}`}
+                    //     width={40}
+                    // />
+                    <div className="gray-circle"></div>
+                )),
         },
         {
             title: (
@@ -78,16 +93,17 @@ const HomePage = () => {
                     نام مجموعه
                 </Button>
             ),
-            dataIndex: "name",
-            key: "name",
+            dataIndex: "branch",
+            key: "branch",
             width: "27%",
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
                         value={record.address}
-                        onChange={(e) =>
-                            handleInputChange(e, record.key, "name")
-                        }
+                        onChange={(e) => {
+                            handleInputChange(e, record.key, "branch");
+                            console.log(e.target.value);
+                        }}
                     />
                 ) : (
                     text
@@ -99,19 +115,21 @@ const HomePage = () => {
                     عنوان آگهی
                 </Button>
             ),
-            dataIndex: "title",
-            key: "title",
+            dataIndex: "jobTitle",
+            key: "jobTitle",
             width: "19.67%",
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
                         value={record.address}
                         onChange={(e) =>
-                            handleInputChange(e, record.key, "title")
+                            handleInputChange(e, record.key, "jobTitle")
                         }
                     />
-                ) : (
+                ) : text ? (
                     text
+                ) : (
+                    "_"
                 ),
         },
         {
@@ -141,8 +159,8 @@ const HomePage = () => {
                     تاریخ ثبت
                 </Button>
             ),
-            dataIndex: "date",
-            key: "date",
+            dataIndex: "createdAt",
+            key: "createdAt",
             width: "14.15%",
             render: (text, record, index) =>
                 index === 0 ? (
@@ -167,7 +185,7 @@ const HomePage = () => {
                             iconPosition={"end"}
                             className="details-btn"
                         >
-                            {record.details}
+                            جزئیات
                         </Button>
                     );
                 }
@@ -202,6 +220,24 @@ const HomePage = () => {
             }
         });
 
+    useEffect(() => {
+        const getData = async () => {
+            const res = await getRequest(
+                `/advertisements?status=pending&sortBy=${page1Filter.sortBy}&sortOrder=${page1Filter.sortOrder}&page=${page1Filter.page}&search=${page1Filter.search}&date=${page1Filter.date}`
+            );
+
+            console.log("RESSSSS >>", res);
+
+            setTotalPage(res.data.totalPages);
+
+            const restaurants = res.data.advertisements;
+            restaurants.unshift({});
+            setTableData(restaurants);
+        };
+
+        getData();
+    }, [page1Filter]);
+
     return (
         <Row gutter={[24, 24]} className="content">
             <QuickAccess />
@@ -209,14 +245,15 @@ const HomePage = () => {
             <Col span={24} className="table-section">
                 <Card title="لیست آگهی جدید">
                     <Table
-                        loading={isLoading}
-                        dataSource={!isLoading && dataSource}
-                        columns={!isLoading && columns}
-                        pagination={{
-                            defaultCurrent: 1,
-                            total: 50,
-                            showLessItems: true,
-                        }}
+                        loading={!totalPage}
+                        dataSource={tableData}
+                        columns={columns}
+                        pagination={false}
+                    />
+                    <Pagination
+                        // showLessItems={true}
+                        total={10 * totalPage}
+                        disabled={!totalPage}
                     />
                 </Card>
             </Col>

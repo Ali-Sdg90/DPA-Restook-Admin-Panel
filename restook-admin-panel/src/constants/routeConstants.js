@@ -7,9 +7,9 @@ const HomePage = lazy(() => import("../pages/HomePage"));
 const PageNotFound = lazy(() => import("../pages/PageNotFound"));
 
 export const routes = [
-    { path: "/login", element: <Login /> },
-    { path: "/home-page", element: <HomePage /> },
-    { path: "/restaurant-page", element: <Restaurant /> },
+    { path: "/login", element: <Login />, needWrapper: false },
+    { path: "/home-page", element: <HomePage />, needWrapper: true },
+    { path: "/restaurant-page", element: <Restaurant />, needWrapper: true },
     { path: "/", element: <Navigate to="/login" replace /> },
     { path: "/page-not-found", element: <PageNotFound /> },
     { path: "*", element: <Navigate to="/page-not-found" replace /> },

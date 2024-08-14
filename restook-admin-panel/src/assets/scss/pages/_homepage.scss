@@ -1,6 +1,5 @@
 .content {
     padding: 29px 19px 19px;
-    background-color: #ebedef;
 
     .ant-card-head {
         display: block;
@@ -8,7 +7,7 @@
 
         .ant-card-head-title {
             color: #000;
-            font-size: 20px;
+            font-size: 2rem;
             font-style: normal;
             font-weight: 700;
             line-height: normal;
@@ -34,7 +33,7 @@
 
                 .btn-title {
                     color: #000;
-                    font-size: 18px;
+                    font-size: 1.8rem;
                     font-style: normal;
                     font-weight: 700;
                     line-height: normal;
@@ -42,7 +41,7 @@
 
                 .btn-amount {
                     color: #000;
-                    font-size: 14px;
+                    font-size: 1.4rem;
                     font-style: normal;
                     font-weight: 400;
                     line-height: normal;
@@ -84,7 +83,7 @@
                 .ant-btn {
                     padding: 15px 10px;
                     color: #000;
-                    font-size: 14px;
+                    font-size: 1.4rem;
                     font-style: normal;
                     font-weight: 700;
                     line-height: normal;
@@ -105,7 +104,7 @@
 
             td.ant-table-cell {
                 color: #000;
-                font-size: 14px;
+                font-size: 1.4rem;
                 font-style: normal;
                 font-weight: 400;
                 line-height: normal;
@@ -139,7 +138,7 @@
 
                 input::placeholder {
                     color: #000;
-                    font-size: 12px;
+                    font-size: 1.2rem;
                     font-style: normal;
                     font-weight: 400;
                     line-height: normal;
@@ -168,6 +167,12 @@
                 .ant-table-cell-row-hover {
                     background-color: transparent !important;
                 }
+
+                .table-image {
+                    width: 40px;
+                    display: block;
+                    margin: auto;
+                }
             }
 
             .details-btn {
@@ -185,6 +190,20 @@
             border: 1px solid #d9d9d9;
             border-radius: 8px;
             overflow: hidden;
+
+            .ant-pagination-options {
+                display: none;
+            }
+
+            .ant-pagination-jump-next,
+            .ant-pagination-jump-prev {
+                background-color: white;
+                user-select: none;
+            }
+
+            .ant-pagination-item-ellipsis {
+                transform: translateX(7px);
+            }
 
             li {
                 border-radius: 0;
