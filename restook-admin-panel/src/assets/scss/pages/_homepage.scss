@@ -78,7 +78,7 @@
             overflow: auto;
 
             th.ant-table-cell {
-                padding: 5px 0px;
+                padding: 5px 0;
 
                 .ant-btn {
                     padding: 15px 10px;
@@ -87,6 +87,14 @@
                     font-style: normal;
                     font-weight: 700;
                     line-height: normal;
+                }
+
+                .ant-btn-icon {
+                    width: 24px;
+                    height: 24px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
                 }
             }
 

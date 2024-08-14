@@ -13,16 +13,15 @@ import {
     DatePicker,
     Pagination,
     Select,
-    Image,
 } from "antd";
 import QuickAccess from "../components/QuickAccess";
 
 import { ReactComponent as Arrow } from "../assets/images/home-page/Chevron - Left.svg";
 import { ReactComponent as Swap } from "../assets/images/home-page/swap-icon.svg";
-// import { ReactComponent as Up } from "../assets/images/home-page/up-arrow.svg";
-// import { ReactComponent as Down } from "../assets/images/home-page/down-arrow.svg";
+import { ReactComponent as Up } from "../assets/images/home-page/up-arrow.svg";
+import { ReactComponent as Down } from "../assets/images/home-page/down-arrow.svg";
 import { ReactComponent as Calender } from "../assets/images/home-page/Calendar - Dates (1).svg";
-import { API_BASE_IMG, API_BASE_URL } from "../constants/apiConstants";
+import { API_BASE_IMG } from "../constants/apiConstants";
 
 const HomePage = () => {
     const { localToken } = useContext(CommonContext);
@@ -37,6 +36,56 @@ const HomePage = () => {
     });
     const [tableData, setTableData] = useState([{}]);
     const [totalPage, setTotalPage] = useState(0);
+    const [sortMode, setSortMode] = useState({
+        mode: "",
+        isASC: false,
+    });
+
+    const sortTable = (mode) => {
+        let sortOrder = "ASC";
+
+        setSortMode((prevState) => {
+            if (prevState.mode === mode) {
+                if (prevState.isASC) {
+                    sortOrder = "DESC";
+                } else {
+                    sortOrder = "ASC";
+                }
+
+                return {
+                    mode: mode,
+                    isASC: !prevState.isASC,
+                };
+            } else {
+                return {
+                    mode: mode,
+                    isASC: true,
+                };
+            }
+        });
+
+        setPage1Filter((prevState) => ({
+            ...prevState,
+            sortBy: mode,
+            sortOrder: sortOrder,
+        }));
+    };
+
+    useEffect(() => {
+        console.log("sortMode >>", sortMode);
+    }, [sortMode]);
+
+    const sortIcon = (mode) => {
+        if (sortMode.mode === mode) {
+            if (sortMode.isASC) {
+                return <Up />;
+            } else {
+                return <Down />;
+            }
+        } else {
+            return <Swap />;
+        }
+    };
 
     useEffect(() => {
         const getProfile = async () => {
@@ -89,19 +138,23 @@ const HomePage = () => {
         },
         {
             title: (
-                <Button type="text" icon={<Swap />}>
+                <Button
+                    type="text"
+                    icon={sortIcon("restaurantTitle")}
+                    onClick={() => sortTable("restaurantTitle")}
+                >
                     نام مجموعه
                 </Button>
             ),
-            dataIndex: "branch",
-            key: "branch",
+            dataIndex: "restaurantTitle",
+            key: "restaurantTitle",
             width: "27%",
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
                         value={record.address}
                         onChange={(e) => {
-                            handleInputChange(e, record.key, "branch");
+                            handleInputChange(e, record.key, "restaurantTitle");
                             console.log(e.target.value);
                         }}
                     />
@@ -111,7 +164,11 @@ const HomePage = () => {
         },
         {
             title: (
-                <Button type="text" icon={<Swap />}>
+                <Button
+                    type="text"
+                    icon={sortIcon("jobTitle")}
+                    onClick={() => sortTable("jobTitle")}
+                >
                     عنوان آگهی
                 </Button>
             ),
@@ -134,7 +191,11 @@ const HomePage = () => {
         },
         {
             title: (
-                <Button type="text" icon={<Swap />}>
+                <Button
+                    type="text"
+                    icon={sortIcon("phoneNumber")}
+                    onClick={() => sortTable("phoneNumber")}
+                >
                     شماره تماس
                 </Button>
             ),
@@ -155,12 +216,16 @@ const HomePage = () => {
         },
         {
             title: (
-                <Button type="text" icon={<Swap />}>
+                <Button
+                    type="text"
+                    icon={sortIcon("createdAt")}
+                    onClick={() => sortTable("createdAt")}
+                >
                     تاریخ ثبت
                 </Button>
             ),
-            dataIndex: "createdAt",
-            key: "createdAt",
+            dataIndex: "date",
+            key: "date",
             width: "14.15%",
             render: (text, record, index) =>
                 index === 0 ? (
@@ -193,33 +258,6 @@ const HomePage = () => {
         },
     ];
 
-    // Temp
-    const dataSource = Array(10)
-        .fill(0)
-        .map((_, index) => {
-            if (index % 2) {
-                return {
-                    key: index,
-                    profileImg: <div className="gray-circle"></div>,
-                    name: "چلوگباب رفتاری (شعبه سعادت آباد)",
-                    title: "آشپز",
-                    phoneNumber: "09120148529",
-                    date: "1402/09/09",
-                    details: "جزئیات",
-                };
-            } else {
-                return {
-                    key: index,
-                    profileImg: <div className="gray-circle"></div>,
-                    name: "رستوران البرز",
-                    title: "سالن کار",
-                    phoneNumber: "09120148529",
-                    date: "1402/09/09",
-                    details: "جزئیات",
-                };
-            }
-        });
-
     useEffect(() => {
         const getData = async () => {
             const res = await getRequest(
@@ -228,11 +266,16 @@ const HomePage = () => {
 
             console.log("RESSSSS >>", res);
 
-            setTotalPage(res.data.totalPages);
+            if (res.success) {
+                console.log("YESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
+                setTotalPage(res.data.totalPages);
 
-            const restaurants = res.data.advertisements;
-            restaurants.unshift({});
-            setTableData(restaurants);
+                const restaurants = res.data.advertisements;
+                restaurants.unshift({});
+                setTableData(restaurants);
+            } else {
+                console.log("ERROR IN FILTERING!!!!!", page1Filter);
+            }
         };
 
         getData();
