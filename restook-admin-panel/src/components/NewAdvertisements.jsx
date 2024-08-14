@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { getRequest } from "../services/apiService";
+import React, { useEffect } from "react";
 
 import { Button, Card, Col, Input, Table, DatePicker, Pagination } from "antd";
 import QuickAccess from "../components/QuickAccess";
@@ -8,58 +7,22 @@ import { ReactComponent as Arrow } from "../assets/images/home-page/Chevron - Le
 import { ReactComponent as Calender } from "../assets/images/home-page/Calendar - Dates (1).svg";
 import { API_BASE_IMG } from "../constants/apiConstants";
 import { sortIcon } from "../utils/tableIconSort";
+import useTableData from "../hooks/useTableData";
+import { getTableData } from "../services/getTableData";
+import { handleImageError } from "../utils/imageFallback";
 
 const NewAdvertisements = () => {
-    const [pageFilter, setPageFilter] = useState({
-        sortBy: "jobTitle",
-        sortOrder: "ASC",
-        page: "1",
-        search: "",
-        date: "",
-    });
-    const [tableData, setTableData] = useState([]);
-    const [totalPage, setTotalPage] = useState(0);
-    const [sortMode, setSortMode] = useState({
-        mode: "",
-        isASC: false,
-    });
-
-    const sortTable = (mode) => {
-        let sortOrder = "ASC";
-
-        setSortMode((prevState) => {
-            if (prevState.mode === mode) {
-                if (prevState.isASC) {
-                    sortOrder = "DESC";
-                } else {
-                    sortOrder = "ASC";
-                }
-
-                return {
-                    mode: mode,
-                    isASC: !prevState.isASC,
-                };
-            } else {
-                return {
-                    mode: mode,
-                    isASC: true,
-                };
-            }
-        });
-
-        setPageFilter((prevState) => ({
-            ...prevState,
-            sortBy: mode,
-            sortOrder: sortOrder,
-        }));
-    };
-
-    const handleInputChange = (e, key, column) => {
-        setPageFilter((prevState) => ({
-            ...prevState,
-            [column]: e.target.value,
-        }));
-    };
+    const {
+        pageFilter,
+        tableData,
+        totalPage,
+        sortMode,
+        sortTable,
+        handleInputChange,
+        setTableData,
+        setTotalPage,
+        currentPage,
+    } = useTableData();
 
     const columns = [
         {
@@ -73,6 +36,7 @@ const NewAdvertisements = () => {
                     <img
                         src={`${API_BASE_IMG}${record.imageUrl}`}
                         className="table-image"
+                        onError={handleImageError}
                     />
                 ) : (
                     <div className="gray-circle"></div>
@@ -202,26 +166,19 @@ const NewAdvertisements = () => {
 
     useEffect(() => {
         const getData = async () => {
-            const res = await getRequest(
-                `/advertisements?status=pending&sortBy=${pageFilter.sortBy}&sortOrder=${pageFilter.sortOrder}&page=${pageFilter.page}&search=${pageFilter.search}&date=${pageFilter.date}`
+            const res = await getTableData(
+                "advertisements",
+                pageFilter,
+                currentPage,
+                false
             );
 
-            console.log("RESSSSS >>", res);
-
-            if (res.success) {
-                console.log("YESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
-                setTotalPage(res.data.totalPages);
-
-                const restaurants = res.data.advertisements;
-                restaurants.unshift({});
-                setTableData(restaurants);
-            } else {
-                console.log("ERROR IN FILTERING!!!!!", pageFilter);
-            }
+            setTableData(res[0]);
+            setTotalPage(res[1]);
         };
 
         getData();
-    }, [pageFilter]);
+    }, [pageFilter, currentPage]);
 
     return (
         <>
@@ -234,6 +191,7 @@ const NewAdvertisements = () => {
                         dataSource={tableData}
                         columns={columns}
                         pagination={false}
+                        rowKey={(record) => record.id}
                     />
                     <Pagination
                         // showLessItems={true}

@@ -1,6 +1,16 @@
 import React, { useEffect } from "react";
 
-import { Button, Card, Col, Input, Table, DatePicker, Pagination } from "antd";
+import {
+    Button,
+    Card,
+    Col,
+    Input,
+    Table,
+    DatePicker,
+    Pagination,
+    Select,
+    Image,
+} from "antd";
 
 import { ReactComponent as Arrow } from "../assets/images/home-page/Chevron - Left.svg";
 import { ReactComponent as Calender } from "../assets/images/home-page/Calendar - Dates (1).svg";
@@ -10,7 +20,7 @@ import { getTableData } from "../services/getTableData";
 import useTableData from "../hooks/useTableData";
 import { handleImageError } from "../utils/imageFallback";
 
-const NewRestaurants = () => {
+const NewUsers = () => {
     const {
         pageFilter,
         tableData,
@@ -20,6 +30,7 @@ const NewRestaurants = () => {
         handleInputChange,
         setTableData,
         setTotalPage,
+        handlePageChange,
         currentPage,
     } = useTableData();
 
@@ -28,7 +39,7 @@ const NewRestaurants = () => {
             title: "",
             dataIndex: "imageUrl",
             key: "imageUrl",
-            width: "10.1%",
+            width: "8.1%",
             render: (_, record, index) =>
                 index !== 0 &&
                 (record.imageUrl ? (
@@ -45,21 +56,21 @@ const NewRestaurants = () => {
             title: (
                 <Button
                     type="text"
-                    icon={sortIcon("jobTitle", sortMode)}
-                    onClick={() => sortTable("jobTitle")}
+                    icon={sortIcon("fullName", sortMode)}
+                    onClick={() => sortTable("fullName")}
                 >
-                    نام مجموعه
+                    نام و نام خانوادگی
                 </Button>
             ),
-            dataIndex: "jobTitle",
-            key: "jobTitle",
-            width: "27%",
+            dataIndex: "fullName",
+            key: "fullName",
+            width: "20%",
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
                         value={record.address}
                         onChange={(e) => {
-                            handleInputChange(e, record.key, "jobTitle");
+                            handleInputChange(e, record.key, "fullName");
                             console.log(e.target.value);
                         }}
                     />
@@ -71,22 +82,30 @@ const NewRestaurants = () => {
             title: (
                 <Button
                     type="text"
-                    icon={sortIcon("branch", sortMode)}
-                    onClick={() => sortTable("branch")}
+                    icon={sortIcon("jobTitle", sortMode)}
+                    onClick={() => sortTable("jobTitle")}
                 >
-                    شعبه
+                    عنوان شغلی
                 </Button>
             ),
-            dataIndex: "branch",
-            key: "branch",
-            width: "19.67%",
+            dataIndex: "jobTitle",
+            key: "jobTitle",
+            width: "17.67%",
             render: (text, record, index) =>
                 index === 0 ? (
-                    <Input
-                        value={record.address}
-                        onChange={(e) =>
-                            handleInputChange(e, record.key, "branch")
-                        }
+                    <Select
+                        defaultValue="همه"
+                        // onChange={handleChange}
+                        style={{ width: "80%" }}
+                        options={[
+                            { value: "همه", label: "همه" },
+                            { value: "آشپز", label: "آشپز" },
+                            { value: "هد آشپزخانه", label: "هد آشپزخانه" },
+                            { value: "کباب زن", label: "کباب زن" },
+                            { value: "باریستا", label: "باریستا" },
+                            { value: "سالاد زن", label: "سالاد زن" },
+                            { value: "بارتندر", label: "بارتندر" },
+                        ]}
                     />
                 ) : text ? (
                     text
@@ -106,7 +125,7 @@ const NewRestaurants = () => {
             ),
             dataIndex: "phoneNumber",
             key: "phoneNumber",
-            width: "21.08%",
+            width: "18%",
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
@@ -126,12 +145,12 @@ const NewRestaurants = () => {
                     icon={sortIcon("createdAt", sortMode)}
                     onClick={() => sortTable("createdAt")}
                 >
-                    تاریخ ثبت
+                    تاریخ ثبت‌نام
                 </Button>
             ),
             dataIndex: "createdAt",
             key: "createdAt",
-            width: "14.15%",
+            width: "14%",
             render: (text, record, index) =>
                 index === 0 ? (
                     <DatePicker
@@ -140,6 +159,54 @@ const NewRestaurants = () => {
                     />
                 ) : (
                     text
+                ),
+        },
+        {
+            title: (
+                <Button
+                    type="text"
+                    icon={sortIcon("jobStatus", sortMode)}
+                    onClick={() => sortTable("jobStatus")}
+                >
+                    وضعیت
+                </Button>
+            ),
+            dataIndex: "jobStatus",
+            key: "jobStatus",
+            width: "14%",
+            render: (text, record, index) =>
+                index === 0 ? (
+                    <Select
+                        defaultValue="همه"
+                        // onChange={handleChange}
+                        options={[
+                            { value: "همه", label: "همه" },
+                            { value: "نا معلوم", label: "نا معلوم" },
+                            {
+                                value: "به دنبال کار بهتر",
+                                label: "به دنبال کار بهتر",
+                            },
+                            {
+                                value: "آماده به کار",
+                                label: "آماده به کار",
+                            },
+                            {
+                                value: "مشغول به کار",
+                                label: "مشغول به کار",
+                            },
+                        ]}
+                    />
+                ) : (
+                    <div
+                        className="status-tag"
+                        style={{ background: text.backColor }}
+                    >
+                        <div
+                            className="status-dot"
+                            style={{ background: text.color }}
+                        ></div>
+                        {text.title}
+                    </div>
                 ),
         },
         {
@@ -166,11 +233,13 @@ const NewRestaurants = () => {
     useEffect(() => {
         const getData = async () => {
             const res = await getTableData(
-                "restaurants",
+                "users",
                 pageFilter,
                 currentPage,
-                false
+                true
             );
+
+            console.log("RESsSsSsSs >> ", res);
 
             setTableData(res[0]);
             setTotalPage(res[1]);
@@ -182,7 +251,7 @@ const NewRestaurants = () => {
     return (
         <>
             <Col span={24} className="table-section">
-                <Card title="لیست مجموعه‌های جدید">
+                <Card title="لیست کارجوهای جدید">
                     <Table
                         loading={!totalPage}
                         dataSource={tableData}
@@ -194,6 +263,7 @@ const NewRestaurants = () => {
                         // showLessItems={true}
                         total={10 * totalPage}
                         disabled={!totalPage}
+                        onChange={handlePageChange}
                     />
                 </Card>
             </Col>
@@ -201,4 +271,4 @@ const NewRestaurants = () => {
     );
 };
 
-export default NewRestaurants;
+export default NewUsers;

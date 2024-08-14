@@ -6,6 +6,7 @@ import { AuthContext } from "../store/AuthContextProvider";
 import { Row } from "antd";
 import NewAdvertisements from "../components/NewAdvertisements";
 import NewRestaurants from "../components/NewRestaurants";
+import NewUsers from "../components/NewUsers";
 
 const HomePage = () => {
     const { localToken } = useContext(CommonContext);
@@ -35,7 +36,8 @@ const HomePage = () => {
     return (
         <Row gutter={[24, 24]} className="content">
             {/* <NewAdvertisements /> */}
-            <NewRestaurants />
+            {/* <NewRestaurants /> */}
+            <NewUsers />
         </Row>
     );
 };

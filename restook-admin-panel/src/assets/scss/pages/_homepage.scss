@@ -137,8 +137,34 @@
             }
 
             .ant-input {
-                width: 70%;
+                width: 80%;
                 border-color: #707070 !important;
+            }
+
+            .status-tag {
+                border-radius: 32px;
+                height: 32px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: min-content;
+                white-space: nowrap;
+                padding: 0 12px;
+
+                .status-dot {
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 50%;
+                    margin-left: 4px;
+                }
+            }
+
+            .ant-select {
+                width: 100%;
+
+                .ant-select-selector {
+                    border: 1px solid #707070 !important;
+                }
             }
 
             .ant-picker {
@@ -180,6 +206,7 @@
                     width: 40px;
                     display: block;
                     margin: auto;
+                    border-radius: 50%;
                 }
             }
 

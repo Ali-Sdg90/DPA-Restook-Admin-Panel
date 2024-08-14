@@ -18,8 +18,6 @@ const QuickAccess = () => {
         const getData = async () => {
             const res = await getRequest("/options/quickAccess");
 
-            // console.log("QuickAccess res >>", res.data);
-
             const { newRestaurantsFormat, newAdsFormat, newUsersFormat } =
                 res.data;
 
