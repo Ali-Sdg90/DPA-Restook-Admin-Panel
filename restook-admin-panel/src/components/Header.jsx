@@ -1,16 +1,40 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, ConfigProvider, Dropdown, Flex } from "antd";
 
 import { ReactComponent as DownArrow } from "../assets/images/header/Chevron - Down (1).svg";
 import { ReactComponent as Menu } from "../assets/images/header/Menu (1).svg";
 import { ReactComponent as Ellipse } from "../assets/images/header/Ellipse 2.svg";
-import { SmileOutlined } from "@ant-design/icons";
+import { LogoutOutlined } from "@ant-design/icons";
+import { AuthContext } from "../store/AuthContextProvider";
+import ImageWithFallback from "./ImageWithFallback";
 
 const Header = ({ setCollapsed }) => {
+    const { userData } = useContext(AuthContext);
+
+    const [userName, setUserName] = useState("");
+    const [userImg, setUserImg] = useState("");
+
+    useEffect(() => {
+        if (
+            userData.user &&
+            userData.user.firstName &&
+            userData.user.lastName
+        ) {
+            setUserName(
+                () => userData.user.firstName + " " + userData.user.lastName
+            );
+        }
+
+        if (userData.user && userData.user.imageUrl) {
+            setUserImg(userData.user.imageUrl);
+        }
+    }, [userData]);
+
     const items = [
         {
             key: "1",
             label: "خروج از حساب کاربری",
+            icon: <LogoutOutlined />,
         },
     ];
 
@@ -27,18 +51,27 @@ const Header = ({ setCollapsed }) => {
                     </Button>
 
                     <Flex align="center" className="left-section">
-                        <Dropdown
-                            menu={{ items }}
-                            arrow
-                            placement="top"
-                            direction={"ltr"}
-                        >
-                            <Button type="text" icon={<DownArrow />}>
-                                علی صادقی
-                            </Button>
-                        </Dropdown>
-
-                        <Ellipse />
+                        <ConfigProvider direction={"rtl"}>
+                            <Dropdown
+                                menu={{ items }}
+                                arrow
+                                placement="top"
+                                direction={"ltr"}
+                            >
+                                <Button type="text" icon={<DownArrow />}>
+                                    {userName}
+                                </Button>
+                            </Dropdown>
+                        </ConfigProvider>
+                        {userImg ? (
+                            <ImageWithFallback
+                                imageUrl={userImg}
+                                className={"profile-image"}
+                                alt={"profile-image"}
+                            />
+                        ) : (
+                            <Ellipse />
+                        )}
                     </Flex>
                 </Flex>
             </ConfigProvider>

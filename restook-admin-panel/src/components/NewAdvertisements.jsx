@@ -9,7 +9,7 @@ import { API_BASE_IMG } from "../constants/apiConstants";
 import { sortIcon } from "../utils/tableIconSort";
 import useTableData from "../hooks/useTableData";
 import { getTableData } from "../services/getTableData";
-import { handleImageError } from "../utils/imageFallback";
+import ImageWithFallback from "./ImageWithFallback";
 
 const NewAdvertisements = () => {
     const {
@@ -33,10 +33,10 @@ const NewAdvertisements = () => {
             render: (_, record, index) =>
                 index !== 0 &&
                 (record.imageUrl ? (
-                    <img
-                        src={`${API_BASE_IMG}${record.imageUrl}`}
-                        className="table-image"
-                        onError={handleImageError}
+                    <ImageWithFallback
+                        imageUrl={record.imageUrl}
+                        className={"table-image"}
+                        alt={"table-image"}
                     />
                 ) : (
                     <div className="gray-circle"></div>
