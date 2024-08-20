@@ -55,7 +55,7 @@ export const postRequest = async (endpoint, data, needToken = true) => {
 
 // GET REQUEST
 export const getRequest = async (endpoint, needToken = true) => {
-    // console.log("ENDPOINT: ", endpoint);
+    console.log("ENDPOINT: ", endpoint);
 
     try {
         const res = await axios.get(`${API_BASE_URL}${endpoint}`, {

@@ -19,7 +19,7 @@ export const getTableData = async (
     console.log("RESSSSS >>", res);
 
     if (res.success) {
-        console.log("YESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
+        // console.log("YESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
 
         const restaurants = res.data[endpoint];
         restaurants.unshift({ id: -1 });

@@ -1,0 +1,35 @@
+.activity-status-tag {
+    border-radius: 40px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: min-content;
+    white-space: nowrap;
+    padding: 0 12px;
+    margin: auto;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.table-section {
+    position: relative;
+
+    .new-restaurant-container {
+        position: absolute;
+        top: 33px;
+        left: 24px;
+
+        .new-restaurant-btn {
+            width: 173px;
+            height: 40px;
+            background: #5d6af2;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+    }
+}

@@ -1,16 +1,8 @@
 import React, { useEffect } from "react";
 
-import {
-    Button,
-    Card,
-    Col,
-    Input,
-    Table,
-    DatePicker,
-    Pagination,
-    Select,
-    Image,
-} from "antd";
+import { Button, Card, Col, Input, Table, Pagination, Select } from "antd";
+
+import { PlusOutlined } from "@ant-design/icons";
 
 import { ReactComponent as Arrow } from "../assets/images/home-page/Chevron - Left.svg";
 import { ReactComponent as Calender } from "../assets/images/home-page/Calendar - Dates (1).svg";
@@ -117,7 +109,7 @@ const RestaurantsList = () => {
             ),
             dataIndex: "phoneNumber",
             key: "phoneNumber",
-            width: "21.08%",
+            width: "19.08%",
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
@@ -134,23 +126,36 @@ const RestaurantsList = () => {
             title: (
                 <Button
                     type="text"
-                    icon={sortIcon("createdAt", sortMode)}
-                    onClick={() => sortTable("createdAt")}
+                    icon={sortIcon("adminStatusTitle", sortMode)}
+                    onClick={() => sortTable("adminStatusTitle")}
                 >
                     وضعیت
                 </Button>
             ),
-            dataIndex: "createdAt",
-            key: "createdAt",
+            dataIndex: "adminStatusTitle",
+            key: "adminStatusTitle",
             width: "14.15%",
             render: (text, record, index) =>
                 index === 0 ? (
-                    <DatePicker
-                        placeholder="انتخاب تاریخ"
-                        suffixIcon={<Calender />}
+                    <Select
+                        defaultValue="همه"
+                        // onChange={handleChange}
+                        options={[
+                            { value: "همه", label: "همه" },
+                            { value: "فعال", label: "فعال" },
+                            { value: "غیرفعال", label: "غیرفعال" },
+                        ]}
                     />
                 ) : (
-                    text
+                    <div
+                        style={{
+                            backgroundColor:
+                                text === "غیر فعال" ? "#F5D6D6" : "#AAE9CE",
+                        }}
+                        className="activity-status-tag"
+                    >
+                        {text}
+                    </div>
                 ),
         },
         {
@@ -176,6 +181,7 @@ const RestaurantsList = () => {
 
     useEffect(() => {
         setPageFilter((prevState) => ({ ...prevState, status: "" }));
+        console.log("RESET --------------------------------");
     }, []);
 
     useEffect(() => {
@@ -193,13 +199,21 @@ const RestaurantsList = () => {
             setTotalPage(res[1]);
         };
 
-        getData();
+        if (pageFilter.status === "") {
+            getData();
+        }
     }, [pageFilter, currentPage]);
 
     return (
         <>
             <Col span={24} className="table-section">
                 <Card title="لیست مجموعه‌ها">
+                    <div className="new-restaurant-container">
+                        <Button type="primary" className="new-restaurant-btn">
+                            مجموعه جدید
+                            <PlusOutlined />
+                        </Button>
+                    </div>
                     <Table
                         loading={!totalPage}
                         dataSource={tableData}

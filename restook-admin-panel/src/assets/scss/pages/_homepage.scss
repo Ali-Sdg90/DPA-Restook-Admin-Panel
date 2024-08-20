@@ -142,6 +142,7 @@
                 width: min-content;
                 white-space: nowrap;
                 padding: 0 12px;
+                margin: auto;
 
                 .status-dot {
                     width: 8px;
@@ -268,4 +269,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.gray-circle {
+    width: 40px;
+    height: 40px;
+    background: #d9d9d9;
+    border-radius: 50%;
+    margin: auto;
 }
