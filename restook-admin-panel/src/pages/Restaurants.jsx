@@ -1,26 +1,22 @@
 import React, { useContext, useEffect } from "react";
-import { Row, Spin } from "antd";
-import { AuthContext } from "../store/AuthContextProvider";
-import NewAdvertisements from "../components/NewAdvertisements";
-import NewRestaurants from "../components/NewRestaurants";
-import NewUsers from "../components/NewUsers";
-import { UserContext } from "../store/UserContextProvider";
 import PageWrapper from "../components/PageWrapper";
+import { UserContext } from "../store/UserContextProvider";
+import { AuthContext } from "../store/AuthContextProvider";
+import { Row, Spin } from "antd";
+import RestaurantsList from "../components/RestaurantsList";
+import RestaurantProfile from "../components/RestaurantProfile";
 
-const HomePage = () => {
+const Restaurants = () => {
     const { userPlace, setUserPlace } = useContext(UserContext);
     const { userData } = useContext(AuthContext);
 
     const pageMode = () => {
         switch (userPlace) {
             case "default":
-            case "home-page":
-            case "new-advertisements":
-                return <NewAdvertisements />;
-            case "new-restaurants":
-                return <NewRestaurants />;
-            case "new-users":
-                return <NewUsers />;
+            case "restaurants-list":
+                return <RestaurantsList />;
+            case "restaurant-profile":
+                return <RestaurantProfile />;
             default:
                 console.log("ERROR IN HomePage-pageMode", userPlace);
         }
@@ -28,7 +24,7 @@ const HomePage = () => {
 
     useEffect(() => {
         if (userPlace === "default") {
-            setUserPlace("home-page");
+            setUserPlace("restaurants-list");
         }
     }, [userPlace, setUserPlace]);
 
@@ -45,4 +41,4 @@ const HomePage = () => {
     );
 };
 
-export default HomePage;
+export default Restaurants;

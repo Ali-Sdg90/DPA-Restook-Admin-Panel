@@ -1,13 +1,18 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 const useTableData = () => {
-    const [pageFilter, setPageFilter] = useState({
-        status: "PENDING",
-        sortBy: "jobTitle",
-        sortOrder: "ASC",
-        search: "",
-        date: "",
-    });
+    const pageFilterMemo = useMemo(
+        () => ({
+            status: "PENDING",
+            sortBy: "jobTitle",
+            sortOrder: "ASC",
+            search: "",
+            date: "",
+        }),
+        []
+    );
+
+    const [pageFilter, setPageFilter] = useState(pageFilterMemo);
     const [tableData, setTableData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState(0);
@@ -56,6 +61,7 @@ const useTableData = () => {
         setTotalPage,
         handlePageChange,
         setCurrentPage,
+        setPageFilter,
     };
 };
 
