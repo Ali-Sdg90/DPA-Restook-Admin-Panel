@@ -11,16 +11,19 @@ const Restaurants = () => {
     const { userData } = useContext(AuthContext);
 
     const pageMode = () => {
-        switch (userPlace) {
-            case "default":
-            case "restaurants-list":
-                return <RestaurantsList />;
-            case "restaurant-profile":
-                return <RestaurantProfile />;
-            default:
-                console.log("ERROR IN HomePage-pageMode", userPlace);
+        if (userPlace === "default" || userPlace === "restaurants-list") {
+            return <RestaurantsList />;
+        } else if (userPlace.includes("restaurant-profile-")) {
+            return <RestaurantProfile />;
+        } else {
+            console.log("ERROR IN Restaurant-pageMode", userPlace);
         }
     };
+
+    useEffect(() => {
+        console.log("userPlace =>", userPlace);
+        pageMode();
+    }, [userPlace]);
 
     useEffect(() => {
         if (userPlace === "default") {

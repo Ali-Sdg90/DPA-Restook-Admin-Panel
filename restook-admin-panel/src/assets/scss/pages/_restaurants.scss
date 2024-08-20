@@ -32,4 +32,144 @@
             line-height: normal;
         }
     }
+
+    .restaurant-profile {
+        min-height: 90vh;
+
+        .ant-card-body {
+            overflow: hidden;
+            padding-top: 0;
+
+            .top-section {
+                height: 223px;
+                border-bottom: 1px solid #d9d9d9;
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: space-between;
+                padding: 40px 40px 0;
+
+                .right-section {
+                    width: 100%;
+
+                    .restaurant-image-container {
+                        padding-left: 24px;
+
+                        .gray-circle,
+                        .restaurant-image {
+                            width: 104px;
+                            height: 104px;
+                        }
+                    }
+
+                    .restaurant-title {
+                        font-size: 24px;
+                        font-style: normal;
+                        font-weight: 700;
+                        line-height: normal;
+                        margin-top: 9px;
+                    }
+
+                    .restaurant-info {
+                        margin-top: 16px;
+                        display: flex;
+                        flex-flow: column nowrap;
+                        gap: 7px;
+
+                        div {
+                            font-size: 16px;
+                            font-style: normal;
+                            font-weight: 400;
+                            line-height: normal;
+                            padding-right: 40px;
+                        }
+
+                        .restaurant-address {
+                            background: url("../../images/restaurants-page/User\ -\ Square.svg");
+                            background-size: 24px;
+                            background-repeat: no-repeat;
+                            background-position: right 3px;
+                        }
+
+                        .restaurant-branch,
+                        .restaurant-phone {
+                            background: url("../../images/restaurants-page/At.svg");
+                            background-size: 24px;
+                            background-repeat: no-repeat;
+                            background-position: right 3px;
+                        }
+                    }
+                }
+
+                .left-section {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+
+                    .active-profile-btn,
+                    .call-restaurant {
+                        width: 190px;
+                        height: 40px;
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: normal;
+                    }
+
+                    .active-profile-btn {
+                        color: #f0f4f7;
+                        background: #2eb85c;
+                    }
+
+                    .call-restaurant {
+                        color: #321fdb;
+                        border: 1px solid #321fdb;
+                    }
+                }
+            }
+
+            .bottom-section {
+                height: 100%;
+                padding: 40px;
+
+                .ant-card {
+                    height: 80px;
+                    align-items: center;
+                    transition: transform 0.15s;
+                    cursor: pointer;
+
+                    .ant-card-body {
+                        height: 100%;
+                        display: flex;
+                        flex-flow: row nowrap;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 0 24px 0 16px;
+
+                        &::after,
+                        &::before {
+                            display: none;
+                        }
+
+                        .card-info {
+                            font-size: 18px;
+                            font-style: normal;
+                            font-weight: 700;
+                            line-height: normal;
+                            display: flex;
+                            align-items: center;
+                            display: flex;
+                            gap: 16px;
+                        }
+                    }
+
+                    &:hover {
+                        transform: scale(1.01);
+                    }
+                    &:active {
+                        transform: scale(1);
+                    }
+                }
+            }
+        }
+    }
 }

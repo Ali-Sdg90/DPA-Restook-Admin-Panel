@@ -1,17 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 
 import { Button, Card, Col, Input, Table, Pagination, Select } from "antd";
 
 import { PlusOutlined } from "@ant-design/icons";
 
 import { ReactComponent as Arrow } from "../assets/images/home-page/Chevron - Left.svg";
-import { ReactComponent as Calender } from "../assets/images/home-page/Calendar - Dates (1).svg";
 import { sortIcon } from "../utils/tableIconSort";
 import { getTableData } from "../services/getTableData";
 import useTableData from "../hooks/useTableData";
 import ImageWithFallback from "./ImageWithFallback";
+import { UserContext } from "../store/UserContextProvider";
 
 const RestaurantsList = () => {
+    const { setUserPlace } = useContext(UserContext);
+
     const {
         pageFilter,
         tableData,
@@ -25,6 +27,10 @@ const RestaurantsList = () => {
         currentPage,
         setPageFilter,
     } = useTableData();
+
+    const detailsHandler = (id) => {
+        setUserPlace(`restaurant-profile-${id}`);
+    };
 
     const columns = [
         {
@@ -160,9 +166,9 @@ const RestaurantsList = () => {
         },
         {
             title: "",
-            dataIndex: "details",
+            dataIndex: "id",
             key: "details",
-            render: (_, record, index) => {
+            render: (text, record, index) => {
                 if (index !== 0) {
                     return (
                         <Button
@@ -170,6 +176,7 @@ const RestaurantsList = () => {
                             icon={<Arrow />}
                             iconPosition={"end"}
                             className="details-btn"
+                            onClick={() => detailsHandler(text)}
                         >
                             جزئیات
                         </Button>
@@ -214,6 +221,7 @@ const RestaurantsList = () => {
                             <PlusOutlined />
                         </Button>
                     </div>
+
                     <Table
                         loading={!totalPage}
                         dataSource={tableData}
@@ -221,6 +229,7 @@ const RestaurantsList = () => {
                         pagination={false}
                         rowKey={(record) => record.id}
                     />
+                    
                     <Pagination
                         // showLessItems={true}
                         total={10 * totalPage}
