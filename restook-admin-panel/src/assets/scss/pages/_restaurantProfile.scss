@@ -1,38 +1,4 @@
-.activity-status-tag {
-    border-radius: 40px;
-    height: 32px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: min-content;
-    white-space: nowrap;
-    padding: 0 12px;
-    margin: auto;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-}
-
 .table-section {
-    position: relative;
-
-    .new-restaurant-container {
-        position: absolute;
-        top: 33px;
-        left: 24px;
-
-        .new-restaurant-btn {
-            width: 173px;
-            height: 40px;
-            background: #5d6af2;
-            font-size: 16px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: normal;
-        }
-    }
-
     .restaurant-profile {
         min-height: 90vh;
 
@@ -41,15 +7,19 @@
             padding-top: 0;
 
             .top-section {
-                height: 223px;
                 border-bottom: 1px solid #d9d9d9;
                 display: flex;
                 flex-flow: row nowrap;
                 justify-content: space-between;
-                padding: 40px 40px 0;
+                gap: 14px;
+                padding: 40px 40px 18px;
 
                 .right-section {
                     width: 100%;
+
+                    .ant-row{
+                        flex-flow: row nowrap !important;
+                    }
 
                     .restaurant-image-container {
                         padding-left: 24px;

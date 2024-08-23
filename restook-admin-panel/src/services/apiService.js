@@ -40,7 +40,7 @@ const createHeaders = (needToken) => {
 
 // POST REQUEST
 export const postRequest = async (endpoint, data, needToken = true) => {
-    // console.log("ENDPOINT: ", endpoint);
+    // console.log("POST ENDPOINT: ", endpoint);
 
     try {
         const res = await axios.post(`${API_BASE_URL}${endpoint}`, data, {
@@ -55,10 +55,25 @@ export const postRequest = async (endpoint, data, needToken = true) => {
 
 // GET REQUEST
 export const getRequest = async (endpoint, needToken = true) => {
-    console.log("ENDPOINT: ", endpoint);
+    console.log("GET ENDPOINT: ", endpoint);
 
     try {
         const res = await axios.get(`${API_BASE_URL}${endpoint}`, {
+            headers: createHeaders(needToken),
+        });
+
+        return res.data;
+    } catch (error) {
+        return handleError(error);
+    }
+};
+
+// PATCH REQUEST
+export const patchRequest = async (endpoint, data, needToken = true) => {
+    console.log("PATCH ENDPOINT: ", endpoint);
+
+    try {
+        const res = await axios.patch(`${API_BASE_URL}${endpoint}`, data, {
             headers: createHeaders(needToken),
         });
 
