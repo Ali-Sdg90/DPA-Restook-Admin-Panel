@@ -5,6 +5,7 @@ import QuickAccess from "../components/QuickAccess";
 
 import { ReactComponent as Arrow } from "../assets/images/home-page/Chevron - Left.svg";
 import { ReactComponent as Calender } from "../assets/images/home-page/Calendar - Dates (1).svg";
+import { ReactComponent as BackIcon } from "../assets/images/home-page/Arrow - Right.svg";
 import { sortIcon } from "../utils/tableIconSort";
 import useTableData from "../hooks/useTableData";
 import { getTableData } from "../services/getTableData";
@@ -24,6 +25,7 @@ const NewAdvertisements = () => {
         setTableData,
         setTotalPage,
         currentPage,
+        backBtnHandler,
     } = useTableData();
 
     const columns = [
@@ -187,7 +189,22 @@ const NewAdvertisements = () => {
             {userPlace === "home-page" && <QuickAccess />}
 
             <Col span={24} className="table-section">
-                <Card title="لیست آگهی جدید">
+                <Card
+                    title={
+                        <>
+                            {userPlace !== "home-page" && (
+                                <span
+                                    onClick={backBtnHandler}
+                                    className="back-arrow-btn"
+                                >
+                                    <BackIcon />
+                                </span>
+                            )}
+
+                            <span>لیست آگهی جدید</span>
+                        </>
+                    }
+                >
                     <Table
                         loading={!totalPage}
                         dataSource={tableData}

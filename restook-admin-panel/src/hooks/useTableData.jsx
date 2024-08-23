@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
+import { UserContext } from "../store/UserContextProvider";
 
 const useTableData = () => {
     const pageFilterMemo = useMemo(
@@ -17,6 +18,8 @@ const useTableData = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState(0);
     const [sortMode, setSortMode] = useState({ mode: "", isASC: false });
+
+    const { setUserPlace } = useContext(UserContext);
 
     const sortTable = (mode) => {
         let sortOrder = "ASC";
@@ -49,6 +52,10 @@ const useTableData = () => {
         console.log("Current page:", page);
     };
 
+    const backBtnHandler = () => {
+        setUserPlace("home-page");
+    };
+
     return {
         pageFilter,
         tableData,
@@ -62,6 +69,7 @@ const useTableData = () => {
         handlePageChange,
         setCurrentPage,
         setPageFilter,
+        backBtnHandler,
     };
 };
 

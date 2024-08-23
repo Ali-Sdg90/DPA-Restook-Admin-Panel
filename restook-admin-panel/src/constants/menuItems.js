@@ -25,7 +25,13 @@ export const SIDER_ITEMS = [
         nav: "/restaurants-list",
         place: "restaurants-list",
     },
-    { key: "3", label: "لیست کارجو‌ها", icon: <NoteText /> },
+    {
+        key: "3",
+        label: "لیست کارجو‌ها",
+        icon: <NoteText />,
+        nav: "/users-list",
+        place: "users-list",
+    },
     { key: "4", label: "لیست آگهی‌ها", icon: <ChefsHat /> },
     { type: "divider" },
     {

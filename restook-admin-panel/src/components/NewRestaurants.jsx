@@ -4,6 +4,7 @@ import { Button, Card, Col, Input, Table, DatePicker, Pagination } from "antd";
 
 import { ReactComponent as Arrow } from "../assets/images/home-page/Chevron - Left.svg";
 import { ReactComponent as Calender } from "../assets/images/home-page/Calendar - Dates (1).svg";
+import { ReactComponent as BackIcon } from "../assets/images/home-page/Arrow - Right.svg";
 import { sortIcon } from "../utils/tableIconSort";
 import { getTableData } from "../services/getTableData";
 import useTableData from "../hooks/useTableData";
@@ -20,6 +21,7 @@ const NewRestaurants = () => {
         setTableData,
         setTotalPage,
         currentPage,
+        backBtnHandler,
     } = useTableData();
 
     const columns = [
@@ -181,7 +183,19 @@ const NewRestaurants = () => {
     return (
         <>
             <Col span={24} className="table-section">
-                <Card title="لیست مجموعه‌های جدید">
+                <Card
+                    title={
+                        <>
+                            <span
+                                onClick={backBtnHandler}
+                                className="back-arrow-btn"
+                            >
+                                <BackIcon />
+                            </span>
+                            <span>لیست مجموعه‌های جدید</span>
+                        </>
+                    }
+                >
                     <Table
                         loading={!totalPage}
                         dataSource={tableData}

@@ -12,6 +12,18 @@
             font-weight: 700;
             line-height: normal;
             padding: 24px 0 8px;
+            height: 66px;
+            display: flex;
+            align-items: center;
+        }
+
+        .back-arrow-btn{
+            cursor: pointer;
+            margin-left: 8px;
+            display: inline-flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: center;
         }
     }
 

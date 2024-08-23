@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 
 import {
     Button,
@@ -10,6 +10,8 @@ import {
     Pagination,
     Select,
     Image,
+    Spin,
+    Row,
 } from "antd";
 
 import { ReactComponent as Arrow } from "../assets/images/home-page/Chevron - Left.svg";
@@ -18,9 +20,11 @@ import { ReactComponent as BackIcon } from "../assets/images/home-page/Arrow - R
 import { sortIcon } from "../utils/tableIconSort";
 import { getTableData } from "../services/getTableData";
 import useTableData from "../hooks/useTableData";
-import ImageWithFallback from "./ImageWithFallback";
+import ImageWithFallback from "../components/ImageWithFallback";
+import PageWrapper from "../components/PageWrapper";
+import { AuthContext } from "../store/AuthContextProvider";
 
-const NewUsers = () => {
+const UsersList = () => {
     const {
         pageFilter,
         tableData,
@@ -33,7 +37,10 @@ const NewUsers = () => {
         handlePageChange,
         currentPage,
         backBtnHandler,
+        setPageFilter,
     } = useTableData();
+
+    const { userData } = useContext(AuthContext);
 
     const columns = [
         {
@@ -237,6 +244,11 @@ const NewUsers = () => {
     ];
 
     useEffect(() => {
+        setPageFilter((prevState) => ({ ...prevState, status: "" }));
+        console.log("RESET --------------------------------");
+    }, []);
+
+    useEffect(() => {
         const getData = async () => {
             const res = await getTableData(
                 "users",
@@ -251,42 +263,40 @@ const NewUsers = () => {
             setTotalPage(res[1]);
         };
 
-        getData();
+        if (pageFilter.status === "") {
+            getData();
+        }
     }, [pageFilter, currentPage]);
 
     return (
         <>
-            <Col span={24} className="table-section">
-                <Card
-                    title={
-                        <>
-                            <span
-                                onClick={backBtnHandler}
-                                className="back-arrow-btn"
-                            >
-                                <BackIcon />
-                            </span>
-                            <span>لیست کارجوهای جدید</span>
-                        </>
-                    }
-                >
-                    <Table
-                        loading={!totalPage}
-                        dataSource={tableData}
-                        columns={columns}
-                        pagination={false}
-                        rowKey={(record) => record.id}
-                    />
-                    <Pagination
-                        // showLessItems={true}
-                        total={10 * totalPage}
-                        disabled={!totalPage}
-                        onChange={handlePageChange}
-                    />
-                </Card>
-            </Col>
+            <PageWrapper>
+                {userData.access_token.length ? (
+                    <Row gutter={[24, 24]} className="content">
+                        <Col span={24} className="table-section">
+                            <Card title="لیست کارجوها">
+                                <Table
+                                    loading={!totalPage}
+                                    dataSource={tableData}
+                                    columns={columns}
+                                    pagination={false}
+                                    rowKey={(record) => record.id}
+                                />
+                                <Pagination
+                                    // showLessItems={true}
+                                    total={10 * totalPage}
+                                    disabled={!totalPage}
+                                    onChange={handlePageChange}
+                                />
+                            </Card>
+                        </Col>
+                    </Row>
+                ) : (
+                    <Spin size="large" className="loading-token-spinner" />
+                )}
+            </PageWrapper>
         </>
     );
 };
 
-export default NewUsers;
+export default UsersList;

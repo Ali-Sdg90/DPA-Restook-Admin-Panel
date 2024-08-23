@@ -149,8 +149,8 @@ const RestaurantsList = () => {
             title: (
                 <Button
                     type="text"
-                    icon={sortIcon("adminStatusTitle", sortMode)}
-                    onClick={() => sortTable("adminStatusTitle")}
+                    icon={sortIcon("adminStatus", sortMode)}
+                    onClick={() => sortTable("adminStatus")}
                 >
                     وضعیت
                 </Button>
