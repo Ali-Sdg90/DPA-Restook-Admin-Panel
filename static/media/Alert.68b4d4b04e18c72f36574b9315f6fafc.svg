@@ -1,0 +1,7 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Alert">
+<path id="Union" fill-rule="evenodd" clip-rule="evenodd" d="M16 5C9.92487 5 5 9.92487 5 16C5 22.0751 9.92487 27 16 27C22.0751 27 27 22.0751 27 16C27 9.92487 22.0751 5 16 5ZM3 16C3 8.8203 8.8203 3 16 3C23.1797 3 29 8.8203 29 16C29 23.1797 23.1797 29 16 29C8.8203 29 3 23.1797 3 16Z" fill="#F4C621"/>
+<path id="Vector" d="M16 17.3333V10.6666" stroke="#F4C621" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse id="Ellipse" cx="15.9998" cy="21.3333" rx="1.33333" ry="1.33333" fill="#F4C621"/>
+</g>
+</svg>
