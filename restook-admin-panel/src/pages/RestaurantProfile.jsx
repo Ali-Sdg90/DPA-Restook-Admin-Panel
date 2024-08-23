@@ -124,7 +124,9 @@ const RestaurantProfile = () => {
                                     <Row>
                                         <div className="restaurant-image-container">
                                             <ImageWithFallback
-                                                imageUrl={"#"}
+                                                imageUrl={
+                                                    restaurantData.imageUrl
+                                                }
                                                 className={"restaurant-image"}
                                                 alt={"restaurant-image"}
                                             />
