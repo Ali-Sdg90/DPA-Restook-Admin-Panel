@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import {
     Button,
@@ -6,26 +6,22 @@ import {
     Col,
     Input,
     Table,
-    DatePicker,
     Pagination,
     Select,
-    Image,
-    Spin,
     Row,
+    Spin,
+    DatePicker,
 } from "antd";
 
-import { ReactComponent as Arrow } from "../assets/images/home-page/Chevron - Left.svg";
 import { ReactComponent as Calender } from "../assets/images/home-page/Calendar - Dates (1).svg";
-import { ReactComponent as BackIcon } from "../assets/images/home-page/Arrow - Right.svg";
+import { ReactComponent as Arrow } from "../assets/images/home-page/Chevron - Left.svg";
 import { sortIcon } from "../utils/tableIconSort";
 import { getTableData } from "../services/getTableData";
 import useTableData from "../hooks/useTableData";
-import ImageWithFallback from "../components/ImageWithFallback";
-import PageWrapper from "../components/PageWrapper";
-import { AuthContext } from "../store/AuthContextProvider";
 import { UserContext } from "../store/UserContextProvider";
+import ImageWithFallback from "./ImageWithFallback";
 
-const UsersList = () => {
+const ExternalAdvertList = () => {
     const {
         pageFilter,
         tableData,
@@ -37,12 +33,15 @@ const UsersList = () => {
         setTotalPage,
         handlePageChange,
         currentPage,
-        backBtnHandler,
         setPageFilter,
     } = useTableData();
 
-    const { userData } = useContext(AuthContext);
     const { userPlace, setUserPlace } = useContext(UserContext);
+
+    const detailsHandler = (id) => {
+        console.log("id >>", id);
+        setUserPlace(`external-advert-profile-${id}`);
+    };
 
     const columns = [
         {
@@ -62,6 +61,7 @@ const UsersList = () => {
                         imageUrl={record.imageUrl}
                         className={"table-image"}
                         alt={"table-image"}
+                        needPrefix={false}
                     />
                 ) : (
                     <div className="gray-circle"></div>
@@ -71,21 +71,21 @@ const UsersList = () => {
             title: (
                 <Button
                     type="text"
-                    icon={sortIcon("fullName", sortMode)}
-                    onClick={() => sortTable("fullName")}
+                    icon={sortIcon("restaurantTitle", sortMode)}
+                    onClick={() => sortTable("restaurantTitle")}
                 >
-                    نام و نام خانوادگی
+                    نام مجموعه
                 </Button>
             ),
-            dataIndex: "fullName",
-            key: "fullName",
-            width: "20%",
+            dataIndex: "restaurantTitle",
+            key: "restaurantTitle",
+            width: "24%",
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
                         value={record.address}
                         onChange={(e) => {
-                            handleInputChange(e, record.key, "fullName");
+                            handleInputChange(e, record.key, "restaurantTitle");
                             console.log(e.target.value);
                         }}
                     />
@@ -100,12 +100,12 @@ const UsersList = () => {
                     icon={sortIcon("jobTitle", sortMode)}
                     onClick={() => sortTable("jobTitle")}
                 >
-                    عنوان شغلی
+                    عنوان آگهی
                 </Button>
             ),
             dataIndex: "jobTitle",
             key: "jobTitle",
-            width: "17.67%",
+            width: "15%",
             render: (text, record, index) =>
                 index === 0 ? (
                     <Select
@@ -157,15 +157,15 @@ const UsersList = () => {
             title: (
                 <Button
                     type="text"
-                    icon={sortIcon("createdAt", sortMode)}
-                    onClick={() => sortTable("createdAt")}
+                    icon={sortIcon("date", sortMode)}
+                    onClick={() => sortTable("date")}
                 >
-                    تاریخ ثبت‌نام
+                    تاریخ ثبت
                 </Button>
             ),
-            dataIndex: "createdAt",
-            key: "createdAt",
-            width: "14%",
+            dataIndex: "date",
+            key: "date",
+            width: "12%",
             render: (text, record, index) =>
                 index === 0 ? (
                     <DatePicker
@@ -180,49 +180,54 @@ const UsersList = () => {
             title: (
                 <Button
                     type="text"
-                    icon={sortIcon("jobStatus", sortMode)}
-                    onClick={() => sortTable("jobStatus")}
+                    icon={sortIcon("statusTitle", sortMode)}
+                    onClick={() => sortTable("statusTitle")}
                 >
-                    وضعیت
+                    وضعیت رستوران
                 </Button>
             ),
-            dataIndex: "jobStatus",
-            key: "jobStatus",
+            dataIndex: "statusTitle",
+            key: "statusTitle",
             width: "14%",
-            render: (text, record, index) =>
-                index === 0 ? (
-                    <Select
-                        defaultValue="همه"
-                        // onChange={handleChange}
-                        options={[
-                            { value: "همه", label: "همه" },
-                            { value: "نا معلوم", label: "نا معلوم" },
-                            {
-                                value: "به دنبال کار بهتر",
-                                label: "به دنبال کار بهتر",
-                            },
-                            {
-                                value: "آماده به کار",
-                                label: "آماده به کار",
-                            },
-                            {
-                                value: "مشغول به کار",
-                                label: "مشغول به کار",
-                            },
-                        ]}
-                    />
-                ) : (
-                    <div
-                        className="status-tag"
-                        style={{ background: text.backColor }}
-                    >
+            render: (text, record, index) => {
+                if (index === 0) {
+                    return (
+                        <Select
+                            defaultValue="همه"
+                            // onChange={handleChange}
+                            options={[
+                                { value: "همه", label: "همه" },
+                                { value: "نا معلوم", label: "نا معلوم" },
+                                {
+                                    value: "به دنبال کار بهتر",
+                                    label: "به دنبال کار بهتر",
+                                },
+                                {
+                                    value: "آماده به کار",
+                                    label: "آماده به کار",
+                                },
+                                {
+                                    value: "مشغول به کار",
+                                    label: "مشغول به کار",
+                                },
+                            ]}
+                        />
+                    );
+                } else {
+                    return (
                         <div
-                            className="status-dot"
-                            style={{ background: text.color }}
-                        ></div>
-                        {text.title}
-                    </div>
-                ),
+                            className="status-tag"
+                            style={{ background: record.statusBackColor }}
+                        >
+                            <div
+                                className="status-dot"
+                                style={{ background: record.statusColor }}
+                            ></div>
+                            {record.statusTitle}
+                        </div>
+                    );
+                }
+            },
         },
         {
             title: "",
@@ -236,6 +241,7 @@ const UsersList = () => {
                             icon={<Arrow />}
                             iconPosition={"end"}
                             className="details-btn"
+                            onClick={() => detailsHandler(record.id)}
                         >
                             جزئیات
                         </Button>
@@ -246,17 +252,22 @@ const UsersList = () => {
     ];
 
     useEffect(() => {
-        setPageFilter((prevState) => ({ ...prevState, status: "" }));
+        setPageFilter((prevState) => ({
+            ...prevState,
+            status: "",
+            sortBy: "", // temp until its API write
+        }));
         console.log("RESET --------------------------------");
     }, []);
 
     useEffect(() => {
         const getData = async () => {
             const res = await getTableData(
-                "users",
+                "temp/tempAds",
                 pageFilter,
                 currentPage,
-                true
+                true,
+                "advertisements"
             );
 
             console.log("RESsSsSsSs >> ", res);
@@ -272,39 +283,30 @@ const UsersList = () => {
 
     useEffect(() => {
         if (userPlace === "default") {
-            setUserPlace("users-list");
+            setUserPlace("external-advert-list");
         }
     }, []);
 
     return (
-        <>
-            <PageWrapper>
-                {userData.access_token.length ? (
-                    <Row gutter={[24, 24]} className="content">
-                        <Col span={24} className="table-section">
-                            <Card title="لیست کارجوها">
-                                <Table
-                                    loading={!totalPage}
-                                    dataSource={tableData}
-                                    columns={columns}
-                                    pagination={false}
-                                    rowKey={(record) => record.id}
-                                />
-                                <Pagination
-                                    // showLessItems={true}
-                                    total={10 * totalPage}
-                                    disabled={!totalPage}
-                                    onChange={handlePageChange}
-                                />
-                            </Card>
-                        </Col>
-                    </Row>
-                ) : (
-                    <Spin size="large" className="loading-token-spinner" />
-                )}
-            </PageWrapper>
-        </>
+        <Col span={24} className="table-section">
+            <Card title="لیست آگهی‌ها">
+                <Table
+                    loading={!totalPage}
+                    dataSource={tableData}
+                    columns={columns}
+                    pagination={false}
+                    rowKey={(record) => record.id}
+                />
+
+                <Pagination
+                    // showLessItems={true}
+                    total={10 * totalPage}
+                    disabled={!totalPage}
+                    onChange={handlePageChange}
+                />
+            </Card>
+        </Col>
     );
 };
 
-export default UsersList;
+export default ExternalAdvertList;

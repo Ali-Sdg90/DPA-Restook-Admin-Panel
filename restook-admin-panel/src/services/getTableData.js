@@ -4,7 +4,8 @@ export const getTableData = async (
     endpoint,
     pageFilter,
     currentPage,
-    isAdminStatus
+    isAdminStatus,
+    objectKey = endpoint
 ) => {
     const res = await getRequest(
         `/${endpoint}?${isAdminStatus ? "adminStatus" : "status"}=${
@@ -21,7 +22,7 @@ export const getTableData = async (
     if (res.success) {
         // console.log("YESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
 
-        const restaurants = res.data[endpoint];
+        const restaurants = res.data[objectKey];
         restaurants.unshift({ id: -1 });
 
         return [restaurants, res.data.totalPages];

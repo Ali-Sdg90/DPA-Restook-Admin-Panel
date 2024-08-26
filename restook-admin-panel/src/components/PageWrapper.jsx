@@ -2,10 +2,13 @@ import React, { useContext, useEffect } from "react";
 import { CommonContext } from "../store/CommonContextProvider";
 import { AuthContext } from "../store/AuthContextProvider";
 import { getRequest } from "../services/apiService";
+import { useNavigate } from "react-router-dom";
 
 const PageWrapper = ({ children }) => {
     const { localToken } = useContext(CommonContext);
     const { userData, setUserData } = useContext(AuthContext);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getProfile = async () => {
@@ -18,6 +21,8 @@ const PageWrapper = ({ children }) => {
                     access_token: localToken,
                     user: res,
                 });
+            } else {
+                navigate("/login");
             }
         };
 

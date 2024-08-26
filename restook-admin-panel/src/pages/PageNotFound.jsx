@@ -1,10 +1,11 @@
 import React from "react";
+import PageWrapper from "../components/PageWrapper";
 
 const PageNotFound = () => {
     return (
-        <div>
+        <PageWrapper>
             <h1>Page Not Found</h1>
-        </div>
+        </PageWrapper>
     );
 };
 

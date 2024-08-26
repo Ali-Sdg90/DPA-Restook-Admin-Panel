@@ -18,15 +18,13 @@ import { ReactComponent as Arrow } from "../assets/images/home-page/Chevron - Le
 import { sortIcon } from "../utils/tableIconSort";
 import { getTableData } from "../services/getTableData";
 import useTableData from "../hooks/useTableData";
-import { UserContext } from "../store/UserContextProvider";
 import ImageWithFallback from "../components/ImageWithFallback";
 import { AuthContext } from "../store/AuthContextProvider";
 import PageWrapper from "../components/PageWrapper";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../store/UserContextProvider";
 
 const RestaurantsList = () => {
-    const { setUserPlace } = useContext(UserContext);
-
     const {
         pageFilter,
         tableData,
@@ -42,6 +40,7 @@ const RestaurantsList = () => {
     } = useTableData();
 
     const { userData } = useContext(AuthContext);
+    const { userPlace, setUserPlace } = useContext(UserContext);
 
     const navigate = useNavigate();
 
@@ -227,6 +226,12 @@ const RestaurantsList = () => {
             getData();
         }
     }, [pageFilter, currentPage]);
+
+    useEffect(() => {
+        if (userPlace === "default") {
+            setUserPlace("restaurants-list");
+        }
+    }, []);
 
     return (
         <PageWrapper>
