@@ -4,7 +4,7 @@ import { AuthContext } from "../store/AuthContextProvider";
 import { UserContext } from "../store/UserContextProvider";
 import PageWrapper from "../components/PageWrapper";
 import ExternalAdverList from "../components/ExternalAdvertList";
-import ExternalAdvertRegisteredChecker from "../components/ExternalAdvertRegisteredChecker";
+import ExternalAdvertProfile from "../components/ExternalAdvertProfile";
 
 const ExternalAdver = () => {
     const { userPlace, setUserPlace } = useContext(UserContext);
@@ -12,9 +12,9 @@ const ExternalAdver = () => {
 
     const pageMode = () => {
         if (userPlace === "default" || userPlace === "external-advert-list") {
-            return <ExternalAdverList  />;
+            return <ExternalAdverList />;
         } else if (userPlace.includes("external-advert-profile")) {
-            return <ExternalAdvertRegisteredChecker  />;
+            return <ExternalAdvertProfile />;
         } else {
             console.log("ERROR IN ExternalAdver-pageMode", userPlace);
         }

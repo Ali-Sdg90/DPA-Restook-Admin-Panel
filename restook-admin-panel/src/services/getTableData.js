@@ -12,9 +12,7 @@ export const getTableData = async (
             pageFilter.status
         }&sortBy=${pageFilter.sortBy}&sortOrder=${
             pageFilter.sortOrder
-        }&page=${currentPage}&search=${pageFilter.search}&date=${
-            pageFilter.date
-        }`
+        }&page=${currentPage}&date=${pageFilter.date}`
     );
 
     console.log("RESSSSS >>", res);
