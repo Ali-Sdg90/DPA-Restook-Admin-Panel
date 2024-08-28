@@ -1,0 +1,199 @@
+.external-advert-card {
+    .card-header {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        padding-bottom: 18px;
+
+        .back-arrow-btn {
+            // border: 1px solid red;
+            padding: 5px;
+            margin-left: 30px;
+            cursor: pointer;
+        }
+
+        .restaurant-img-container {
+            .restaurant-img {
+                width: 72px;
+                height: 72px;
+            }
+        }
+
+        .restaurant-title {
+            margin-right: 24px;
+
+            .restaurant-info-text {
+                color: #707070;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+            }
+
+            .restaurant-name {
+                color: #000;
+                font-size: 24px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+            }
+
+            .restaurant-address {
+                color: #5d6af2;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+            }
+        }
+    }
+
+    .section-title {
+        color: #000;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        margin-bottom: 24px;
+    }
+
+    .ant-form-item {
+        label {
+            color: #000;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            padding-bottom: 16px;
+        }
+
+        input {
+            border-radius: 4px;
+            border: 1px solid #707070;
+            height: 40px;
+            color: #707070;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+
+        textarea {
+            border-radius: 4px;
+            border: 1px solid #707070 !important;
+            color: #707070;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+
+        .ant-btn {
+            height: 40px;
+            padding: 8px 24px;
+            color: #707070;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            border-radius: 4px;
+            border: 1px solid #707070;
+        }
+
+        .ant-select-selector {
+            border-radius: 4px;
+            border: 1px solid #707070;
+
+            .anticon-down svg {
+                color: #000000;
+            }
+        }
+    }
+
+    .card-btn {
+        margin: 0 0 16px 16px;
+    }
+
+    .ant-card-body {
+        padding: 32px 16px 10px;
+    }
+
+    .top-text {
+        color: #1e1e1e;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
+
+    .bottom-text {
+        color: #959595;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 300;
+        line-height: normal;
+    }
+
+    .salary-section {
+        padding: 40px 0 20px;
+
+        .left-side {
+            .ant-typography {
+                color: #000;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                margin-right: 8px;
+            }
+        }
+    }
+
+    .ant-card-head {
+        padding: 0 16px;
+
+        .ant-card-head-title {
+            color: #1e1e1e;
+            font-size: 22px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            padding: 0;
+        }
+    }
+
+    .fourth-card,
+    .third-card,
+    .second-card {
+        margin-top: 24px;
+    }
+
+    .third-card .ant-card-body {
+        padding-top: 16px;
+    }
+
+    .fourth-card .ant-card-body {
+        padding-top: 10px;
+    }
+
+    .submit-btn {
+        border-radius: 5px;
+        background: #5d6af2;
+        height: 40px;
+        padding: 12px 24px;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        color: #f0f4f7 !important;
+        border: none !important;
+        margin-top: 14px;
+    }
+
+    .third-card {
+        .ant-col {
+            padding: 0 16px;
+        }
+    }
+}

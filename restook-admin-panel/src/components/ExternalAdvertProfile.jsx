@@ -121,8 +121,12 @@ const ExternalAdvertProfile = () => {
                             <BackIcon />
                         </div>
 
-                        <div className="restaurant-img">
-                            <ImageWithFallback />
+                        <div className="restaurant-img-container">
+                            <ImageWithFallback
+                                imageUrl={"#"}
+                                className={"restaurant-img"}
+                                alt={"restaurant-img"}
+                            />
                         </div>
 
                         <div className="restaurant-title">
@@ -141,7 +145,7 @@ const ExternalAdvertProfile = () => {
                     <div className="restaurant-base-info">
                         <div className="section-title">اطلاعات پایه</div>
 
-                        <Row>
+                        <Row gutter={[48, 10]}>
                             <Col span={8}>
                                 <Form.Item label="عنوان مجموعه" name="jobTitle">
                                     <Input placeholder="" />
@@ -167,7 +171,7 @@ const ExternalAdvertProfile = () => {
                                 <Form.Item label="درباره ما" name="aboutUs">
                                     <TextArea
                                         placeholder=""
-                                        autoSize={{ minRows: 3, maxRows: 5 }}
+                                        autoSize={{ minRows: 5, maxRows: 5 }}
                                         // onChange={handleChange}
                                     />
                                 </Form.Item>
@@ -183,15 +187,12 @@ const ExternalAdvertProfile = () => {
                             </Col>
 
                             <Col span={24}>
-                                <Form.Item
-                                    label="نوع کسب و کار"
-                                    name="jobTypeId"
-                                >
+                                <Form.Item label="نوع کسب و کار">
                                     {businessTypesArray.map((type) => (
                                         <Button
+                                            type="default"
                                             key={type}
-                                            type={"default"}
-                                            // onClick={() => handleClick(type)}
+                                            className="card-btn"
                                         >
                                             {type}
                                         </Button>
@@ -204,7 +205,7 @@ const ExternalAdvertProfile = () => {
                     <div className="restaurant-contact-section">
                         <div className="section-title">راه‌های ارتباطی</div>
 
-                        <Row>
+                        <Row gutter={[48, 10]}>
                             <Col span={8}>
                                 <Form.Item
                                     label="شماره موبایل (خط ارتباطی)"
@@ -258,6 +259,7 @@ const ExternalAdvertProfile = () => {
                                     <Button
                                         key={type}
                                         type={"default"}
+                                        className="card-btn"
                                         // onClick={() => handleClick(type)}
                                     >
                                         {type}
@@ -275,6 +277,7 @@ const ExternalAdvertProfile = () => {
                                     <Button
                                         key={type}
                                         type={"default"}
+                                        className="card-btn"
                                         // onClick={() => handleClick(type)}
                                     >
                                         {type}
@@ -289,6 +292,7 @@ const ExternalAdvertProfile = () => {
                                     <Button
                                         key={type}
                                         type={"default"}
+                                        className="card-btn"
                                         // onClick={() => handleClick(type)}
                                     >
                                         {type}
@@ -303,6 +307,7 @@ const ExternalAdvertProfile = () => {
                                     <Button
                                         key={type}
                                         type={"default"}
+                                        className="card-btn"
                                         // onClick={() => handleClick(type)}
                                     >
                                         {type}
@@ -317,6 +322,7 @@ const ExternalAdvertProfile = () => {
                                     <Button
                                         key={type}
                                         type={"default"}
+                                        className="card-btn"
                                         // onClick={() => handleClick(type)}
                                     >
                                         {type}
@@ -331,6 +337,7 @@ const ExternalAdvertProfile = () => {
                                     <Button
                                         key={type}
                                         type={"default"}
+                                        className="card-btn"
                                         // onClick={() => handleClick(type)}
                                     >
                                         {type}
@@ -338,11 +345,76 @@ const ExternalAdvertProfile = () => {
                                 ))}
                             </Form.Item>
                         </Col>
+
+                        <Row gutter={[48, 0]} style={{ width: "100%" }}>
+                            <Col span={8}>
+                                <Form.Item
+                                    label="حداقل سابقه"
+                                    name="workExperience"
+                                >
+                                    <Select
+                                        placeholder=""
+                                        // onChange={handleChange}
+                                    >
+                                        <Option value="option1">
+                                            Option 1
+                                        </Option>
+                                        <Option value="option2">
+                                            Option 2
+                                        </Option>
+                                        <Option value="option3">
+                                            Option 3
+                                        </Option>
+                                    </Select>
+                                </Form.Item>
+                            </Col>
+
+                            <Col span={8}>
+                                <Form.Item label="حداکثر سن" name="ageLimit">
+                                    <Select
+                                        placeholder=""
+                                        // onChange={handleChange}
+                                    >
+                                        <Option value="option1">
+                                            Option 1
+                                        </Option>
+                                        <Option value="option2">
+                                            Option 2
+                                        </Option>
+                                        <Option value="option3">
+                                            Option 3
+                                        </Option>
+                                    </Select>
+                                </Form.Item>
+                            </Col>
+
+                            <Col span={8}>
+                                <Form.Item
+                                    label="حداقل تحصیلات"
+                                    name="educationLevel"
+                                >
+                                    <Select
+                                        placeholder=""
+                                        // onChange={handleChange}
+                                    >
+                                        <Option value="option1">
+                                            Option 1
+                                        </Option>
+                                        <Option value="option2">
+                                            Option 2
+                                        </Option>
+                                        <Option value="option3">
+                                            Option 3
+                                        </Option>
+                                    </Select>
+                                </Form.Item>
+                            </Col>
+                        </Row>
                     </Row>
                 </Card>
 
-                <Card title="مزایای شغلی" className="third-class">
-                    <Row gutter={[16, 16]}>
+                <Card title="مزایای شغلی" className="third-card">
+                    <Row gutter={[48, 0]}>
                         {workBonesVarName.map((varName, index) => (
                             <Col span={12} key={index}>
                                 <Form.Item name={varName}>
@@ -370,7 +442,7 @@ const ExternalAdvertProfile = () => {
                             </Form.Item>
                         </Col>
 
-                        <Col span={24}>
+                        <Col span={24} className="salary-section">
                             <Flex justify="space-between">
                                 <div className="right-side">
                                     <div className="top-text">
@@ -392,32 +464,40 @@ const ExternalAdvertProfile = () => {
                             </Flex>
                         </Col>
 
-                        <Col span={8}>
-                            <Form.Item
-                                label="حداقل حقوق به تومان"
-                                name="minSalary"
-                            >
-                                <Input placeholder="" />
-                            </Form.Item>
-                        </Col>
+                        <Row gutter={[20]} style={{ width: "100%" }}>
+                            <Col span={8}>
+                                <Form.Item
+                                    label="حداقل حقوق به تومان"
+                                    name="minSalary"
+                                >
+                                    <Input placeholder="" />
+                                </Form.Item>
+                            </Col>
 
-                        <Col span={8}>
-                            <Form.Item
-                                label="حداکثر حقوق به تومان"
-                                name="maxSalary"
-                            >
-                                <Input placeholder="" />
-                            </Form.Item>
-                        </Col>
+                            <Col span={8}>
+                                <Form.Item
+                                    label="حداکثر حقوق به تومان"
+                                    name="maxSalary"
+                                >
+                                    <Input placeholder="" />
+                                </Form.Item>
+                            </Col>
+                        </Row>
                     </Row>
                 </Card>
             </Form>
 
-            <Form.Item>
-                <Button type="primary" htmlType="submit">
-                    ثبت اطلاعات
-                </Button>
-            </Form.Item>
+            <Flex justify="flex-end">
+                <Form.Item>
+                    <Button
+                        type="primary"
+                        htmlType="submit"
+                        className="submit-btn"
+                    >
+                        ثبت اطلاعات
+                    </Button>
+                </Form.Item>
+            </Flex>
         </Col>
     );
 };
