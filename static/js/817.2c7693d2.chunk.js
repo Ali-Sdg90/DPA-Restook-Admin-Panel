@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkrestook_admin_panel=self.webpackChunkrestook_admin_panel||[]).push([[817],{9817:(e,n,s)=>{s.r(n),s.d(n,{default:()=>l});s(5043);var a=s(2281),d=s(579);const l=()=>(0,d.jsx)(a.A,{children:(0,d.jsx)("h1",{children:"Page Not Found"})})}}]);
+//# sourceMappingURL=817.2c7693d2.chunk.js.map
