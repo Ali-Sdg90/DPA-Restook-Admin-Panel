@@ -4,7 +4,7 @@
         flex-flow: row nowrap;
         justify-content: flex-start;
         align-items: center;
-        padding-bottom: 18px;
+        padding: 0 10px 18px 0;
 
         .back-arrow-btn {
             // border: 1px solid red;
@@ -136,7 +136,7 @@
     }
 
     .salary-section {
-        padding: 40px 0 20px;
+        padding-top: 40px;
 
         .left-side {
             .ant-typography {
@@ -196,4 +196,21 @@
             padding: 0 16px;
         }
     }
+
+    .restaurant-img-placeholder {
+        width: 72px;
+        height: 72px;
+    }
+
+    .show-salary-section {
+        width: 100%;
+        padding-top: 20px;
+    }
+}
+
+.loading-token-spinner {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

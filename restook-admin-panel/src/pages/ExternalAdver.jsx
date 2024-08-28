@@ -29,9 +29,7 @@ const ExternalAdver = () => {
     return (
         <PageWrapper>
             {userData.access_token.length ? (
-                <Row gutter={[24, 24]} className="content">
-                    {pageMode()}
-                </Row>
+                <>{pageMode()}</>
             ) : (
                 <Spin size="large" className="loading-token-spinner" />
             )}

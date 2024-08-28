@@ -288,24 +288,26 @@ const ExternalAdvertList = () => {
     }, []);
 
     return (
-        <Col span={24} className="table-section">
-            <Card title="لیست آگهی‌ها">
-                <Table
-                    loading={!totalPage}
-                    dataSource={tableData}
-                    columns={columns}
-                    pagination={false}
-                    rowKey={(record) => record.id}
-                />
+        <Row gutter={[24, 24]} className="content">
+            <Col span={24} className="table-section">
+                <Card title="لیست آگهی‌ها">
+                    <Table
+                        loading={!totalPage}
+                        dataSource={tableData}
+                        columns={columns}
+                        pagination={false}
+                        rowKey={(record) => record.id}
+                    />
 
-                <Pagination
-                    // showLessItems={true}
-                    total={10 * totalPage}
-                    disabled={!totalPage}
-                    onChange={handlePageChange}
-                />
-            </Card>
-        </Col>
+                    <Pagination
+                        // showLessItems={true}
+                        total={10 * totalPage}
+                        disabled={!totalPage}
+                        onChange={handlePageChange}
+                    />
+                </Card>
+            </Col>
+        </Row>
     );
 };
 

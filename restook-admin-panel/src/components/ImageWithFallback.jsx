@@ -6,9 +6,9 @@ const ImageWithFallback = ({ imageUrl, className, alt, needPrefix = true }) => {
         event.target.outerHTML = `<div class="gray-circle ${className}"></div>`;
     };
 
-    useEffect(() => {
-        // console.log("imageUrl >>", imageUrl);
-    });
+    // useEffect(() => {
+    //     console.log("imageUrl >>", imageUrl);
+    // }, []);
 
     return (
         <img
