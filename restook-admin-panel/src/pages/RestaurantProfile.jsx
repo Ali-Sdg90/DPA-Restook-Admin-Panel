@@ -35,7 +35,7 @@ const RestaurantProfile = () => {
                 if (res.success) {
                     setRestaurantData(res.data);
                 } else {
-                    console.log(`ERROR IM /restaurants/${id}`);
+                    console.log(`ERROR in /restaurants/${id}`);
                 }
             };
 

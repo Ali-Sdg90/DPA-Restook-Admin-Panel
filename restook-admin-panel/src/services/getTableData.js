@@ -18,13 +18,11 @@ export const getTableData = async (
     console.log("RESSSSS >>", res);
 
     if (res.success) {
-        // console.log("YESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
-
         const restaurants = res.data[objectKey];
         restaurants.unshift({ id: -1 });
 
         return [restaurants, res.data.totalPages];
     } else {
-        console.log("ERROR IN FILTERING!!!!!", pageFilter);
+        console.log("ERROR IN FILTERING!", pageFilter);
     }
 };

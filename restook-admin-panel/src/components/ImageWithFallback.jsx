@@ -13,7 +13,7 @@ const ImageWithFallback = ({ imageUrl, className, alt, needPrefix = true }) => {
     return (
         <img
             src={`${needPrefix ? API_BASE_IMG : ""}${imageUrl}`}
-            className={className}
+            className={`${className} image-default-style`}
             alt={alt}
             onError={handleImageError}
         />

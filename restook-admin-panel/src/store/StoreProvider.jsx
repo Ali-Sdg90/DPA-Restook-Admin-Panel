@@ -7,7 +7,9 @@ const StoreProvider = ({ children }) => {
     return (
         <CommonContextProvider>
             <AuthContextProvider>
-                <UsersContextProvider>{children}</UsersContextProvider>
+                <UsersContextProvider>
+                    <>{children}</>
+                </UsersContextProvider>
             </AuthContextProvider>
         </CommonContextProvider>
     );

@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Row, Spin } from "antd";
+import { Spin } from "antd";
 import { AuthContext } from "../store/AuthContextProvider";
 import { UserContext } from "../store/UserContextProvider";
 import PageWrapper from "../components/PageWrapper";
-import ExternalAdverList from "../components/ExternalAdvertList";
-import ExternalAdvertProfile from "../components/ExternalAdvertProfile";
+import ExternalAdvertList from "../components/ExternalAdvert/ExternalAdvertList";
+import { ExternalAdvertContextProvider } from "../store/ExternalAdvertContextProvider";
+import ExternalAdvertProfile from "../components/ExternalAdvert/ExternalAdvertProfile";
 
 const ExternalAdver = () => {
     const { userPlace, setUserPlace } = useContext(UserContext);
@@ -12,7 +13,7 @@ const ExternalAdver = () => {
 
     const pageMode = () => {
         if (userPlace === "default" || userPlace === "external-advert-list") {
-            return <ExternalAdverList />;
+            return <ExternalAdvertList />;
         } else if (userPlace.includes("external-advert-profile")) {
             return <ExternalAdvertProfile />;
         } else {
@@ -29,7 +30,9 @@ const ExternalAdver = () => {
     return (
         <PageWrapper>
             {userData.access_token.length ? (
-                <>{pageMode()}</>
+                <ExternalAdvertContextProvider>
+                    {pageMode()}
+                </ExternalAdvertContextProvider>
             ) : (
                 <Spin size="large" className="loading-token-spinner" />
             )}

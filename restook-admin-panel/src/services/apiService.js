@@ -55,7 +55,7 @@ export const postRequest = async (endpoint, data, needToken = true) => {
 
 // GET REQUEST
 export const getRequest = async (endpoint, needToken = true) => {
-    console.log("GET ENDPOINT: ", endpoint);
+    // console.log("GET ENDPOINT: ", endpoint);
 
     try {
         const res = await axios.get(`${API_BASE_URL}${endpoint}`, {
@@ -70,7 +70,7 @@ export const getRequest = async (endpoint, needToken = true) => {
 
 // PATCH REQUEST
 export const patchRequest = async (endpoint, data, needToken = true) => {
-    console.log("PATCH ENDPOINT: ", endpoint);
+    // console.log("PATCH ENDPOINT: ", endpoint);
 
     try {
         const res = await axios.patch(`${API_BASE_URL}${endpoint}`, data, {

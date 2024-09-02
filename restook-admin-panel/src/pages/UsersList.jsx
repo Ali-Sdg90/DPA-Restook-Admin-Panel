@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import {
     Button,
@@ -9,14 +9,12 @@ import {
     DatePicker,
     Pagination,
     Select,
-    Image,
     Spin,
     Row,
 } from "antd";
 
 import { ReactComponent as Arrow } from "../assets/images/home-page/Chevron - Left.svg";
 import { ReactComponent as Calender } from "../assets/images/home-page/Calendar - Dates (1).svg";
-import { ReactComponent as BackIcon } from "../assets/images/home-page/Arrow - Right.svg";
 import { sortIcon } from "../utils/tableIconSort";
 import { getTableData } from "../services/getTableData";
 import useTableData from "../hooks/useTableData";
@@ -24,6 +22,7 @@ import ImageWithFallback from "../components/ImageWithFallback";
 import PageWrapper from "../components/PageWrapper";
 import { AuthContext } from "../store/AuthContextProvider";
 import { UserContext } from "../store/UserContextProvider";
+import { getRequest } from "../services/apiService";
 
 const UsersList = () => {
     const {
@@ -37,12 +36,12 @@ const UsersList = () => {
         setTotalPage,
         handlePageChange,
         currentPage,
-        backBtnHandler,
         setPageFilter,
     } = useTableData();
 
     const { userData } = useContext(AuthContext);
     const { userPlace, setUserPlace } = useContext(UserContext);
+    const [jobTitle, setJobTitle] = useState();
 
     const columns = [
         {
@@ -112,15 +111,10 @@ const UsersList = () => {
                         defaultValue="همه"
                         // onChange={handleChange}
                         style={{ width: "80%" }}
-                        options={[
-                            { value: "همه", label: "همه" },
-                            { value: "آشپز", label: "آشپز" },
-                            { value: "هد آشپزخانه", label: "هد آشپزخانه" },
-                            { value: "کباب زن", label: "کباب زن" },
-                            { value: "باریستا", label: "باریستا" },
-                            { value: "سالاد زن", label: "سالاد زن" },
-                            { value: "بارتندر", label: "بارتندر" },
-                        ]}
+                        options={jobTitle.map((item) => ({
+                            value: item.id,
+                            label: item.title,
+                        }))}
                     />
                 ) : text ? (
                     text
@@ -247,7 +241,22 @@ const UsersList = () => {
 
     useEffect(() => {
         setPageFilter((prevState) => ({ ...prevState, status: "" }));
-        console.log("RESET --------------------------------");
+
+        const getData = async () => {
+            try {
+                const res = await getRequest(`/options/jobTitles`);
+
+                if (res.success) {
+                    setJobTitle([{ id: "", title: "همه" }, ...res.data]);
+                } else {
+                    throw new Error("Unsuccessful fetch /options/jobTitles");
+                }
+            } catch (error) {
+                console.log("Error in UsersList-getData: ", error);
+            }
+        };
+
+        getData();
     }, []);
 
     useEffect(() => {

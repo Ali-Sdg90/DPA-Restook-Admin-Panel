@@ -18,5 +18,5 @@ export const routes = [
     { path: "/external-advert", element: <ExternalAdver />, needWrapper: true },
     { path: "/", element: <Navigate to="/login" replace /> },
     { path: "/page-not-found", element: <PageNotFound /> },
-    // { path: "*", element: <Navigate to="/page-not-found" replace /> },
+    { path: "*", element: <Navigate to="/page-not-found" replace /> },
 ];
