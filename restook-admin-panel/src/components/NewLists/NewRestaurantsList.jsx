@@ -2,26 +2,33 @@ import React, { useEffect } from "react";
 
 import { Button, Card, Col, Input, Table, DatePicker, Pagination } from "antd";
 
-import { ReactComponent as Arrow } from "../assets/images/home-page/Chevron - Left.svg";
-import { ReactComponent as Calender } from "../assets/images/home-page/Calendar - Dates (1).svg";
-import { ReactComponent as BackIcon } from "../assets/images/home-page/Arrow - Right.svg";
-import { sortIcon } from "../utils/tableIconSort";
-import { getTableData } from "../services/getTableData";
-import useTableData from "../hooks/useTableData";
-import ImageWithFallback from "./ImageWithFallback";
+import { ReactComponent as Arrow } from "../../assets/images/home-page/Chevron - Left.svg";
+import { ReactComponent as Calender } from "../../assets/images/home-page/Calendar - Dates (1).svg";
+import { ReactComponent as BackIcon } from "../../assets/images/home-page/Arrow - Right.svg";
+import { sortIcon } from "../../utils/tableIconSort";
+import { getTableData } from "../../services/getTableData";
+import useTableData from "../../hooks/useTableData";
+import ImageWithFallback from "../Common/ImageWithFallback";
+import { InputDatePicker } from "jalaali-react-date-picker";
 
-const NewRestaurants = () => {
+const NewRestaurantsList = () => {
     const {
         pageFilter,
         tableData,
         totalPage,
         sortMode,
+        currentPage,
+        selectedDate,
+        isDateOpen,
+        calendarRef,
         sortTable,
         handleInputChange,
         setTableData,
         setTotalPage,
-        currentPage,
         backBtnHandler,
+        handleDateChange,
+        handleOpenChange,
+        handlePageChange,
     } = useTableData();
 
     const columns = [
@@ -135,9 +142,13 @@ const NewRestaurants = () => {
             width: "14.15%",
             render: (text, record, index) =>
                 index === 0 ? (
-                    <DatePicker
-                        placeholder="انتخاب تاریخ"
-                        suffixIcon={<Calender />}
+                    <InputDatePicker
+                        value={selectedDate}
+                        onChange={handleDateChange}
+                        format="jYYYY-jMM-jDD"
+                        open={isDateOpen}
+                        onOpenChange={handleOpenChange}
+                        ref={calendarRef}
                     />
                 ) : (
                     text
@@ -170,7 +181,7 @@ const NewRestaurants = () => {
                 "restaurants",
                 pageFilter,
                 currentPage,
-                false
+                true
             );
 
             setTableData(res[0]);
@@ -207,6 +218,7 @@ const NewRestaurants = () => {
                         // showLessItems={true}
                         total={10 * totalPage}
                         disabled={!totalPage}
+                        onChange={handlePageChange}
                     />
                 </Card>
             </Col>
@@ -214,4 +226,4 @@ const NewRestaurants = () => {
     );
 };
 
-export default NewRestaurants;
+export default NewRestaurantsList;

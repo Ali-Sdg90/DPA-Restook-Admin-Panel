@@ -1,27 +1,23 @@
 import React, { useContext, useEffect, useState } from "react";
-import { UserContext } from "../store/UserContextProvider";
 import { Button, Card, Col, Row, Spin } from "antd";
 
 import { ReactComponent as PhoneIcon } from "../assets/images/restaurants-page/Phone (1).svg";
 import { ReactComponent as PowerIcon } from "../assets/images/restaurants-page/Power (1).svg";
 
-import { ReactComponent as CardUserIcon } from "../assets/images/restaurants-page/User (2).svg";
-import { ReactComponent as CardAlertIcon } from "../assets/images/restaurants-page/Alert.svg";
-import { ReactComponent as CardCreditCardIcon } from "../assets/images/restaurants-page/Credit Card (3).svg";
-import { ReactComponent as CardImageIcon } from "../assets/images/restaurants-page/Image - 3.svg";
-import { ReactComponent as CardNoteIcon } from "../assets/images/restaurants-page/Note - Text (3).svg";
-import { ReactComponent as CardTicketIcon } from "../assets/images/restaurants-page/Ticket.svg";
 import { ReactComponent as CardLeftArrowIcon } from "../assets/images/restaurants-page/Chevron - Left (1).svg";
-import ImageWithFallback from "../components/ImageWithFallback";
-import PageWrapper from "../components/PageWrapper";
 import { AuthContext } from "../store/AuthContextProvider";
 import { useParams } from "react-router-dom";
 import { getRequest, patchRequest } from "../services/apiService";
+import { CommonContext } from "../store/CommonContextProvider";
+import { restaurantProfileCardsConstants } from "../constants/restaurantProfileCardsConstants";
+import ImageWithFallback from "../components/Common/ImageWithFallback";
+import PageWrapper from "../components/Common/PageWrapper";
 
 const RestaurantProfile = () => {
     const { userData } = useContext(AuthContext);
     const { id } = useParams();
     const [restaurantData, setRestaurantData] = useState();
+    const { setToastifyObj } = useContext(CommonContext);
 
     useEffect(() => {
         if (id) {
@@ -43,45 +39,6 @@ const RestaurantProfile = () => {
         }
     }, [id]);
 
-    const cardData = [
-        {
-            title: "اطلاعات مجموعه",
-            icon: <CardUserIcon />,
-            bgColor: "#EFF1FE",
-            borderColor: "rgba(93, 106, 242, 0.50)",
-        },
-        {
-            title: "آگهی‌ها",
-            icon: <CardNoteIcon />,
-            bgColor: "#EBF8EF",
-            borderColor: "rgba(46, 184, 92, 0.20)",
-        },
-        {
-            title: "گالری مجموعه",
-            icon: <CardImageIcon />,
-            bgColor: "#F5E9F8",
-            borderColor: "#CB8FD9",
-        },
-        {
-            title: "تراکنش ها و امور مالی",
-            icon: <CardCreditCardIcon />,
-            bgColor: "#E8F6FE",
-            borderColor: "#7FCAF9",
-        },
-        {
-            title: "کد تخفیف اختصاصی",
-            icon: <CardTicketIcon />,
-            bgColor: "#FDDFD3",
-            borderColor: "#F9A07A",
-        },
-        {
-            title: "گزارش‌های تخلف",
-            icon: <CardAlertIcon />,
-            bgColor: "#FDF4D3",
-            borderColor: "#F9DD7A",
-        },
-    ];
-
     const dataChecker = (data) => {
         if (data) {
             return data;
@@ -97,9 +54,14 @@ const RestaurantProfile = () => {
             newState = "INACTIVE";
         }
 
-        const res = await patchRequest(`/restaurants/${id}`, {
-            adminStatus: newState,
-        });
+        const res = await patchRequest(
+            `/restaurants/${id}`,
+            {
+                adminStatus: newState,
+            },
+            true,
+            setToastifyObj
+        );
 
         if (res.success) {
             setRestaurantData((prevData) => ({
@@ -201,24 +163,27 @@ const RestaurantProfile = () => {
                             </Row>
 
                             <Row className="bottom-section" gutter={[32, 24]}>
-                                {cardData.map((item, index) => (
-                                    <Col span={12} key={index}>
-                                        <Card
-                                            style={{
-                                                background: item.bgColor,
-                                                borderColor: item.borderColor,
-                                            }}
-                                            className="card-container"
-                                        >
-                                            <div className="card-info">
-                                                {item.icon} {item.title}
-                                            </div>
-                                            <div className="card-arrow">
-                                                <CardLeftArrowIcon />
-                                            </div>
-                                        </Card>
-                                    </Col>
-                                ))}
+                                {restaurantProfileCardsConstants.map(
+                                    (item, index) => (
+                                        <Col span={12} key={index}>
+                                            <Card
+                                                style={{
+                                                    background: item.bgColor,
+                                                    borderColor:
+                                                        item.borderColor,
+                                                }}
+                                                className="card-container"
+                                            >
+                                                <div className="card-info">
+                                                    {item.icon} {item.title}
+                                                </div>
+                                                <div className="card-arrow">
+                                                    <CardLeftArrowIcon />
+                                                </div>
+                                            </Card>
+                                        </Col>
+                                    )
+                                )}
                             </Row>
                         </Card>
                     </Col>

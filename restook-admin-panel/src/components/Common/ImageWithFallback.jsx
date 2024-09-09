@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { API_BASE_IMG } from "../constants/apiConstants";
+import { API_BASE_IMG } from "../../constants/apiConstants";
 
 const ImageWithFallback = ({ imageUrl, className, alt, needPrefix = true }) => {
     const handleImageError = (event) => {

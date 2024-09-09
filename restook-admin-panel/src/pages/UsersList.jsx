@@ -18,11 +18,12 @@ import { ReactComponent as Calender } from "../assets/images/home-page/Calendar 
 import { sortIcon } from "../utils/tableIconSort";
 import { getTableData } from "../services/getTableData";
 import useTableData from "../hooks/useTableData";
-import ImageWithFallback from "../components/ImageWithFallback";
-import PageWrapper from "../components/PageWrapper";
 import { AuthContext } from "../store/AuthContextProvider";
 import { UserContext } from "../store/UserContextProvider";
 import { getRequest } from "../services/apiService";
+import ImageWithFallback from "../components/Common/ImageWithFallback";
+import PageWrapper from "../components/Common/PageWrapper";
+import { InputDatePicker } from "jalaali-react-date-picker";
 
 const UsersList = () => {
     const {
@@ -30,13 +31,18 @@ const UsersList = () => {
         tableData,
         totalPage,
         sortMode,
+        currentPage,
+        selectedDate,
+        isDateOpen,
+        calendarRef,
         sortTable,
         handleInputChange,
         setTableData,
         setTotalPage,
         handlePageChange,
-        currentPage,
         setPageFilter,
+        handleDateChange,
+        handleOpenChange,
     } = useTableData();
 
     const { userData } = useContext(AuthContext);
@@ -52,11 +58,6 @@ const UsersList = () => {
             render: (_, record, index) =>
                 index !== 0 &&
                 (record.imageUrl ? (
-                    // <img
-                    //     src={`${API_BASE_IMG}${record.imageUrl}`}
-                    //     className="table-image"
-                    //     onError={handleImageError}
-                    // />
                     <ImageWithFallback
                         imageUrl={record.imageUrl}
                         className={"table-image"}
@@ -162,9 +163,13 @@ const UsersList = () => {
             width: "14%",
             render: (text, record, index) =>
                 index === 0 ? (
-                    <DatePicker
-                        placeholder="انتخاب تاریخ"
-                        suffixIcon={<Calender />}
+                    <InputDatePicker
+                        value={selectedDate}
+                        onChange={handleDateChange}
+                        format="jYYYY-jMM-jDD"
+                        open={isDateOpen}
+                        onOpenChange={handleOpenChange}
+                        ref={calendarRef}
                     />
                 ) : (
                     text

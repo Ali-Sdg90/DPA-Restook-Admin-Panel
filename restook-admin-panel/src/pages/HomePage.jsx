@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from "react";
 import { Row, Spin } from "antd";
 import { AuthContext } from "../store/AuthContextProvider";
-import NewAdvertisements from "../components/NewAdvertisements";
-import NewRestaurants from "../components/NewRestaurants";
-import NewUsers from "../components/NewUsers";
+import NewAdvertisementsList from "../components/NewLists/NewAdvertisementsList";
+import NewRestaurantsList from "../components/NewLists/NewRestaurantsList";
+import NewUsersList from "../components/NewLists/NewUsersList";
 import { UserContext } from "../store/UserContextProvider";
-import PageWrapper from "../components/PageWrapper";
+import PageWrapper from "../components/Common/PageWrapper";
 
 const HomePage = () => {
     const { userPlace, setUserPlace } = useContext(UserContext);
@@ -16,11 +16,11 @@ const HomePage = () => {
             case "default":
             case "home-page":
             case "new-advertisements":
-                return <NewAdvertisements />;
+                return <NewAdvertisementsList />;
             case "new-restaurants":
-                return <NewRestaurants />;
+                return <NewRestaurantsList />;
             case "new-users":
-                return <NewUsers />;
+                return <NewUsersList />;
             default:
                 console.log("ERROR IN HomePage-pageMode", userPlace);
         }

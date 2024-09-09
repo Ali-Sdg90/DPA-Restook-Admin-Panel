@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
-import { CommonContext } from "../store/CommonContextProvider";
-import { AuthContext } from "../store/AuthContextProvider";
-import { getRequest } from "../services/apiService";
+import { CommonContext } from "../../store/CommonContextProvider";
+import { AuthContext } from "../../store/AuthContextProvider";
+import { getRequest } from "../../services/apiService";
 import { useNavigate } from "react-router-dom";
 
 const PageWrapper = ({ children }) => {
@@ -15,8 +15,6 @@ const PageWrapper = ({ children }) => {
             if (localToken) {
                 const res = await getRequest("/auth/profile");
 
-                console.log("SET >>", res);
-
                 setUserData({
                     access_token: localToken,
                     user: res,
@@ -29,7 +27,7 @@ const PageWrapper = ({ children }) => {
         if (!userData.access_token.length) {
             getProfile();
         } else {
-            console.log("NO NEED FOR getProfile()", userData);
+            // console.log("NO NEED FOR getProfile()", userData);
         }
     }, [localToken, setUserData, userData]);
 

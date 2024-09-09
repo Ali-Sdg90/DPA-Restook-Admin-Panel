@@ -26,11 +26,20 @@ const ExternalAdvertProfile2 = () => {
         const mergedObject = mergeObjectFunc(form.getFieldsValue(), mappedData);
         console.log("mergedObject >> ", mergedObject);
 
-        const postObject = convertToPostObj(mergedObject, profileId);
+        const postObject = convertToPostObj(
+            mergedObject,
+            profileId,
+            mappedData.alreadyExist
+        );
         console.log("postObject >>", postObject);
 
         try {
-            const res = await postRequest("/temp/AddAdvertisement", postObject);
+            const res = await postRequest(
+                "/temp/AddAdvertisement",
+                postObject,
+                true,
+                setToastifyObj
+            );
 
             if (res.success) {
                 setToastifyObj(() => ({
@@ -42,11 +51,6 @@ const ExternalAdvertProfile2 = () => {
             }
         } catch (error) {
             console.log("ERROR >>", error);
-
-            setToastifyObj(() => ({
-                title: "ثبت اطلاعات با مشکل مواجه شد",
-                mode: "error",
-            }));
         }
     };
 
@@ -55,32 +59,47 @@ const ExternalAdvertProfile2 = () => {
             {isAllDataFetched === true ? (
                 <Row gutter={[24, 24]} className="content">
                     <Col span={24} className="external-advert-card">
-                        <Form
-                            form={form}
-                            name="restaurant-base-info-form"
-                            layout="vertical"
-                            autoComplete="off"
-                            initialValues={mappedData}
-                            loading
-                        >
-                            <ExternalAdvertFirstCard />
-                            <ExternalAdvertJobConditions />
-                            <ExternalAdvertJobAdvantages />
-                            <ExternalAdvertAdditionalInfo />
-                        </Form>
-
-                        <Flex justify="flex-end">
-                            <Form.Item>
-                                <Button
-                                    type="primary"
-                                    htmlType="submit"
-                                    className="submit-btn"
-                                    onClick={() => submitForm()}
+                        {mappedData ? (
+                            <>
+                                <Form
+                                    form={form}
+                                    name="restaurant-base-info-form"
+                                    layout="vertical"
+                                    autoComplete="off"
+                                    initialValues={mappedData}
                                 >
-                                    ثبت اطلاعات
-                                </Button>
-                            </Form.Item>
-                        </Flex>
+                                    <>
+                                        <ExternalAdvertFirstCard />
+                                        <ExternalAdvertJobConditions />
+                                        <ExternalAdvertJobAdvantages />
+                                        <ExternalAdvertAdditionalInfo />
+                                    </>
+
+                                    {/* <ExternalAdvertFirstCard /> */}
+                                    {/* <ExternalAdvertJobConditions /> */}
+                                    {/* <ExternalAdvertJobAdvantages /> */}
+                                    {/* <ExternalAdvertAdditionalInfo /> */}
+                                </Form>
+
+                                <Flex justify="flex-end">
+                                    <Form.Item>
+                                        <Button
+                                            type="primary"
+                                            htmlType="submit"
+                                            className="submit-btn"
+                                            onClick={() => submitForm()}
+                                        >
+                                            ثبت اطلاعات
+                                        </Button>
+                                    </Form.Item>
+                                </Flex>
+                            </>
+                        ) : (
+                            <Spin
+                                size="large"
+                                className="loading-token-spinner"
+                            />
+                        )}
                     </Col>
                 </Row>
             ) : (

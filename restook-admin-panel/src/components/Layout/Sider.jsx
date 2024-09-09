@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Layout, Menu } from "antd";
-import { SIDER_ITEMS } from "../constants/menuItems";
-import { ReactComponent as MainLogo } from "../assets/images/sider/main-logo.svg";
-import { UserContext } from "../store/UserContextProvider";
+import { SIDER_ITEMS } from "../../constants/menuItems";
+import { ReactComponent as MainLogo } from "../../assets/images/sider/main-logo.svg";
+import { UserContext } from "../../store/UserContextProvider";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const { Sider: AntSider } = Layout;
@@ -17,7 +17,7 @@ const Sider = ({ collapsed, setCollapsed }) => {
         const activeItem = SIDER_ITEMS.find(
             (item) => item.nav === location.pathname && item.place === userPlace
         );
-        
+
         if (activeItem) {
             setActiveKey(activeItem.key);
         }

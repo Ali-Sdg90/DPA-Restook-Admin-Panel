@@ -44,7 +44,6 @@ export const ExternalAdvertContextProvider = ({ children }) => {
 
     useEffect(() => {
         const fetchAllData = async () => {
-
             await Promise.all([
                 fetchData(`/temp/tempAdDetail?id=${profileId}`, setApiResponse),
                 fetchData(`/options/jobTypes`, setJobTypes),
@@ -78,7 +77,11 @@ export const ExternalAdvertContextProvider = ({ children }) => {
                     ? restaurant.contacts.address
                     : null,
                 ageLimit: advertisement.ageLimit || null,
+                alreadyExist: restaurant.alreadyExist || null,
                 branch: restaurant.branch || "",
+                connectionPhoneNumber: restaurant.contacts
+                    ? restaurant.contacts.phoneNumber
+                    : null,
                 dutyStatus: advertisement.dutyStatus || null,
                 educationLevel: advertisement.educationLevel || null,
                 explanation: advertisement.explanation || "",
@@ -105,6 +108,8 @@ export const ExternalAdvertContextProvider = ({ children }) => {
                     ? restaurant.contacts.telegram
                     : null,
                 workExperience: advertisement.workExperience || null,
+                jobTitle: restaurant.jobTitle,
+                website: restaurant.website,
             };
 
             // For advantages

@@ -3,7 +3,7 @@ import { HashRouter } from "react-router-dom";
 import AppRoutes from "./routes/AppRoutes";
 import StoreProvider from "./store/StoreProvider";
 import ConfigProviderWrapper from "./config/ConfigProviderWrapper";
-import Toastify from "./components/Toastify";
+import Toastify from "./components/Common/Toastify";
 
 const App = () => {
     return (

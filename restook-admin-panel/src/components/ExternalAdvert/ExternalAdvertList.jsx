@@ -9,17 +9,17 @@ import {
     Pagination,
     Select,
     Row,
-    DatePicker,
+    // DatePicker,
 } from "antd";
-
+import { InputDatePicker } from "jalaali-react-date-picker";
 import { ReactComponent as Calender } from "../../assets/images/home-page/Calendar - Dates (1).svg";
 import { ReactComponent as Arrow } from "../../assets/images/home-page/Chevron - Left.svg";
 import { sortIcon } from "../../utils/tableIconSort";
 import { getTableData } from "../../services/getTableData";
 import useTableData from "../../hooks/useTableData";
 import { UserContext } from "../../store/UserContextProvider";
-import ImageWithFallback from "../ImageWithFallback";
 import { getRequest } from "../../services/apiService";
+import ImageWithFallback from "../Common/ImageWithFallback";
 
 const ExternalAdvertList = () => {
     const {
@@ -27,13 +27,18 @@ const ExternalAdvertList = () => {
         tableData,
         totalPage,
         sortMode,
+        currentPage,
+        selectedDate,
+        isDateOpen,
+        calendarRef,
         sortTable,
         handleInputChange,
         setTableData,
         setTotalPage,
         handlePageChange,
-        currentPage,
         setPageFilter,
+        handleDateChange,
+        handleOpenChange,
     } = useTableData();
 
     const { userPlace, setUserPlace } = useContext(UserContext);
@@ -131,7 +136,7 @@ const ExternalAdvertList = () => {
             ),
             dataIndex: "phoneNumber",
             key: "phoneNumber",
-            width: "18%",
+            width: "16%",
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
@@ -148,20 +153,24 @@ const ExternalAdvertList = () => {
             title: (
                 <Button
                     type="text"
-                    icon={sortIcon("date", sortMode)}
-                    onClick={() => sortTable("date")}
+                    icon={sortIcon("createdAt", sortMode)}
+                    onClick={() => sortTable("createdAt")}
                 >
                     تاریخ ثبت
                 </Button>
             ),
             dataIndex: "date",
             key: "date",
-            width: "12%",
+            width: "14%",
             render: (text, record, index) =>
                 index === 0 ? (
-                    <DatePicker
-                        placeholder="انتخاب تاریخ"
-                        suffixIcon={<Calender />}
+                    <InputDatePicker
+                        value={selectedDate}
+                        onChange={handleDateChange}
+                        format="jYYYY-jMM-jDD"
+                        open={isDateOpen}
+                        onOpenChange={handleOpenChange}
+                        ref={calendarRef}
                     />
                 ) : (
                     text
@@ -171,8 +180,8 @@ const ExternalAdvertList = () => {
             title: (
                 <Button
                     type="text"
-                    icon={sortIcon("statusTitle", sortMode)}
-                    onClick={() => sortTable("statusTitle")}
+                    icon={sortIcon("status", sortMode)}
+                    onClick={() => sortTable("status")}
                 >
                     وضعیت رستوران
                 </Button>
@@ -243,7 +252,7 @@ const ExternalAdvertList = () => {
         const getData = async () => {
             try {
                 const jobTitleRes = await getRequest(`/options/jobTitles`);
-                
+
                 if (jobTitleRes.success) {
                     setJobTitle([
                         { id: "", title: "همه" },

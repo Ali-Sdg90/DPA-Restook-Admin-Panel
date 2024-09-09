@@ -1,4 +1,4 @@
-export const convertToPostObj = (data, profileId) => {
+export const convertToPostObj = (data, profileId, alreadyExist) => {
     const restaurantData = {
         jobTitle: data.jobTitle,
         phoneNumber: data.phoneNumber,
@@ -8,7 +8,7 @@ export const convertToPostObj = (data, profileId) => {
         jobTypeId: data.jobTypeId,
         // cityId: 1, // ?
         contacts: {
-            phoneNumber: data.phoneNumber,
+            phoneNumber: data.connectionPhoneNumber,
             instagram: data.instagram,
             telegram: data.telegram,
             lat: 35.770722, // Static value
@@ -22,12 +22,12 @@ export const convertToPostObj = (data, profileId) => {
         status: "published", // Static value
         // jobTitleId: profileId, // ?
         jobTitle: data.jobTitle,
-        skillLevels: data.skillLevels || [],
-        dutyStatus: data.dutyStatus || [],
-        genders: data.genders || [],
-        nation: data.nation || [],
-        marriageStatus: data.marriageStatus || [],
-        languages: data.languages || [],
+        skillLevels: data.skillLevels || "",
+        dutyStatus: data.dutyStatus || "",
+        genders: data.genders || "",
+        nation: data.nation || "",
+        marriageStatus: data.marriageStatus || "",
+        languages: data.languages || "",
         workExperience: data.workExperience,
         ageLimit: data.ageLimit,
         educationLevel: data.educationLevel,
@@ -45,9 +45,16 @@ export const convertToPostObj = (data, profileId) => {
         maxSalary: data.maxSalary,
     };
 
-    return {
-        restaurantData,
-        advertisementData,
-        tempAdId: profileId[0],
-    };
+    if (alreadyExist) {
+        return {
+            advertisementData,
+            tempAdId: Number(profileId[0]),
+        };
+    } else {
+        return {
+            restaurantData,
+            advertisementData,
+            tempAdId: Number(profileId[0]),
+        };
+    }
 };

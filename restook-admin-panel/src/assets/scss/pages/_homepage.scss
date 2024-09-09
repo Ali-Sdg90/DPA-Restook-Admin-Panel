@@ -219,6 +219,18 @@
             .details-btn {
                 padding: 6px 10px 6px 1px;
             }
+
+            .picker-input-wrapper {
+                border-radius: 6px;
+                border: 1px solid #707070;
+                width: 80%;
+                min-width: unset;
+                height: 32px;
+
+                &:hover {
+                    border: 1px solid #707070;
+                }
+            }
         }
 
         .ant-pagination {
@@ -274,11 +286,4 @@
             }
         }
     }
-}
-
-.loading-token-spinner {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }

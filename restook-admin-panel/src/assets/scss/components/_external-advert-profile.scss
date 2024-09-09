@@ -7,7 +7,6 @@
         padding: 0 10px 18px 0;
 
         .back-arrow-btn {
-            // border: 1px solid red;
             padding: 5px;
             margin-left: 30px;
             cursor: pointer;
@@ -47,15 +46,6 @@
                 line-height: normal;
             }
         }
-    }
-
-    .section-title {
-        color: #000;
-        font-size: 20px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: normal;
-        margin-bottom: 24px;
     }
 
     .ant-form-item {
@@ -180,20 +170,6 @@
         padding-top: 10px;
     }
 
-    .submit-btn {
-        border-radius: 5px;
-        background: #5d6af2;
-        height: 40px;
-        padding: 12px 24px;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-        color: #f0f4f7 !important;
-        border: none !important;
-        margin-top: 14px;
-    }
-
     .third-card {
         .ant-col {
             padding: 0 16px;
@@ -221,4 +197,27 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.card-section-title {
+    color: #000;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin-bottom: 24px;
+}
+
+.submit-btn {
+    border-radius: 5px;
+    background: #5d6af2;
+    height: 40px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    color: #f0f4f7 !important;
+    border: none !important;
+    margin-top: 14px;
 }

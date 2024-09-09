@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, ConfigProvider, Dropdown, Flex } from "antd";
 
-import { ReactComponent as DownArrow } from "../assets/images/header/Chevron - Down (1).svg";
-import { ReactComponent as Menu } from "../assets/images/header/Menu (1).svg";
-import { ReactComponent as Ellipse } from "../assets/images/header/Ellipse 2.svg";
+import { ReactComponent as DownArrow } from "../../assets/images/header/Chevron - Down (1).svg";
+import { ReactComponent as Menu } from "../../assets/images/header/Menu (1).svg";
+import { ReactComponent as Ellipse } from "../../assets/images/header/Ellipse 2.svg";
 import { LogoutOutlined } from "@ant-design/icons";
-import { AuthContext } from "../store/AuthContextProvider";
-import ImageWithFallback from "./ImageWithFallback";
+import { AuthContext } from "../../store/AuthContextProvider";
+import ImageWithFallback from "../Common/ImageWithFallback";
 import { useNavigate } from "react-router-dom";
-import { CommonContext } from "../store/CommonContextProvider";
-import { UserContext } from "../store/UserContextProvider";
+import { CommonContext } from "../../store/CommonContextProvider";
+import { UserContext } from "../../store/UserContextProvider";
 
 const Header = ({ setCollapsed }) => {
     const { userData, setUserData } = useContext(AuthContext);
@@ -40,7 +40,7 @@ const Header = ({ setCollapsed }) => {
     const logoutHandler = () => {
         setLocalToken("");
         setUserData({});
-        setUserPlace("/login");
+        setUserPlace("login-page");
         navigate("/login");
     };
 

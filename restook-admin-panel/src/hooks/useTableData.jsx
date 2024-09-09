@@ -1,5 +1,6 @@
-import { useContext, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { UserContext } from "../store/UserContextProvider";
+import { convertFAtoEN } from "./../utils/convertFAtoENNumbers";
 
 const useTableData = () => {
     const pageFilterMemo = useMemo(
@@ -18,8 +19,44 @@ const useTableData = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState(0);
     const [sortMode, setSortMode] = useState({ mode: "", isASC: false });
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [isDateOpen, setIsDateOpen] = useState(false);
 
     const { setUserPlace } = useContext(UserContext);
+
+    const calendarRef = useRef(null);
+
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+        setIsDateOpen(false);
+
+        const sendDate = convertFAtoEN(
+            new Intl.DateTimeFormat("fa-IR").format(date)
+        );
+
+        console.log(sendDate); // temp
+    };
+
+    const handleOpenChange = (open) => {
+        setIsDateOpen(open);
+    };
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                calendarRef.current &&
+                !calendarRef.current.contains(event.target)
+            ) {
+                setIsDateOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [calendarRef]);
 
     const sortTable = (mode) => {
         let sortOrder = "ASC";
@@ -62,6 +99,9 @@ const useTableData = () => {
         totalPage,
         sortMode,
         currentPage,
+        selectedDate,
+        isDateOpen,
+        calendarRef,
         sortTable,
         handleInputChange,
         setTableData,
@@ -70,6 +110,8 @@ const useTableData = () => {
         setCurrentPage,
         setPageFilter,
         backBtnHandler,
+        handleDateChange,
+        handleOpenChange,
     };
 };
 

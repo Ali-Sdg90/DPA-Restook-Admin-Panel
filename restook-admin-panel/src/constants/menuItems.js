@@ -36,6 +36,8 @@ export const SIDER_ITEMS = [
         key: "4",
         label: "لیست آگهی‌ها",
         icon: <ChefsHat />,
+        nav: "/advertisements-list",
+        place: "advertisements-list",
     },
     {
         key: "5",

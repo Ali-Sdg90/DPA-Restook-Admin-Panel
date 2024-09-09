@@ -1,0 +1,201 @@
+.advert-review {
+    .ant-card-body {
+        padding: 0 !important;
+    }
+
+    .first-card {
+        padding: 30px 42px 26px 25px;
+
+        .right-side {
+            margin-top: 10px;
+
+            .advert-img-container {
+                .advert-img {
+                    width: 104px;
+                    height: 104px;
+                }
+            }
+
+            .advert-name {
+                color: #000;
+                font-size: 24px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+            }
+
+            .advert-address {
+                color: #000;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+            }
+
+            .address-icon {
+                flex-shrink: 0;
+            }
+        }
+
+        .left-side {
+            padding: 10px;
+
+            .confirm-btn,
+            .deny-btn {
+                width: 152px;
+                height: 40px;
+                color: #f0f4f7;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+            }
+
+            .deny-btn {
+                background: #e45353;
+
+                &:hover {
+                    background: #d14c4c;
+                }
+
+                &:active {
+                    background: #c34747;
+                }
+            }
+
+            .confirm-btn {
+                background: #2eb85c;
+
+                &:hover {
+                    background: #2bad57;
+                }
+
+                &:active {
+                    background: #28a251;
+                }
+            }
+        }
+    }
+
+    .second-card {
+        padding: 20px 16px 23px;
+
+        .edit-btn-container {
+            padding: 8px;
+
+            .edit-info-btn {
+                border: 1px solid #5d6af2;
+                color: #5d6af2;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                width: 157px;
+                height: 40px;
+            }
+        }
+
+        .about-title {
+            color: #1e1e1e;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            margin-bottom: 18px;
+        }
+
+        .about-content {
+            color: #5a5a5a;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 300;
+            line-height: normal;
+        }
+
+        .divider {
+            border: none;
+            height: 1px;
+            background-color: #dfdfdf;
+            margin: 12px 8px 10px;
+        }
+
+        .salary-title {
+            color: #1e1e1e;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+        }
+
+        .salary-content {
+            color: #5a5a5a;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 300;
+            line-height: normal;
+            padding-top: 10px;
+        }
+    }
+
+    .third-card {
+        padding: 16px 16px 25px;
+
+        .condition-title {
+            color: #1e1e1e;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            margin-bottom: 16px;
+        }
+
+        .ant-row {
+            margin: 0 !important;
+            row-gap: 13px !important;
+            overflow: hidden !important;
+        }
+
+        .condition-item {
+            color: #5a5a5a;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 300;
+            line-height: normal;
+        }
+    }
+
+    .forth-card {
+        padding: 16px 16px 25px;
+
+        .advantages-title {
+            color: #1e1e1e;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            margin-bottom: 16px;
+        }
+
+        .ant-row {
+            margin: 0 !important;
+            row-gap: 13px !important;
+            overflow: hidden !important;
+        }
+
+        .advantage-item {
+            color: #5a5a5a;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 300;
+            line-height: normal;
+        }
+    }
+
+    .first-card,
+    .second-card,
+    .third-card,
+    .forth-card {
+        margin-bottom: 24px;
+        // box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.04);
+    }
+}

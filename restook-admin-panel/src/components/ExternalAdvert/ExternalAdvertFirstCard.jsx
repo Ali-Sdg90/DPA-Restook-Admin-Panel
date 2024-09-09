@@ -1,28 +1,15 @@
 import React, { useContext } from "react";
 
-import {
-    Button,
-    Card,
-    Col,
-    Input,
-    Row,
-    Form,
-} from "antd";
+import { Button, Card, Col, Input, Row, Form } from "antd";
 
 import { ReactComponent as BackIcon } from "../../assets/images/home-page/Arrow - Right.svg";
-import ImageWithFallback from "../ImageWithFallback";
 import { ExternalAdvertContext } from "../../store/ExternalAdvertContextProvider";
 import TextArea from "antd/es/input/TextArea";
+import ImageWithFallback from "../Common/ImageWithFallback";
 
 const ExternalAdvertFirstCard = () => {
-    const {
-        profileImg,
-        apiResponse,
-        jobTypes,
-        mappedData,
-        backBtnHandler,
-        setMappedData,
-    } = useContext(ExternalAdvertContext);
+    const { profileImg, jobTypes, mappedData, backBtnHandler, setMappedData } =
+        useContext(ExternalAdvertContext);
 
     return (
         <Card className="first-card">
@@ -47,38 +34,39 @@ const ExternalAdvertFirstCard = () => {
                 <div className="restaurant-title">
                     <div className="restaurant-info-text">اطلاعات مجموعه</div>
                     <div className="restaurant-name">
-                        {apiResponse &&
-                        apiResponse.restaurant &&
-                        apiResponse.restaurant.jobTitle
-                            ? apiResponse.restaurant.jobTitle
-                            : "_"}
+                        {mappedData.jobTitle ? mappedData.jobTitle : "_"}
                     </div>
                     <div className="restaurant-address">
                         آدرس وبسایت:{" "}
-                        {apiResponse.restaurant &&
-                        apiResponse.restaurant.website
-                            ? apiResponse.restaurant.website
-                            : "_"}
+                        <a
+                            href={
+                                mappedData.website
+                                    ? "https://" + mappedData.website
+                                    : "#"
+                            }
+                            target="_blank"
+                        >
+                            {mappedData.website ? mappedData.website : "_"}
+                        </a>
                     </div>
                 </div>
             </div>
 
-            {/* {apiResponse.restaurant.alreadyExist ? ( */}
-            {true ? ( // temp
+            {!mappedData.alreadyExist ? (
                 <>
                     <div className="restaurant-base-info">
-                        <div className="section-title">اطلاعات پایه</div>
+                        <div className="card-section-title">اطلاعات پایه</div>
 
                         <Row gutter={[48, 10]}>
                             <Col span={8}>
                                 <Form.Item label="عنوان مجموعه" name="jobTitle">
-                                    <Input placeholder="" />
+                                    <Input />
                                 </Form.Item>
                             </Col>
 
                             <Col span={8}>
                                 <Form.Item label="شعبه" name="branch">
-                                    <Input placeholder="" />
+                                    <Input />
                                 </Form.Item>
                             </Col>
 
@@ -87,14 +75,13 @@ const ExternalAdvertFirstCard = () => {
                                     label="شماره موبایل"
                                     name="phoneNumber"
                                 >
-                                    <Input placeholder="" />
+                                    <Input />
                                 </Form.Item>
                             </Col>
 
                             <Col span={16}>
                                 <Form.Item label="درباره ما" name="aboutUs">
                                     <TextArea
-                                        placeholder=""
                                         autoSize={{
                                             minRows: 5,
                                             maxRows: 5,
@@ -108,7 +95,7 @@ const ExternalAdvertFirstCard = () => {
                                     label="تصویر پروفایل"
                                     name="imageFileName"
                                 >
-                                    <Input placeholder="" />
+                                    <Input />
                                 </Form.Item>
                             </Col>
 
@@ -139,33 +126,35 @@ const ExternalAdvertFirstCard = () => {
                     </div>
 
                     <div className="restaurant-contact-section">
-                        <div className="section-title">راه‌های ارتباطی</div>
+                        <div className="card-section-title">
+                            راه‌های ارتباطی
+                        </div>
 
                         <Row gutter={[48, 10]}>
                             <Col span={8}>
                                 <Form.Item
                                     label="شماره موبایل (خط ارتباطی)"
-                                    name="phoneNumber"
+                                    name="connectionPhoneNumber"
                                 >
-                                    <Input placeholder="" />
+                                    <Input />
                                 </Form.Item>
                             </Col>
 
                             <Col span={8}>
                                 <Form.Item label="اینستاگرام" name="instagram">
-                                    <Input placeholder="" />
+                                    <Input />
                                 </Form.Item>
                             </Col>
 
                             <Col span={8}>
                                 <Form.Item label="تلگرام" name="telegram">
-                                    <Input placeholder="" />
+                                    <Input />
                                 </Form.Item>
                             </Col>
 
                             <Col span={24}>
                                 <Form.Item label="آدرس" name="address">
-                                    <Input placeholder="" />
+                                    <Input />
                                 </Form.Item>
                             </Col>
                         </Row>

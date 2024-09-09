@@ -1,7 +1,7 @@
 export const jobConditionsArray = [
     "skillLevels",
     "dutyStatus",
-    "gender",
+    "genders",
     "nation",
     "marriageStatus",
     "adEducation",

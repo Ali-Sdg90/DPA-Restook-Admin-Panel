@@ -1,12 +1,12 @@
 import { Card, Col, Flex, Row, Skeleton } from "antd";
 import React, { useContext, useEffect, useState } from "react";
 
-import { ReactComponent as Cutlery } from "../assets/images/quick-access/cutlery 2 (1).svg";
-import { ReactComponent as Note } from "../assets/images/quick-access/Note - Text (2).svg";
-import { ReactComponent as Hat } from "../assets/images/quick-access/chef's hat (1).svg";
-import { ReactComponent as Arrow } from "../assets/images/quick-access/Chevron - Left.svg";
-import { getRequest } from "../services/apiService";
-import { UserContext } from "../store/UserContextProvider";
+import { ReactComponent as Cutlery } from "../../assets/images/quick-access/cutlery 2 (1).svg";
+import { ReactComponent as Note } from "../../assets/images/quick-access/Note - Text (2).svg";
+import { ReactComponent as Hat } from "../../assets/images/quick-access/chef's hat (1).svg";
+import { ReactComponent as Arrow } from "../../assets/images/quick-access/Chevron - Left.svg";
+import { getRequest } from "../../services/apiService";
+import { UserContext } from "../../store/UserContextProvider";
 
 const QuickAccess = () => {
     const [quickAccessData, setQuickAccessData] = useState({

@@ -17,20 +17,31 @@ const ExternalAdvertJobConditions = () => {
     const conditionBtnClickHandler = (category, key) => {
         console.log(category, key);
 
-        setMappedData((prevState) => {
-            const currentKeys = prevState[category] || [];
-
-            const keyExists = currentKeys.includes(key);
-
-            const updatedKeys = keyExists
-                ? currentKeys.filter((item) => item !== key)
-                : [...currentKeys, key];
-
-            return {
+        if (
+            category === "nation" ||
+            category === "dutyStatus" ||
+            category === "marriageStatus"
+        ) {
+            setMappedData((prevState) => ({
                 ...prevState,
-                [category]: updatedKeys,
-            };
-        });
+                [category]: key,
+            }));
+        } else {
+            setMappedData((prevState) => {
+                const currentKeys = prevState[category] || [];
+
+                const keyExists = currentKeys.includes(key);
+
+                const updatedKeys = keyExists
+                    ? currentKeys.filter((item) => item !== key)
+                    : [...currentKeys, key];
+
+                return {
+                    ...prevState,
+                    [category]: updatedKeys,
+                };
+            });
+        }
     };
 
     return (
@@ -38,7 +49,7 @@ const ExternalAdvertJobConditions = () => {
             <Row>
                 <Col span={8}>
                     <Form.Item label="عنوان شغلی" name="jobTypeId">
-                        <Select placeholder="">
+                        <Select>
                             {jobTitles.map((title, index) => (
                                 <Option value={title.id} key={index}>
                                     {title.title}
@@ -57,35 +68,32 @@ const ExternalAdvertJobConditions = () => {
                             name="dutyStatus"
                         >
                             {field !== "adEducation"
-                                ? jobConditions[field].map((item) => {
-                                      if (field === "gender") {
-                                          field = "genders";
-                                      }
-
-                                      return (
-                                          <Button
-                                              key={item.key}
-                                              category={field}
-                                              item={"default"}
-                                              className={`card-btn ${
-                                                  mappedData[field] &&
-                                                  mappedData[field].includes(
-                                                      item.key
-                                                  )
-                                                      ? "active-button"
-                                                      : ""
-                                              }`}
-                                              onClick={() =>
-                                                  conditionBtnClickHandler(
-                                                      field,
-                                                      item.key
-                                                  )
-                                              }
-                                          >
-                                              {item.value}
-                                          </Button>
-                                      );
-                                  })
+                                ? jobConditions[field].map((item) => (
+                                      <Button
+                                          key={item.key}
+                                          category={field}
+                                          item={"default"}
+                                          className={`card-btn ${
+                                              mappedData[field] &&
+                                              (Array.isArray(mappedData[field])
+                                                  ? mappedData[field].includes(
+                                                        item.key
+                                                    )
+                                                  : mappedData[field] ===
+                                                    item.key)
+                                                  ? "active-button"
+                                                  : ""
+                                          }`}
+                                          onClick={() =>
+                                              conditionBtnClickHandler(
+                                                  field,
+                                                  item.key
+                                              )
+                                          }
+                                      >
+                                          {item.value}
+                                      </Button>
+                                  ))
                                 : languages.map((item) => (
                                       <Button
                                           key={item.id}
@@ -116,7 +124,7 @@ const ExternalAdvertJobConditions = () => {
                 <Row gutter={[48, 0]} style={{ width: "100%" }}>
                     <Col span={8}>
                         <Form.Item label="حداقل سابقه" name="workExperience">
-                            <Select placeholder="">
+                            <Select>
                                 {minRecord.map((record, index) => (
                                     <Option value={index} key={index}>
                                         {record}
@@ -128,7 +136,7 @@ const ExternalAdvertJobConditions = () => {
 
                     <Col span={8}>
                         <Form.Item label="حداکثر سن" name="ageLimit">
-                            <Select placeholder="">
+                            <Select>
                                 {maxAge.map((age, index) => (
                                     <Option value={index} key={index}>
                                         {age}
@@ -140,7 +148,7 @@ const ExternalAdvertJobConditions = () => {
 
                     <Col span={8}>
                         <Form.Item label="حداقل تحصیلات" name="educationLevel">
-                            <Select placeholder="">
+                            <Select>
                                 {jobConditions["adEducation"].map((item) => (
                                     <Button
                                         key={item.key}

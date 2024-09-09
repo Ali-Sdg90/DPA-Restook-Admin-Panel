@@ -1,15 +1,6 @@
 import React, { useContext } from "react";
 import { ExternalAdvertContext } from "../../store/ExternalAdvertContextProvider";
-import {
-    Card,
-    Col,
-    Input,
-    Row,
-    Form,
-    Switch,
-    Typography,
-    Flex,
-} from "antd";
+import { Card, Col, Input, Row, Form, Switch, Typography, Flex } from "antd";
 import TextArea from "antd/es/input/TextArea";
 
 const { Text } = Typography;
@@ -25,7 +16,6 @@ const ExternalAdvertAdditionalInfo = () => {
                 <Col span={24}>
                     <Form.Item label="شرح شغلی" name="explanation">
                         <TextArea
-                            placeholder=""
                             autoSize={{
                                 minRows: 5,
                                 maxRows: 8,
@@ -66,7 +56,7 @@ const ExternalAdvertAdditionalInfo = () => {
                                 label="حداقل حقوق به تومان"
                                 name="minSalary"
                             >
-                                <Input placeholder="" />
+                                <Input />
                             </Form.Item>
                         </Col>
 
@@ -75,7 +65,7 @@ const ExternalAdvertAdditionalInfo = () => {
                                 label="حداکثر حقوق به تومان"
                                 name="maxSalary"
                             >
-                                <Input placeholder="" />
+                                <Input />
                             </Form.Item>
                         </Col>
                     </Row>

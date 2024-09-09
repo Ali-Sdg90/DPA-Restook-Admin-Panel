@@ -14,15 +14,14 @@ import {
 
 import { PlusOutlined } from "@ant-design/icons";
 
-import { ReactComponent as Arrow } from "../assets/images/home-page/Chevron - Left.svg";
-import { sortIcon } from "../utils/tableIconSort";
-import { getTableData } from "../services/getTableData";
-import useTableData from "../hooks/useTableData";
-import ImageWithFallback from "../components/ImageWithFallback";
-import { AuthContext } from "../store/AuthContextProvider";
-import PageWrapper from "../components/PageWrapper";
+import { ReactComponent as Arrow } from "../../assets/images/home-page/Chevron - Left.svg";
+import { sortIcon } from "../../utils/tableIconSort";
+import { getTableData } from "../../services/getTableData";
+import useTableData from "../../hooks/useTableData";
+import { AuthContext } from "../../store/AuthContextProvider";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../store/UserContextProvider";
+import { UserContext } from "../../store/UserContextProvider";
+import ImageWithFallback from "../Common/ImageWithFallback";
 
 const RestaurantsList = () => {
     const {
@@ -204,7 +203,6 @@ const RestaurantsList = () => {
 
     useEffect(() => {
         setPageFilter((prevState) => ({ ...prevState, status: "" }));
-        console.log("RESET --------------------------------");
     }, []);
 
     useEffect(() => {
@@ -231,45 +229,47 @@ const RestaurantsList = () => {
         if (userPlace === "default") {
             setUserPlace("restaurants-list");
         }
-    }, []);
+
+        if (userPlace === "new-restaurant") {
+        }
+    }, [userPlace]);
+
+    const newRestaurantBtnClickHandler = () => {
+        setUserPlace("create-new-restaurant");
+    };
 
     return (
-        <PageWrapper>
-            {userData.access_token.length ? (
-                <Row gutter={[24, 24]} className="content">
-                    <Col span={24} className="table-section">
-                        <Card title="لیست مجموعه‌ها">
-                            <div className="new-restaurant-container">
-                                <Button
-                                    type="primary"
-                                    className="new-restaurant-btn"
-                                >
-                                    مجموعه جدید
-                                    <PlusOutlined />
-                                </Button>
-                            </div>
+        <Row gutter={[24, 24]} className="content">
+            <Col span={24} className="table-section">
+                <Card title="لیست مجموعه‌ها">
+                    <div className="new-restaurant-container">
+                        <Button
+                            type="primary"
+                            className="new-restaurant-btn"
+                            onClick={newRestaurantBtnClickHandler}
+                        >
+                            مجموعه جدید
+                            <PlusOutlined />
+                        </Button>
+                    </div>
 
-                            <Table
-                                loading={!totalPage}
-                                dataSource={tableData}
-                                columns={columns}
-                                pagination={false}
-                                rowKey={(record) => record.id}
-                            />
+                    <Table
+                        loading={!totalPage}
+                        dataSource={tableData}
+                        columns={columns}
+                        pagination={false}
+                        rowKey={(record) => record.id}
+                    />
 
-                            <Pagination
-                                // showLessItems={true}
-                                total={10 * totalPage}
-                                disabled={!totalPage}
-                                onChange={handlePageChange}
-                            />
-                        </Card>
-                    </Col>
-                </Row>
-            ) : (
-                <Spin size="large" className="loading-token-spinner" />
-            )}
-        </PageWrapper>
+                    <Pagination
+                        // showLessItems={true}
+                        total={10 * totalPage}
+                        disabled={!totalPage}
+                        onChange={handlePageChange}
+                    />
+                </Card>
+            </Col>
+        </Row>
     );
 };
 

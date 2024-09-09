@@ -13,7 +13,7 @@ const {
 } = Layout;
 
 const LayoutWrapper = ({ children }) => {
-    const [collapsed, setCollapsed] = useState(true);
+    const [collapsed, setCollapsed] = useState(false);
 
     return (
         <Layout className="main-layout" style={{ minHeight: "100vh" }}>

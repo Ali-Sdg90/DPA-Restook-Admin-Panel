@@ -1,0 +1,14 @@
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="User - Military" clip-path="url(#clip0_26_4629)">
+<path id="Vector" d="M12.5 6.5L11.7035 8L10 8.207L11.25 9.3335L11 11L12.5 10.0625L14 11L13.75 9.3335L15 8.207L13.25 8L12.5 6.5Z" fill="#1E1E1E"/>
+<path id="Vector_2" d="M10.707 6.707L12.5 4.917L14.2935 6.708L15 6L12.5 3.5L10 6L10.707 6.707Z" fill="#1E1E1E"/>
+<path id="Vector_3" d="M10.707 4.207L12.5 2.417L14.2935 4.208L15 3.5L12.5 1L10 3.5L10.707 4.207Z" fill="#1E1E1E"/>
+<circle id="Ellipse" cx="5.66667" cy="5.66667" r="2.66667" stroke="#1E1E1E" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_4" d="M7.66667 11H3.66667C2.19391 11 1 12.1939 1 13.6667C1 14.403 1.59695 15 2.33333 15H9C9.73638 15 10.3333 14.403 10.3333 13.6667C10.3333 12.1939 9.13943 11 7.66667 11Z" stroke="#1E1E1E" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_26_4629">
+<rect width="16" height="16" fill="white"/>
+</clipPath>
+</defs>
+</svg>

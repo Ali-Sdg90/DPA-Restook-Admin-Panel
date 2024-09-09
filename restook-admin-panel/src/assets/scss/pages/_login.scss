@@ -167,6 +167,11 @@
     }
 }
 
+.full-page-loading {
+    height: 100vh;
+    background-color: #ebedef;
+}
+
 @media (max-width: 480px) {
     .rightSide {
         align-items: unset !important;

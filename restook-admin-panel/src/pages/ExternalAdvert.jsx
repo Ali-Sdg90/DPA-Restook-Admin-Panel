@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { Spin } from "antd";
 import { AuthContext } from "../store/AuthContextProvider";
 import { UserContext } from "../store/UserContextProvider";
-import PageWrapper from "../components/PageWrapper";
 import ExternalAdvertList from "../components/ExternalAdvert/ExternalAdvertList";
 import { ExternalAdvertContextProvider } from "../store/ExternalAdvertContextProvider";
 import ExternalAdvertProfile from "../components/ExternalAdvert/ExternalAdvertProfile";
+import PageWrapper from "../components/Common/PageWrapper";
 
 const ExternalAdver = () => {
     const { userPlace, setUserPlace } = useContext(UserContext);
