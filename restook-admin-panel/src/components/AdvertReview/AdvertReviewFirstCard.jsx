@@ -7,9 +7,14 @@ import { ReactComponent as CrossIcon } from "../../assets/images/advertisement-r
 import { ReactComponent as UserSquareIcon } from "../../assets/images/advertisement-review/User - Square.svg";
 import { CommonContext } from "../../store/CommonContextProvider";
 import { patchRequest } from "../../services/apiService";
+import { UserContext } from "../../store/UserContextProvider";
+import { useNavigate } from "react-router-dom";
 
 const AdvertReviewFirstCard = ({ advertData, id }) => {
     const { setToastifyObj } = useContext(CommonContext);
+    const { setUserPlace } = useContext(UserContext);
+
+    const navigate = useNavigate();
 
     const patchStatus = async (isPublished) => {
         const res = await patchRequest(
@@ -24,9 +29,14 @@ const AdvertReviewFirstCard = ({ advertData, id }) => {
                 title: res.message,
                 mode: "success",
             }));
+
+            console.log("success-res >>", res);
         } else {
             console.error("ERROR IN PATCH", res);
         }
+
+        setUserPlace("new-advertisements");
+        navigate("/home-page");
     };
 
     return (

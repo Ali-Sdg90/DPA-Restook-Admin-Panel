@@ -1,13 +1,41 @@
 export const convertFAtoEN = (input) => {
-    const persianNumbers = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-    const englishNumbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    if (input) {
+        console.log("INPUT >>", input);
 
-    let output = input;
+        const persianNumbers = [
+            "۰",
+            "۱",
+            "۲",
+            "۳",
+            "۴",
+            "۵",
+            "۶",
+            "۷",
+            "۸",
+            "۹",
+        ];
+        const englishNumbers = [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+        ];
 
-    persianNumbers.forEach((num, index) => {
-        const regex = new RegExp(num, "g");
-        output = output.replace(regex, englishNumbers[index]);
-    });
+        let output = input.toString();
 
-    return output;
+        persianNumbers.forEach((num, index) => {
+            const regex = new RegExp(num, "g");
+            output = output.replace(regex, englishNumbers[index]);
+        });
+
+        return output;
+    } else {
+        return "";
+    }
 };

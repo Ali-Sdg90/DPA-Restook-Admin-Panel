@@ -1,3 +1,5 @@
+import { convertFAtoEN } from "./convertFAtoENNumbers";
+
 export const convertToPostObj = (
     data,
     profileId,
@@ -6,14 +8,14 @@ export const convertToPostObj = (
 ) => {
     const restaurantData = {
         jobTitle: data.jobTitle,
-        phoneNumber: data.phoneNumber,
+        phoneNumber: convertFAtoEN(data.phoneNumber),
         branch: data.branch,
         aboutUs: data.aboutUs,
         imageFileName: data.imageFileName,
         jobTypeId: data.jobTypeId,
         // cityId: 1, // ?
         contacts: {
-            phoneNumber: data.connectionPhoneNumber,
+            phoneNumber: convertFAtoEN(data.connectionPhoneNumber),
             instagram: data.instagram,
             telegram: data.telegram,
             lat: 35.770722, // Static value
@@ -49,8 +51,8 @@ export const convertToPostObj = (
             restInShif: data.restInShif,
             explanation: data.explanation,
             salary: data.salary,
-            minSalary: data.minSalary,
-            maxSalary: data.maxSalary,
+            minSalary: convertFAtoEN(data.minSalary),
+            maxSalary: convertFAtoEN(data.maxSalary),
         };
     }
 

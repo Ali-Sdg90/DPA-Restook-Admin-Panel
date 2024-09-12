@@ -39,6 +39,13 @@ const AdvertReviewModal = ({
             const values = await form.validateFields();
             console.log("Form submitted with values:", values);
 
+            if (
+                values.salary & !values.minSalary ||
+                values.salary & !values.maxSalary
+            ) {
+                throw new Error();
+            }
+
             const res = await patchRequest(
                 `/advertisements/${id}`,
                 values,
@@ -56,10 +63,16 @@ const AdvertReviewModal = ({
             } else {
                 console.error("ERROR IN PATCH", res);
             }
+
+            setIsModalOpen(false);
         } catch (error) {
             console.log("Validation Failed:", error);
+
+            setToastifyObj(() => ({
+                title: "حداقل و حداکثر حقوق را وارد کنید",
+                mode: "error",
+            }));
         }
-        setIsModalOpen(false);
     };
 
     const handleCancel = () => {

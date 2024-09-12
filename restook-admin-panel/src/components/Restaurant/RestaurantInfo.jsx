@@ -7,6 +7,7 @@ import { CommonContext } from "../../store/CommonContextProvider";
 import { mergeObjectFunc } from "../../utils/mergeObjectFuncExternalAdvert";
 import { convertToPostObj } from "../../utils/convertToPostObjExternalAdvert";
 import { ReactComponent as Edit } from "../../assets/images/restaurants-page/Edit.svg";
+import { UserContext } from "../../store/UserContextProvider";
 
 const RestaurantInfo = () => {
     const {
@@ -17,6 +18,7 @@ const RestaurantInfo = () => {
     } = useContext(ExternalAdvertContext);
 
     const { setToastifyObj } = useContext(CommonContext);
+    const { userPlace, setUserPlace } = useContext(UserContext);
 
     const submitForm = async () => {
         console.log("-- SUBMIT --");
@@ -52,6 +54,8 @@ const RestaurantInfo = () => {
                 }));
 
                 console.log(res);
+
+                setUserPlace("restaurant-profile");
             } else {
                 throw new Error();
             }

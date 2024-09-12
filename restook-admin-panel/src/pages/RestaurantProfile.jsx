@@ -23,6 +23,7 @@ const ExternalAdver = () => {
                 <ExternalAdvertContextProvider
                     mainAPI={"/restaurants/"}
                     onlyFirstCard={true}
+                    rootUserPlace={`restaurant-profile`}
                 >
                     <RestaurantInfo />
                 </ExternalAdvertContextProvider>

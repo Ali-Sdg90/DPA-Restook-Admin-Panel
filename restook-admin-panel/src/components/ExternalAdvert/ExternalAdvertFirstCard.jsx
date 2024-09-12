@@ -36,19 +36,20 @@ const ExternalAdvertFirstCard = ({ usePrefixForImage }) => {
                     <div className="restaurant-name">
                         {mappedData.jobTitle ? mappedData.jobTitle : "_"}
                     </div>
-                    <div className="restaurant-address">
-                        آدرس وبسایت:{" "}
-                        <a
-                            href={
-                                mappedData.website
-                                    ? "https://" + mappedData.website
-                                    : "#"
-                            }
-                            target="_blank"
-                        >
-                            {mappedData.website ? mappedData.website : "_"}
-                        </a>
-                    </div>
+
+                    {mappedData.website ? (
+                        <div className="restaurant-address">
+                            آدرس وبسایت:{" "}
+                            <a
+                                href={"https://" + mappedData.website}
+                                target="_blank"
+                            >
+                                {mappedData.website}
+                            </a>
+                        </div>
+                    ) : (
+                        <div className="empty-address"></div>
+                    )}
                 </div>
             </div>
 

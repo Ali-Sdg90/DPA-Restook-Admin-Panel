@@ -9,6 +9,7 @@ export const ExternalAdvertContextProvider = ({
     children,
     mainAPI,
     onlyFirstCard = false,
+    rootUserPlace,
 }) => {
     const [form] = Form.useForm();
     const [profileImg, setProfileImg] = useState();
@@ -91,8 +92,9 @@ export const ExternalAdvertContextProvider = ({
                     connectionPhoneNumber: apiResponse.contacts[0]
                         ? apiResponse.contacts[0].phoneNumber
                         : null,
-                    imageFileName:
-                        apiResponse.imageFileName || "resPlaceHolder.png",
+                    imageFileName: apiResponse.imageUrl
+                        ? apiResponse.imageUrl.split("/")[4]
+                        : "",
                     instagram: apiResponse.contacts[0]
                         ? apiResponse.contacts[0].instagram
                         : null,
@@ -185,13 +187,13 @@ export const ExternalAdvertContextProvider = ({
     }, [apiResponse, onlyFirstCard]);
 
     useEffect(() => {
-        if (userPlace === "external-advert-list") {
+        if (userPlace === rootUserPlace) {
             setIsAllDataFetched(false);
         }
     }, [userPlace]);
 
     const backBtnHandler = () => {
-        setUserPlace("external-advert-list");
+        setUserPlace(rootUserPlace);
     };
 
     const handleSalarySwitchChange = (checked) => {
