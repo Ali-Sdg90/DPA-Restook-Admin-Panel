@@ -199,3 +199,135 @@
         // box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.04);
     }
 }
+
+.modal-container {
+    .ant-modal-content {
+        padding: 48px 34px 34px;
+    }
+
+    .ant-col {
+        padding: 0 !important;
+    }
+
+    .ant-form-item {
+        label {
+            color: #000;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            padding-bottom: 16px;
+            white-space: nowrap;
+        }
+
+        input {
+            border-radius: 4px;
+            border: 1px solid #707070;
+            height: 40px;
+            color: #707070;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+
+        textarea {
+            border-radius: 4px;
+            border: 1px solid #707070 !important;
+            color: #707070;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+
+            &:hover {
+                border: 1px solid #707070 !important;
+            }
+        }
+
+        .ant-btn {
+            height: 40px;
+            padding: 8px 24px;
+            color: #707070;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            border-radius: 4px;
+            border: 1px solid #707070;
+        }
+
+        .ant-select-selector {
+            border-radius: 4px;
+            border: 1px solid #707070;
+
+            .anticon-down svg {
+                color: #000000;
+            }
+        }
+    }
+
+    .ant-row {
+        width: 100%;
+    }
+
+    .top-text {
+        color: #1e1e1e;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
+
+    .bottom-text {
+        color: #959595;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 300;
+        line-height: normal;
+    }
+
+    .salary-section {
+        margin-top: 16px;
+
+        .left-side {
+            .ant-typography {
+                color: #000;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                margin-right: 8px;
+            }
+        }
+    }
+
+    .show-salary-section {
+        display: flex;
+        gap: 19px;
+        margin-top: 16px;
+        padding-right: 10px;
+    }
+
+    .close-btn,
+    .submit-btn {
+        border-radius: 5px;
+        background: #5d6af2;
+        height: 40px;
+        padding: 12px 24px;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        color: #f0f4f7 !important;
+        border: none !important;
+        margin-top: 14px;
+    }
+
+    .close-btn {
+        background: white;
+        color: #5d6af2 !important;
+        border-radius: 5px;
+        border: 1px solid #5d6af2 !important;
+    }
+}

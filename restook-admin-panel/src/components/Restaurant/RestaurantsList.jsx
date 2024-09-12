@@ -44,6 +44,7 @@ const RestaurantsList = () => {
     const navigate = useNavigate();
 
     const detailsHandler = (id) => {
+        setUserPlace(`restaurant-profile${id}`);
         navigate(`/restaurant-profile/${id}`);
     };
 

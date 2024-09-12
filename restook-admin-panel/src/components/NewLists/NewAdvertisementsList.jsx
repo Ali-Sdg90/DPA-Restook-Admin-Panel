@@ -4,7 +4,6 @@ import { Button, Card, Col, Input, Table, DatePicker, Pagination } from "antd";
 import QuickAccess from "./QuickAccess";
 
 import { ReactComponent as Arrow } from "../../assets/images/home-page/Chevron - Left.svg";
-import { ReactComponent as Calender } from "../../assets/images/home-page/Calendar - Dates (1).svg";
 import { ReactComponent as BackIcon } from "../../assets/images/home-page/Arrow - Right.svg";
 import { sortIcon } from "../../utils/tableIconSort";
 import useTableData from "../../hooks/useTableData";
@@ -12,10 +11,9 @@ import { getTableData } from "../../services/getTableData";
 import ImageWithFallback from "../Common/ImageWithFallback";
 import { UserContext } from "../../store/UserContextProvider";
 import { InputDatePicker } from "jalaali-react-date-picker";
+import { useNavigate } from "react-router-dom";
 
 const NewAdvertisementsList = () => {
-    const { userPlace } = useContext(UserContext);
-
     const {
         pageFilter,
         tableData,
@@ -34,6 +32,17 @@ const NewAdvertisementsList = () => {
         handleOpenChange,
         handlePageChange,
     } = useTableData();
+
+    const navigate = useNavigate();
+
+    const { userPlace, setUserPlace } = useContext(UserContext);
+
+    const detailBtnClickHandler = (id) => {
+        console.log("id >>", id);
+
+        setUserPlace("advertisement-review");
+        navigate(`/advertisement-review/${id}`);
+    };
 
     const columns = [
         {
@@ -170,6 +179,7 @@ const NewAdvertisementsList = () => {
                             icon={<Arrow />}
                             iconPosition={"end"}
                             className="details-btn"
+                            onClick={() => detailBtnClickHandler(record.id)}
                         >
                             جزئیات
                         </Button>

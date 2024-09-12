@@ -1,11 +1,16 @@
 import React from "react";
 import { Button, Card, Flex } from "antd";
 
-const AdvertReviewInfo = ({ advertData }) => {
+const AdvertReviewInfo = ({ advertData, setIsModalOpen }) => {
     return (
         <Card className="second-card">
             <Flex justify="flex-end" className="edit-btn-container">
-                <Button className="edit-info-btn">ویرایش اطلاعات</Button>
+                <Button
+                    className="edit-info-btn"
+                    onClick={() => setIsModalOpen(true)}
+                >
+                    ویرایش اطلاعات
+                </Button>
             </Flex>
 
             <div className="about-title">شرح موقعیت شغلی</div>

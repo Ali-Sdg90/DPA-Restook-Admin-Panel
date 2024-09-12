@@ -65,6 +65,7 @@ const CreateNewRestaurant = () => {
                     title: `ثبت اطلاعات با موفقیت انجام شد`,
                     mode: "success",
                 }));
+                console.log("success-res >> ", res);
             } else {
                 throw new Error();
             }

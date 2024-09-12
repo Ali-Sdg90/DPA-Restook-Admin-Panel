@@ -1,16 +1,14 @@
 import React, { useContext, useEffect } from "react";
-import { Row, Col, Card, Spin, Form, Flex, Button } from "antd";
-import ExternalAdvertFirstCard from "./ExternalAdvertFirstCard";
-import ExternalAdvertJobConditions from "./ExternalAdvertJobConditions";
-import ExternalAdvertJobAdvantages from "./ExternalAdvertJobAdvantages";
-import ExternalAdvertAdditionalInfo from "./ExternalAdvertAdditionalInfo";
+import { Row, Col, Spin, Form, Flex, Button } from "antd";
+import ExternalAdvertFirstCard from "../ExternalAdvert/ExternalAdvertFirstCard";
 import { ExternalAdvertContext } from "../../store/ExternalAdvertContextProvider";
-import { postRequest } from "../../services/apiService";
+import { patchRequest } from "../../services/apiService";
 import { CommonContext } from "../../store/CommonContextProvider";
 import { mergeObjectFunc } from "../../utils/mergeObjectFuncExternalAdvert";
 import { convertToPostObj } from "../../utils/convertToPostObjExternalAdvert";
+import { ReactComponent as Edit } from "../../assets/images/restaurants-page/Edit.svg";
 
-const ExternalAdvertProfile2 = () => {
+const RestaurantInfo = () => {
     const {
         isAllDataFetched = false,
         form,
@@ -23,20 +21,25 @@ const ExternalAdvertProfile2 = () => {
     const submitForm = async () => {
         console.log("-- SUBMIT --");
 
-        const mergedObject = mergeObjectFunc(form.getFieldsValue(), mappedData);
+        console.log("FORM >>", form.getFieldsValue());
+        console.log("mappedData >>", mappedData);
+
+        console.log("- - - - - - - -");
+
+        const mergedObject = mergeObjectFunc(mappedData, form.getFieldsValue());
         console.log("mergedObject >> ", mergedObject);
 
         const postObject = convertToPostObj(
             mergedObject,
             profileId,
             mappedData.alreadyExist,
-            false
+            true
         );
         console.log("postObject >>", postObject);
 
         try {
-            const res = await postRequest(
-                "/temp/AddAdvertisement",
+            const res = await patchRequest(
+                `/restaurants/${profileId}`,
                 postObject,
                 true,
                 setToastifyObj
@@ -47,6 +50,8 @@ const ExternalAdvertProfile2 = () => {
                     title: `ثبت اطلاعات با موفقیت انجام شد`,
                     mode: "success",
                 }));
+
+                console.log(res);
             } else {
                 throw new Error();
             }
@@ -70,11 +75,8 @@ const ExternalAdvertProfile2 = () => {
                                     initialValues={mappedData}
                                 >
                                     <ExternalAdvertFirstCard
-                                        usePrefixForImage={false}
+                                        usePrefixForImage={true}
                                     />
-                                    <ExternalAdvertJobConditions />
-                                    <ExternalAdvertJobAdvantages />
-                                    <ExternalAdvertAdditionalInfo />
                                 </Form>
 
                                 <Flex justify="flex-end">
@@ -85,7 +87,8 @@ const ExternalAdvertProfile2 = () => {
                                             className="submit-btn"
                                             onClick={() => submitForm()}
                                         >
-                                            ثبت اطلاعات
+                                            <Edit />
+                                            ویرایش
                                         </Button>
                                     </Form.Item>
                                 </Flex>
@@ -105,4 +108,4 @@ const ExternalAdvertProfile2 = () => {
     );
 };
 
-export default ExternalAdvertProfile2;
+export default RestaurantInfo;

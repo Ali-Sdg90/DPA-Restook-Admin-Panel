@@ -10,16 +10,20 @@ import AdvertReviewFirstCard from "../components/AdvertReview/AdvertReviewFirstC
 import AdvertReviewInfo from "../components/AdvertReview/AdvertReviewInfo";
 import AdvertReviewConditions from "../components/AdvertReview/AdvertReviewConditions";
 import AdvertReviewAdvantages from "../components/AdvertReview/AdvertReviewAdvantages";
+import AdvertReviewModal from "../components/AdvertReview/AdvertReviewModal";
 
 const AdvertisementReview = () => {
     const { userPlace, setUserPlace } = useContext(UserContext);
     const { userData } = useContext(AuthContext);
 
     const { id } = useParams();
+
     const [advertData, setAdvertData] = useState();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [shouldRefetchData, setShouldRefetchData] = useState(true);
 
     useEffect(() => {
-        if (id) {
+        if (id && shouldRefetchData) {
             console.log("id >>", id);
 
             const getData = async () => {
@@ -35,8 +39,9 @@ const AdvertisementReview = () => {
             };
 
             getData();
+            setShouldRefetchData(false);
         }
-    }, [id]);
+    }, [id, shouldRefetchData]);
 
     return (
         <PageWrapper>
@@ -44,9 +49,20 @@ const AdvertisementReview = () => {
                 <Row gutter={[24, 24]} className="content advert-review">
                     <Col span={24} className="table-section">
                         <AdvertReviewFirstCard advertData={advertData} />
-                        <AdvertReviewInfo advertData={advertData} />
+                        <AdvertReviewInfo
+                            advertData={advertData}
+                            setIsModalOpen={setIsModalOpen}
+                            id={id}
+                        />
                         <AdvertReviewConditions advertData={advertData} />
                         <AdvertReviewAdvantages advertData={advertData} />
+                        <AdvertReviewModal
+                            isModalOpen={isModalOpen}
+                            setIsModalOpen={setIsModalOpen}
+                            advertData={advertData}
+                            id={id}
+                            setShouldRefetchData={setShouldRefetchData}
+                        />
                     </Col>
                 </Row>
             ) : (

@@ -1,4 +1,9 @@
-export const convertToPostObj = (data, profileId, alreadyExist) => {
+export const convertToPostObj = (
+    data,
+    profileId,
+    alreadyExist,
+    onlyRestaurant
+) => {
     const restaurantData = {
         jobTitle: data.jobTitle,
         phoneNumber: data.phoneNumber,
@@ -17,44 +22,52 @@ export const convertToPostObj = (data, profileId, alreadyExist) => {
         },
     };
 
-    const advertisementData = {
-        // restaurantId: profileId, // ?
-        status: "published", // Static value
-        // jobTitleId: profileId, // ?
-        jobTitle: data.jobTitle,
-        skillLevels: data.skillLevels || "",
-        dutyStatus: data.dutyStatus || "",
-        genders: data.genders || "",
-        nation: data.nation || "",
-        marriageStatus: data.marriageStatus || "",
-        languages: data.languages || "",
-        workExperience: data.workExperience,
-        ageLimit: data.ageLimit,
-        educationLevel: data.educationLevel,
-        insurance: data.insurance,
-        residence: data.residence,
-        meal: data.meal,
-        discount: data.discount,
-        trainingClass: data.trainingClass,
-        style: data.style,
-        shuttleService: data.shuttleService,
-        restInShif: data.restInShif,
-        explanation: data.explanation,
-        salary: data.salary,
-        minSalary: data.minSalary,
-        maxSalary: data.maxSalary,
-    };
+    let advertisementData;
 
-    if (alreadyExist) {
-        return {
-            advertisementData,
-            tempAdId: Number(profileId[0]),
+    if (!onlyRestaurant) {
+        advertisementData = {
+            // restaurantId: profileId, // ?
+            status: "published", // Static value
+            // jobTitleId: profileId, // ?
+            jobTitle: data.jobTitle,
+            skillLevels: data.skillLevels || "",
+            dutyStatus: data.dutyStatus || "",
+            genders: data.genders || "",
+            nation: data.nation || "",
+            marriageStatus: data.marriageStatus || "",
+            languages: data.languages || "",
+            workExperience: data.workExperience,
+            ageLimit: data.ageLimit,
+            educationLevel: data.educationLevel,
+            insurance: data.insurance,
+            residence: data.residence,
+            meal: data.meal,
+            discount: data.discount,
+            trainingClass: data.trainingClass,
+            style: data.style,
+            shuttleService: data.shuttleService,
+            restInShif: data.restInShif,
+            explanation: data.explanation,
+            salary: data.salary,
+            minSalary: data.minSalary,
+            maxSalary: data.maxSalary,
         };
+    }
+
+    if (onlyRestaurant) {
+        return restaurantData;
     } else {
-        return {
-            restaurantData,
-            advertisementData,
-            tempAdId: Number(profileId[0]),
-        };
+        if (alreadyExist) {
+            return {
+                advertisementData,
+                tempAdId: Number(profileId[0]),
+            };
+        } else {
+            return {
+                restaurantData,
+                advertisementData,
+                tempAdId: Number(profileId[0]),
+            };
+        }
     }
 };

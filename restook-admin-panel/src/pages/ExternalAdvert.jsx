@@ -30,7 +30,7 @@ const ExternalAdver = () => {
     return (
         <PageWrapper>
             {userData.access_token.length ? (
-                <ExternalAdvertContextProvider>
+                <ExternalAdvertContextProvider mainAPI={"/temp/tempAdDetail?id="}>
                     {pageMode()}
                 </ExternalAdvertContextProvider>
             ) : (

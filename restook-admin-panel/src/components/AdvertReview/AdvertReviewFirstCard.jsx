@@ -1,12 +1,34 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Card, Flex } from "antd";
 import ImageWithFallback from "../Common/ImageWithFallback";
 
 import { ReactComponent as CheckIcon } from "../../assets/images/advertisement-review/Check.svg";
 import { ReactComponent as CrossIcon } from "../../assets/images/advertisement-review/Cross.svg";
 import { ReactComponent as UserSquareIcon } from "../../assets/images/advertisement-review/User - Square.svg";
+import { CommonContext } from "../../store/CommonContextProvider";
+import { patchRequest } from "../../services/apiService";
 
-const AdvertReviewFirstCard = ({ advertData }) => {
+const AdvertReviewFirstCard = ({ advertData, id }) => {
+    const { setToastifyObj } = useContext(CommonContext);
+
+    const patchStatus = async (isPublished) => {
+        const res = await patchRequest(
+            `/advertisements/${id}`,
+            { status: isPublished ? "published" : "draft" },
+            true,
+            setToastifyObj
+        );
+
+        if (res.success) {
+            setToastifyObj(() => ({
+                title: res.message,
+                mode: "success",
+            }));
+        } else {
+            console.error("ERROR IN PATCH", res);
+        }
+    };
+
     return (
         <Card className="first-card">
             <Flex justify="space-between" gap={"14px"}>
@@ -40,12 +62,20 @@ const AdvertReviewFirstCard = ({ advertData }) => {
                 </Flex>
 
                 <Flex className="left-side" vertical gap={"8px"}>
-                    <Button type="primary" className="confirm-btn">
+                    <Button
+                        type="primary"
+                        className="confirm-btn"
+                        onClick={() => patchStatus(true)}
+                    >
                         <CheckIcon />
                         تأیید
                     </Button>
 
-                    <Button type="primary" className="deny-btn">
+                    <Button
+                        type="primary"
+                        className="deny-btn"
+                        onClick={() => patchStatus(false)}
+                    >
                         <CrossIcon />
                         عدم تأیید
                     </Button>

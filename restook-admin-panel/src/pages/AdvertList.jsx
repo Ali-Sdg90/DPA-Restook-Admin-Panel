@@ -55,7 +55,7 @@ const AdvertisementsList = () => {
     const detailBtnClickHandler = (id) => {
         console.log("id >>", id);
 
-        navigate(`/advertisement-review/${id}`);
+        // navigate(`/advertisement-review/${id}`);
     };
 
     const columns = [

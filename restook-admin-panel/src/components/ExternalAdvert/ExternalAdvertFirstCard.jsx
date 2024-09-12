@@ -7,7 +7,7 @@ import { ExternalAdvertContext } from "../../store/ExternalAdvertContextProvider
 import TextArea from "antd/es/input/TextArea";
 import ImageWithFallback from "../Common/ImageWithFallback";
 
-const ExternalAdvertFirstCard = () => {
+const ExternalAdvertFirstCard = ({ usePrefixForImage }) => {
     const { profileImg, jobTypes, mappedData, backBtnHandler, setMappedData } =
         useContext(ExternalAdvertContext);
 
@@ -24,7 +24,7 @@ const ExternalAdvertFirstCard = () => {
                             imageUrl={profileImg}
                             className={"restaurant-img"}
                             alt={"restaurant-img"}
-                            needPrefix={false}
+                            needPrefix={usePrefixForImage}
                         />
                     ) : (
                         <div className="restaurant-img-placeholder"></div>
