@@ -6,6 +6,7 @@ import { ExternalAdvertContextProvider } from "../store/ExternalAdvertContextPro
 import PageWrapper from "../components/Common/PageWrapper";
 import RestaurantProfileMenu from "../components/Restaurant/RestaurantProfileMenu";
 import RestaurantInfo from "../components/Restaurant/RestaurantInfo";
+import RestaurantAdvertList from "../components/Restaurant/RestaurantAdvertList";
 
 const ExternalAdver = () => {
     const { userPlace, setUserPlace } = useContext(UserContext);
@@ -28,8 +29,10 @@ const ExternalAdver = () => {
                     <RestaurantInfo />
                 </ExternalAdvertContextProvider>
             );
+        } else if (userPlace.includes("restaurant-adverts-list")) {
+            return <RestaurantAdvertList />;
         } else {
-            console.log("ERROR IN ExternalAdver-pageMode", userPlace);
+            console.log("ERROR IN RestaurantProfile-pageMode", userPlace);
         }
     };
 

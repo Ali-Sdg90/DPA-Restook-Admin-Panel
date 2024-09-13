@@ -17,7 +17,7 @@ const ExternalAdver = () => {
         } else if (userPlace.includes("external-advert-profile")) {
             return <ExternalAdvertProfile />;
         } else {
-            console.log("ERROR IN ExternalAdver-pageMode", userPlace);
+            console.log("ERROR IN ExternalAdvert-pageMode", userPlace);
         }
     };
 

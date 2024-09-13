@@ -291,33 +291,31 @@ const UsersList = () => {
     }, []);
 
     return (
-        <>
-            <PageWrapper>
-                {userData.access_token.length ? (
-                    <Row gutter={[24, 24]} className="content">
-                        <Col span={24} className="table-section">
-                            <Card title="لیست کارجوها">
-                                <Table
-                                    loading={!totalPage}
-                                    dataSource={tableData}
-                                    columns={columns}
-                                    pagination={false}
-                                    rowKey={(record) => record.id}
-                                />
-                                <Pagination
-                                    // showLessItems={true}
-                                    total={10 * totalPage}
-                                    disabled={!totalPage}
-                                    onChange={handlePageChange}
-                                />
-                            </Card>
-                        </Col>
-                    </Row>
-                ) : (
-                    <Spin size="large" className="loading-token-spinner" />
-                )}
-            </PageWrapper>
-        </>
+        <PageWrapper>
+            {userData.access_token.length ? (
+                <Row gutter={[24, 24]} className="content">
+                    <Col span={24} className="table-section">
+                        <Card title="لیست کارجوها">
+                            <Table
+                                loading={!totalPage}
+                                dataSource={tableData}
+                                columns={columns}
+                                pagination={false}
+                                rowKey={(record) => record.id}
+                            />
+                            <Pagination
+                                // showLessItems={true}
+                                total={10 * totalPage}
+                                disabled={!totalPage}
+                                onChange={handlePageChange}
+                            />
+                        </Card>
+                    </Col>
+                </Row>
+            ) : (
+                <Spin size="large" className="loading-token-spinner" />
+            )}
+        </PageWrapper>
     );
 };
 

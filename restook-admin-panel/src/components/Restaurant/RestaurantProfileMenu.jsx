@@ -84,6 +84,9 @@ const RestaurantProfileMenu = () => {
             case 0:
                 setUserPlace(`restaurant-info-${id}`);
                 break;
+            case 1:
+                setUserPlace(`restaurant-adverts-list-${id}`);
+                break;
             default:
                 console.log("You click on", index);
         }
