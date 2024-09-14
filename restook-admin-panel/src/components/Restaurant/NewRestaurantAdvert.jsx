@@ -1,16 +1,17 @@
 import React, { useContext, useEffect } from "react";
 import { Row, Col, Card, Spin, Form, Flex, Button } from "antd";
-import ExternalAdvertFirstCard from "./ExternalAdvertFirstCard";
-import ExternalAdvertJobConditions from "./ExternalAdvertJobConditions";
-import ExternalAdvertJobAdvantages from "./ExternalAdvertJobAdvantages";
-import ExternalAdvertAdditionalInfo from "./ExternalAdvertAdditionalInfo";
 import { ExternalAdvertContext } from "../../store/ExternalAdvertContextProvider";
 import { postRequest } from "../../services/apiService";
 import { CommonContext } from "../../store/CommonContextProvider";
 import { mergeObjectFunc } from "../../utils/mergeObjectFuncExternalAdvert";
 import { convertToPostObj } from "../../utils/convertToPostObjExternalAdvert";
 
-const ExternalAdvertProfile = () => {
+import ExternalAdvertFirstCard from "../ExternalAdvert/ExternalAdvertFirstCard";
+import ExternalAdvertJobConditions from "../ExternalAdvert/ExternalAdvertJobConditions";
+import ExternalAdvertJobAdvantages from "../ExternalAdvert/ExternalAdvertJobAdvantages";
+import ExternalAdvertAdditionalInfo from "../ExternalAdvert/ExternalAdvertAdditionalInfo";
+
+const NewRestaurantAdvert = () => {
     const {
         isAllDataFetched = false,
         form,
@@ -30,13 +31,13 @@ const ExternalAdvertProfile = () => {
             mergedObject,
             profileId,
             mappedData.alreadyExist,
-            "ExternalAdvert"
+            "newAdvertForRestaurant"
         );
         console.log("postObject >>", postObject);
 
         try {
             const res = await postRequest(
-                "/temp/AddAdvertisement",
+                "/advertisements",
                 postObject,
                 true,
                 setToastifyObj
@@ -47,6 +48,8 @@ const ExternalAdvertProfile = () => {
                     title: `ثبت اطلاعات با موفقیت انجام شد`,
                     mode: "success",
                 }));
+
+                console.log("success-res >>", res);
             } else {
                 throw new Error();
             }
@@ -71,7 +74,7 @@ const ExternalAdvertProfile = () => {
                                 >
                                     <ExternalAdvertFirstCard
                                         usePrefixForImage={false}
-                                        forceFalseAlreadyExist={false}
+                                        forceFalseAlreadyExist={true}
                                     />
                                     <ExternalAdvertJobConditions />
                                     <ExternalAdvertJobAdvantages />
@@ -106,4 +109,4 @@ const ExternalAdvertProfile = () => {
     );
 };
 
-export default ExternalAdvertProfile;
+export default NewRestaurantAdvert;

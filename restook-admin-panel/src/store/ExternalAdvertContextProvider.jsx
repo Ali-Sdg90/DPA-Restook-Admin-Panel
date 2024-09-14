@@ -9,6 +9,7 @@ export const ExternalAdvertContextProvider = ({
     children,
     mainAPI,
     onlyFirstCard = false,
+    haveAdvertData = false,
     rootUserPlace,
 }) => {
     const [form] = Form.useForm();
@@ -81,7 +82,7 @@ export const ExternalAdvertContextProvider = ({
 
             let localMappedData;
 
-            if (onlyFirstCard) {
+            if (!haveAdvertData) {
                 localMappedData = {
                     aboutUs: apiResponse.aboutUs || "",
                     address: apiResponse.contacts[0]
@@ -184,7 +185,7 @@ export const ExternalAdvertContextProvider = ({
                 setIsSalaryAgreed(true);
             }
         }
-    }, [apiResponse, onlyFirstCard]);
+    }, [apiResponse, onlyFirstCard, haveAdvertData]);
 
     useEffect(() => {
         if (userPlace === rootUserPlace) {

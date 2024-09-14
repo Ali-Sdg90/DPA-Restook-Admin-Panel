@@ -33,6 +33,7 @@ const ExternalAdver = () => {
                 <ExternalAdvertContextProvider
                     mainAPI={"/temp/tempAdDetail?id="}
                     onlyFirstCard={false}
+                    haveAdvertData={true}
                     rootUserPlace={"external-advert-list"}
                 >
                     {pageMode()}

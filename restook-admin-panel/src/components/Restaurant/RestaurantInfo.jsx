@@ -35,7 +35,7 @@ const RestaurantInfo = () => {
             mergedObject,
             profileId,
             mappedData.alreadyExist,
-            true
+            "onlyRestaurant"
         );
         console.log("postObject >>", postObject);
 
@@ -80,6 +80,7 @@ const RestaurantInfo = () => {
                                 >
                                     <ExternalAdvertFirstCard
                                         usePrefixForImage={true}
+                                        forceFalseAlreadyExist={false}
                                     />
                                 </Form>
 

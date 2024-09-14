@@ -199,7 +199,7 @@ const NewAdvertisementsList = () => {
             );
 
             setTableData(res[0]);
-            setTotalPage(res[1]);
+            setTotalPage(res[1] ? res[1] : 1);
         };
 
         getData();

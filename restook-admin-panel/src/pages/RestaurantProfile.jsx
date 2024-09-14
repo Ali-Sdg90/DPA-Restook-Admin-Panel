@@ -7,6 +7,7 @@ import PageWrapper from "../components/Common/PageWrapper";
 import RestaurantProfileMenu from "../components/Restaurant/RestaurantProfileMenu";
 import RestaurantInfo from "../components/Restaurant/RestaurantInfo";
 import RestaurantAdvertList from "../components/Restaurant/RestaurantAdvertList";
+import NewRestaurantAdvert from "../components/Restaurant/NewRestaurantAdvert";
 
 const ExternalAdver = () => {
     const { userPlace, setUserPlace } = useContext(UserContext);
@@ -24,6 +25,7 @@ const ExternalAdver = () => {
                 <ExternalAdvertContextProvider
                     mainAPI={"/restaurants/"}
                     onlyFirstCard={true}
+                    haveAdvertData={false}
                     rootUserPlace={`restaurant-profile`}
                 >
                     <RestaurantInfo />
@@ -31,6 +33,17 @@ const ExternalAdver = () => {
             );
         } else if (userPlace.includes("restaurant-adverts-list")) {
             return <RestaurantAdvertList />;
+        } else if (userPlace.includes("new-restaurant-advert")) {
+            return (
+                <ExternalAdvertContextProvider
+                    mainAPI={"/restaurants/"}
+                    onlyFirstCard={false}
+                    haveAdvertData={false}
+                    rootUserPlace={"restaurant-adverts-list"}
+                >
+                    <NewRestaurantAdvert />
+                </ExternalAdvertContextProvider>
+            );
         } else {
             console.log("ERROR IN RestaurantProfile-pageMode", userPlace);
         }

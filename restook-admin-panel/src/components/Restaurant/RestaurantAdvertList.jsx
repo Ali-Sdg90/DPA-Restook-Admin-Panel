@@ -276,7 +276,7 @@ const RestaurantAdvertList = () => {
             console.log("RESsSsSsSs >> ", res);
 
             setTableData(res[0]);
-            setTotalPage(res[1]);
+            setTotalPage(res[1] ? res[1] : 1);
         };
 
         if (pageFilter.status === "") {
@@ -285,7 +285,11 @@ const RestaurantAdvertList = () => {
     }, [pageFilter, currentPage]);
 
     const backBtnHandler = () => {
-        setUserPlace("restaurant-profile");
+        setUserPlace(`restaurant-profile-${id}`);
+    };
+
+    const newRestaurantAdvertBtn = () => {
+        setUserPlace(`new-restaurant-advert-${id}`);
     };
 
     return (
@@ -310,7 +314,7 @@ const RestaurantAdvertList = () => {
                                 <Button
                                     type="primary"
                                     className="new-restaurant-btn"
-                                    // onClick={newRestaurantBtnClickHandler}
+                                    onClick={newRestaurantAdvertBtn}
                                 >
                                     آگهی جدید
                                     <PlusOutlined />

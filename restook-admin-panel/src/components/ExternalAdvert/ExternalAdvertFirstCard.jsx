@@ -7,7 +7,10 @@ import { ExternalAdvertContext } from "../../store/ExternalAdvertContextProvider
 import TextArea from "antd/es/input/TextArea";
 import ImageWithFallback from "../Common/ImageWithFallback";
 
-const ExternalAdvertFirstCard = ({ usePrefixForImage }) => {
+const ExternalAdvertFirstCard = ({
+    usePrefixForImage,
+    forceFalseAlreadyExist = false,
+}) => {
     const { profileImg, jobTypes, mappedData, backBtnHandler, setMappedData } =
         useContext(ExternalAdvertContext);
 
@@ -53,7 +56,7 @@ const ExternalAdvertFirstCard = ({ usePrefixForImage }) => {
                 </div>
             </div>
 
-            {!mappedData.alreadyExist ? (
+            {!mappedData.alreadyExist && !forceFalseAlreadyExist ? (
                 <>
                     <div className="restaurant-base-info">
                         <div className="card-section-title">اطلاعات پایه</div>
