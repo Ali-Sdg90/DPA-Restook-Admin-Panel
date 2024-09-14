@@ -10,6 +10,7 @@ import AdvertReviewInfo from "../AdvertReview/AdvertReviewInfo";
 import AdvertReviewConditions from "../AdvertReview/AdvertReviewConditions";
 import AdvertReviewAdvantages from "../AdvertReview/AdvertReviewAdvantages";
 import AdvertActionBtns from "../AdvertReview/AdvertActionBtns";
+import AdvertActionModal from "./../AdvertReview/AdvertActionModal";
 
 const RestaurantAdvertInfo = () => {
     const { userPlace, setUserPlace } = useContext(UserContext);
@@ -56,7 +57,10 @@ const RestaurantAdvertInfo = () => {
                             showBtns={false}
                             backAddress={"restaurant-adverts-list"}
                         />
-                        <AdvertActionBtns />
+                        <AdvertActionBtns
+                            resumeCounter={advertData.resumeCounter}
+                            setIsModalOpen={setIsModalOpen}
+                        />
                         <AdvertReviewInfo
                             advertData={advertData}
                             setIsModalOpen={setIsModalOpen}
@@ -64,6 +68,11 @@ const RestaurantAdvertInfo = () => {
                         />
                         <AdvertReviewConditions advertData={advertData} />
                         <AdvertReviewAdvantages advertData={advertData} />
+                        <AdvertActionModal
+                            isModalOpen={isModalOpen}
+                            setIsModalOpen={setIsModalOpen}
+                            id={id}
+                        />
                     </Col>
                 </Row>
             ) : (

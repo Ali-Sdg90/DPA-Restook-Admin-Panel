@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
     Button,
     Col,
@@ -111,7 +111,7 @@ const AdvertReviewModal = ({
                 // }} // temp
                 initialValues={{
                     explanation: advertData.explanation,
-                    salary: isSalaryAgreed,
+                    salary: !isSalaryAgreed,
                     minSalary: advertData.minSalary,
                     maxSalary: advertData.maxSalary,
                 }}

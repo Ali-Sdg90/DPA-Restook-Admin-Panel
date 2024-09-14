@@ -48,7 +48,12 @@ const AdvertisementReview = () => {
             {userData.access_token.length && advertData ? (
                 <Row gutter={[24, 24]} className="content advert-review">
                     <Col span={24} className="table-section">
-                        <AdvertReviewFirstCard advertData={advertData} />
+                        <AdvertReviewFirstCard
+                            advertData={advertData}
+                            id={id}
+                            showBtns={true}
+                            backAddress={""}
+                        />
                         <AdvertReviewInfo
                             advertData={advertData}
                             setIsModalOpen={setIsModalOpen}

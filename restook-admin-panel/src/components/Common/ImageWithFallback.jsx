@@ -7,7 +7,7 @@ const ImageWithFallback = ({ imageUrl, className, alt, needPrefix = true }) => {
     };
 
     // useEffect(() => {
-    //     console.log("imageUrl >>", imageUrl);
+    //     console.log("imageUrl >>", API_BASE_IMG + imageUrl);
     // }, []);
 
     return (

@@ -45,12 +45,17 @@ const AdvertReviewFirstCard = ({ advertData, id, showBtns, backAddress }) => {
             <Flex justify="space-between" gap={"14px"}>
                 <Flex className="right-side" gap={"24px"}>
                     <div className="advert-img-container">
-                        <div
-                            className="back-arrow-btn"
-                            onClick={() => setUserPlace(backAddress)}
-                        >
-                            <BackIcon />
-                        </div>
+                        {backAddress ? (
+                            <div
+                                className="back-arrow-btn"
+                                onClick={() => setUserPlace(backAddress)}
+                            >
+                                <BackIcon />
+                            </div>
+                        ) : (
+                            ""
+                        )}
+
                         {advertData.imageUrl ? (
                             <ImageWithFallback
                                 imageUrl={advertData.imageUrl}

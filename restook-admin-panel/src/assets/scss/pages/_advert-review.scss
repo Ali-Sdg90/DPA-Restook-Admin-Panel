@@ -204,11 +204,19 @@
 
 .modal-container {
     .ant-modal-content {
-        padding: 48px 34px 34px;
+        padding: 32px;
     }
 
     .ant-col {
         padding: 0 !important;
+    }
+
+    .modal-text {
+        color: #000;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
     }
 
     .ant-form-item {
@@ -312,7 +320,8 @@
     }
 
     .close-btn,
-    .submit-btn {
+    .submit-btn,
+    .red-close-btn {
         border-radius: 5px;
         background: #5d6af2;
         height: 40px;
@@ -329,7 +338,12 @@
     .close-btn {
         background: white;
         color: #5d6af2 !important;
-        border-radius: 5px;
         border: 1px solid #5d6af2 !important;
+    }
+
+    .red-close-btn {
+        background: white;
+        color: #e45353 !important;
+        border: 1px solid #e45353 !important;
     }
 }
