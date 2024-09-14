@@ -54,6 +54,10 @@ const RestaurantAdvertList = () => {
 
     const { id } = useParams();
 
+    const detailsBtnClickHandler = (advertId) => {
+        setUserPlace(`restaurant-advert-info-${advertId}`);
+    };
+
     const columns = [
         {
             title: "",
@@ -121,14 +125,14 @@ const RestaurantAdvertList = () => {
             title: (
                 <Button
                     type="text"
-                    icon={sortIcon("resumeCounter", sortMode)}
-                    onClick={() => sortTable("resumeCounter")}
+                    icon={sortIcon("status", sortMode)}
+                    onClick={() => sortTable("status")}
                 >
                     وضعیت
                 </Button>
             ),
-            dataIndex: "resumeCounter",
-            key: "resumeCounter",
+            dataIndex: "status",
+            key: "status",
             width: "15%",
             render: (text, record, index) =>
                 index === 0 ? (
@@ -253,6 +257,7 @@ const RestaurantAdvertList = () => {
                             icon={<Arrow />}
                             iconPosition={"end"}
                             className="details-btn"
+                            onClick={() => detailsBtnClickHandler(record.id)}
                         >
                             جزئیات
                         </Button>

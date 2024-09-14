@@ -4,13 +4,14 @@ import ImageWithFallback from "../Common/ImageWithFallback";
 
 import { ReactComponent as CheckIcon } from "../../assets/images/advertisement-review/Check.svg";
 import { ReactComponent as CrossIcon } from "../../assets/images/advertisement-review/Cross.svg";
+import { ReactComponent as BackIcon } from "../../assets/images/home-page/Arrow - Right.svg";
 import { ReactComponent as UserSquareIcon } from "../../assets/images/advertisement-review/User - Square.svg";
 import { CommonContext } from "../../store/CommonContextProvider";
 import { patchRequest } from "../../services/apiService";
 import { UserContext } from "../../store/UserContextProvider";
 import { useNavigate } from "react-router-dom";
 
-const AdvertReviewFirstCard = ({ advertData, id }) => {
+const AdvertReviewFirstCard = ({ advertData, id, showBtns, backAddress }) => {
     const { setToastifyObj } = useContext(CommonContext);
     const { setUserPlace } = useContext(UserContext);
 
@@ -44,6 +45,12 @@ const AdvertReviewFirstCard = ({ advertData, id }) => {
             <Flex justify="space-between" gap={"14px"}>
                 <Flex className="right-side" gap={"24px"}>
                     <div className="advert-img-container">
+                        <div
+                            className="back-arrow-btn"
+                            onClick={() => setUserPlace(backAddress)}
+                        >
+                            <BackIcon />
+                        </div>
                         {advertData.imageUrl ? (
                             <ImageWithFallback
                                 imageUrl={advertData.imageUrl}
@@ -71,25 +78,29 @@ const AdvertReviewFirstCard = ({ advertData, id }) => {
                     </Flex>
                 </Flex>
 
-                <Flex className="left-side" vertical gap={"8px"}>
-                    <Button
-                        type="primary"
-                        className="confirm-btn"
-                        onClick={() => patchStatus(true)}
-                    >
-                        <CheckIcon />
-                        تأیید
-                    </Button>
+                {showBtns ? (
+                    <Flex className="left-side" vertical gap={"8px"}>
+                        <Button
+                            type="primary"
+                            className="confirm-btn"
+                            onClick={() => patchStatus(true)}
+                        >
+                            <CheckIcon />
+                            تأیید
+                        </Button>
 
-                    <Button
-                        type="primary"
-                        className="deny-btn"
-                        onClick={() => patchStatus(false)}
-                    >
-                        <CrossIcon />
-                        عدم تأیید
-                    </Button>
-                </Flex>
+                        <Button
+                            type="primary"
+                            className="deny-btn"
+                            onClick={() => patchStatus(false)}
+                        >
+                            <CrossIcon />
+                            عدم تأیید
+                        </Button>
+                    </Flex>
+                ) : (
+                    ""
+                )}
             </Flex>
         </Card>
     );

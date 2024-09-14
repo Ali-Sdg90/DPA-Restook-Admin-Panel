@@ -1,26 +1,29 @@
 import React, { useContext, useEffect, useState } from "react";
-import PageWrapper from "../components/Common/PageWrapper";
+import PageWrapper from "../Common/PageWrapper";
 import { Col, Row, Spin } from "antd";
-import { UserContext } from "../store/UserContextProvider";
-import { AuthContext } from "../store/AuthContextProvider";
-import { useParams } from "react-router-dom";
-import { getRequest } from "../services/apiService";
+import { UserContext } from "../../store/UserContextProvider";
+import { AuthContext } from "../../store/AuthContextProvider";
+import { getRequest } from "../../services/apiService";
 
-import AdvertReviewFirstCard from "../components/AdvertReview/AdvertReviewFirstCard";
-import AdvertReviewInfo from "../components/AdvertReview/AdvertReviewInfo";
-import AdvertReviewConditions from "../components/AdvertReview/AdvertReviewConditions";
-import AdvertReviewAdvantages from "../components/AdvertReview/AdvertReviewAdvantages";
-import AdvertReviewModal from "../components/AdvertReview/AdvertReviewModal";
+import AdvertReviewFirstCard from "../AdvertReview/AdvertReviewFirstCard";
+import AdvertReviewInfo from "../AdvertReview/AdvertReviewInfo";
+import AdvertReviewConditions from "../AdvertReview/AdvertReviewConditions";
+import AdvertReviewAdvantages from "../AdvertReview/AdvertReviewAdvantages";
+import AdvertActionBtns from "../AdvertReview/AdvertActionBtns";
 
-const AdvertisementReview = () => {
+const RestaurantAdvertInfo = () => {
     const { userPlace, setUserPlace } = useContext(UserContext);
     const { userData } = useContext(AuthContext);
 
-    const { id } = useParams();
+    const [id, setId] = useState();
 
     const [advertData, setAdvertData] = useState();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [shouldRefetchData, setShouldRefetchData] = useState(true);
+
+    useEffect(() => {
+        setId(userPlace.match(/\d+/g));
+    }, []);
 
     useEffect(() => {
         if (id && shouldRefetchData) {
@@ -48,21 +51,19 @@ const AdvertisementReview = () => {
             {userData.access_token.length && advertData ? (
                 <Row gutter={[24, 24]} className="content advert-review">
                     <Col span={24} className="table-section">
-                        <AdvertReviewFirstCard advertData={advertData} />
+                        <AdvertReviewFirstCard
+                            advertData={advertData}
+                            showBtns={false}
+                            backAddress={"restaurant-adverts-list"}
+                        />
+                        <AdvertActionBtns />
                         <AdvertReviewInfo
                             advertData={advertData}
                             setIsModalOpen={setIsModalOpen}
-                            hasEditBtn={true}
+                            hasEditBtn={false}
                         />
                         <AdvertReviewConditions advertData={advertData} />
                         <AdvertReviewAdvantages advertData={advertData} />
-                        <AdvertReviewModal
-                            isModalOpen={isModalOpen}
-                            setIsModalOpen={setIsModalOpen}
-                            advertData={advertData}
-                            id={id}
-                            setShouldRefetchData={setShouldRefetchData}
-                        />
                     </Col>
                 </Row>
             ) : (
@@ -72,4 +73,4 @@ const AdvertisementReview = () => {
     );
 };
 
-export default AdvertisementReview;
+export default RestaurantAdvertInfo;
