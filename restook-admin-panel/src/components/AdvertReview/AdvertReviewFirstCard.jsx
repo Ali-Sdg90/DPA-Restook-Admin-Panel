@@ -20,7 +20,7 @@ const AdvertReviewFirstCard = ({ advertData, id, showBtns, backAddress }) => {
     const patchStatus = async (isPublished) => {
         const res = await patchRequest(
             `/advertisements/${id}`,
-            { status: isPublished ? "published" : "draft" },
+            { status: isPublished ? "published" : "closed" },
             true,
             setToastifyObj
         );

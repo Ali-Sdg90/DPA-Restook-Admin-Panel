@@ -49,7 +49,7 @@ const RestaurantAdvertInfo = () => {
 
     return (
         <PageWrapper>
-            {userData.access_token.length && advertData ? (
+            {userData.access_token.length && advertData && id ? (
                 <Row gutter={[24, 24]} className="content advert-review">
                     <Col span={24} className="table-section">
                         <AdvertReviewFirstCard
@@ -71,7 +71,7 @@ const RestaurantAdvertInfo = () => {
                         <AdvertActionModal
                             isModalOpen={isModalOpen}
                             setIsModalOpen={setIsModalOpen}
-                            id={id}
+                            advertId={id}
                         />
                     </Col>
                 </Row>

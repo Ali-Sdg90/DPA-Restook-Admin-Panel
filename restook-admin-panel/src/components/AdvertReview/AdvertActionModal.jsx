@@ -13,8 +13,6 @@ const AdvertActionModal = ({ isModalOpen, setIsModalOpen, advertId }) => {
 
     const handleOk = async () => {
         try {
-            console.log("OK");
-
             const res = await patchRequest(
                 `/advertisements/${advertId}`,
                 { status: "closed" },
