@@ -9,9 +9,13 @@
             gap: 35px;
 
             .user-image-container {
-                border: 1px solid blue;
                 width: 104px;
                 height: 104px;
+
+                .profile-img {
+                    width: 104px;
+                    height: 104px;
+                }
             }
 
             .user-info {
@@ -40,7 +44,6 @@
                     .user-tag {
                         padding: 7px 8px 7px 15px;
                         border-radius: 32px;
-                        border: 1px solid red;
                         display: flex;
                         justify-content: center;
                         align-items: center;
@@ -49,7 +52,6 @@
                             width: 8px;
                             height: 8px;
                             border-radius: 50%;
-                            border: 1px solid red;
                         }
 
                         .tag-text {
@@ -60,6 +62,12 @@
                             line-height: normal;
                             margin-right: 4px;
                         }
+                    }
+
+                    .eye-icon {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
                     }
                 }
             }
@@ -129,7 +137,6 @@
         .second-right-card,
         .second-left-card {
             width: 100%;
-            height: 417px; // temp
         }
 
         .second-right-card {
@@ -200,7 +207,6 @@
                     position: absolute;
                     width: 30px;
                     height: 30px;
-                    border: 1px solid red;
                     top: 0;
                     right: -15px;
                     background-color: white;

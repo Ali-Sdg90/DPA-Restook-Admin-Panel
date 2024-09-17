@@ -44,4 +44,4 @@ export const getTableData2 = async (
     } else {
         console.log("ERROR IN FILTERING!");
     }
-};
+}; // Need to change
