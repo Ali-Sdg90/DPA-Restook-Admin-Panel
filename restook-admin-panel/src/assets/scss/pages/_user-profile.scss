@@ -1,0 +1,245 @@
+.user-profile {
+    .first-card {
+        padding: 23px 31px 58px 40px;
+        margin-bottom: 24px;
+
+        .right-side {
+            display: flex;
+            flex-flow: row nowrap;
+            gap: 35px;
+
+            .user-image-container {
+                border: 1px solid blue;
+                width: 104px;
+                height: 104px;
+            }
+
+            .user-info {
+                .user-name {
+                    color: #1e1e1e;
+                    font-size: 24px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                }
+
+                .user-type {
+                    color: #5a5a5a;
+                    font-size: 22px;
+                    font-style: normal;
+                    font-weight: 300;
+                    line-height: normal;
+                }
+
+                .user-tag-eye {
+                    display: flex;
+                    flex-flow: row nowrap;
+                    margin-top: 6px;
+                    gap: 13px;
+
+                    .user-tag {
+                        padding: 7px 8px 7px 15px;
+                        border-radius: 32px;
+                        border: 1px solid red;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        .tag-circle {
+                            width: 8px;
+                            height: 8px;
+                            border-radius: 50%;
+                            border: 1px solid red;
+                        }
+
+                        .tag-text {
+                            color: #1e1e1e;
+                            font-size: 16px;
+                            font-style: normal;
+                            font-weight: 500;
+                            line-height: normal;
+                            margin-right: 4px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .left-side {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 26px;
+
+            .active-profile-btn,
+            .call-restaurant {
+                width: 190px;
+                height: 40px;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+            }
+
+            .active-profile-btn {
+                color: #f0f4f7;
+                background: #2eb85c;
+            }
+
+            .call-restaurant {
+                color: #321fdb;
+                border: 1px solid #321fdb;
+            }
+        }
+
+        .ant-card-body {
+            padding: 0 !important;
+            overflow: unset !important;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+
+            &::after,
+            &::before {
+                display: none;
+            }
+        }
+    }
+
+    .second-card {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        gap: 24px;
+        margin-bottom: 24px;
+
+        .ant-card-body {
+            padding: 0 !important;
+            overflow: unset !important;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+
+            &::after,
+            &::before {
+                display: none;
+            }
+        }
+
+        .second-right-card,
+        .second-left-card {
+            width: 100%;
+            height: 417px; // temp
+        }
+
+        .second-right-card {
+            padding: 16px 16px 25px 3px;
+
+            .basic-info-section {
+                padding: 0 37px;
+                width: 100%;
+                display: flex;
+                flex-flow: column nowrap;
+                gap: 17px;
+
+                .basic-info-row {
+                    display: flex;
+                    flex-flow: row nowrap;
+                    justify-content: space-between;
+                    width: 100%;
+
+                    .basic-info-title {
+                        color: #1e1e1e;
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: normal;
+                    }
+
+                    .basic-info-value {
+                        color: #1e1e1e;
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 300;
+                        line-height: normal;
+                    }
+                }
+            }
+        }
+
+        .second-left-card {
+            padding: 16px 16px 0 35px;
+
+            .about-context {
+                padding-right: 40px;
+                color: #1e1e1e;
+                font-size: 18px;
+                font-style: normal;
+                font-weight: 300;
+                line-height: normal;
+            }
+        }
+    }
+
+    .third-card {
+        padding: 10px 25px 29px 0;
+        margin-bottom: 25px;
+
+        .work-details-section {
+            padding-right: 20px;
+            display: flex;
+            flex-flow: column nowrap;
+            gap: 20px;
+
+            .work-detail {
+                border-right: 1px solid #b3b3b3;
+                padding-right: 20px;
+                position: relative;
+
+                .bag-icon {
+                    position: absolute;
+                    width: 30px;
+                    height: 30px;
+                    border: 1px solid red;
+                    top: 0;
+                    right: -15px;
+                    background-color: white;
+                }
+
+                .work-title {
+                    color: #1e1e1e;
+                    font-size: 18px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: normal;
+                }
+
+                .work-place,
+                .work-time {
+                    color: #787878;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 300;
+                    line-height: normal;
+                }
+            }
+        }
+    }
+
+    .ant-card-head-wrapper .ant-card-head-title {
+        padding: 10px 0 14px;
+        color: #1e1e1e;
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
+
+    .ant-card-head {
+        padding: 0 !important;
+    }
+
+    .ant-card-body {
+        padding: 0 !important;
+    }
+}

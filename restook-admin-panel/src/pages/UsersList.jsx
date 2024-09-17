@@ -6,7 +6,6 @@ import {
     Col,
     Input,
     Table,
-    DatePicker,
     Pagination,
     Select,
     Spin,
@@ -24,6 +23,7 @@ import { getRequest } from "../services/apiService";
 import ImageWithFallback from "../components/Common/ImageWithFallback";
 import PageWrapper from "../components/Common/PageWrapper";
 import { InputDatePicker } from "jalaali-react-date-picker";
+import { useNavigate } from "react-router-dom";
 
 const UsersList = () => {
     const {
@@ -48,6 +48,15 @@ const UsersList = () => {
     const { userData } = useContext(AuthContext);
     const { userPlace, setUserPlace } = useContext(UserContext);
     const [jobTitle, setJobTitle] = useState();
+
+    const navigate = useNavigate();
+
+    const detailBtnHandler = (id) => {
+        console.log("id >>", id);
+
+        setUserPlace(`user-profile-${id}`);
+        navigate(`/user-profile/${id}`);
+    };
 
     const columns = [
         {
@@ -235,6 +244,7 @@ const UsersList = () => {
                             icon={<Arrow />}
                             iconPosition={"end"}
                             className="details-btn"
+                            onClick={() => detailBtnHandler(record.id)}
                         >
                             جزئیات
                         </Button>

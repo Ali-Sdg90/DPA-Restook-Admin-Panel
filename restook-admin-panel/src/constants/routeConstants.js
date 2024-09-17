@@ -1,5 +1,6 @@
 import React, { lazy } from "react";
 import { Navigate } from "react-router-dom";
+import UserProfile from "../pages/UserProfile";
 
 const HomePage = lazy(() => import("../pages/HomePage"));
 const LoginPage = lazy(() => import("../pages/LoginPage"));
@@ -19,6 +20,7 @@ export const routes = [
     { path: "/advertisements-list", element: <AdvertList />, needWrapper: true },
     { path: "/advertisement-review/:id", element: <AdvertReview />, needWrapper: true },
     { path: "/users-list", element: <UsersList />, needWrapper: true },
+    { path: "/user-profile/:id", element: <UserProfile />, needWrapper: true },
     { path: "/external-advert", element: <ExternalAdvert />, needWrapper: true },
     { path: "/", element: <Navigate to="/login" replace /> },
     { path: "/page-not-found", element: <PageNotFound /> },
