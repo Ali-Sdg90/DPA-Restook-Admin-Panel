@@ -4,53 +4,31 @@ import { useParams } from "react-router-dom";
 import { Button, Card, Col, Spin, Row } from "antd";
 
 import PageWrapper from "../components/Common/PageWrapper";
-import { UserContext } from "../store/UserContextProvider";
 import { AuthContext } from "../store/AuthContextProvider";
 
 import { ReactComponent as PhoneIcon } from "../assets/images/restaurants-page/Phone (1).svg";
 import { ReactComponent as PowerIcon } from "../assets/images/restaurants-page/Power (1).svg";
-import { ReactComponent as Briefcase } from "../assets/images/UserProfile/Briefcase.svg";
-import { ReactComponent as Eye } from "../assets/images/UserProfile/Eye - Slash.svg";
+import { ReactComponent as BriefcaseIcon } from "../assets/images/UserProfile/Briefcase.svg";
+import { ReactComponent as EyeSlashIcon } from "../assets/images/UserProfile/Eye - Slash.svg";
+import { ReactComponent as EyeIcon } from "../assets/images/UserProfile/Eye.svg";
 
-import { getRequest } from "../services/apiService";
+import { getRequest, patchRequest } from "../services/apiService";
 import ImageWithFallback from "../components/Common/ImageWithFallback";
-
-const userBasicInfoEngOrder = [
-    "birthYear",
-    "originCity",
-    "city",
-    "genderTitle",
-    "nationTitle",
-    "marriageStatusTitle",
-    "dutyStatusTitle",
-];
-
-const userBasicInfoFaOrder = [
-    "سال تولد",
-    "محل تولد",
-    "محل سکونت",
-    "جنسیت",
-    "ملیت",
-    "وضعیت تأهل",
-    "وضعیت نظام وظیفه",
-];
-
-const userMainInfoEngOrder = ["workExperiences", "educations", "languages"];
-
-const userMainInfoFaOrder = [
-    "سوابق کاری",
-    // "جوایز و مدارک",
-    "تحصیلات دانشگاهی",
-    "زبان‌های خارجی",
-];
+import { CommonContext } from "../store/CommonContextProvider";
+import {
+    userBasicInfoEngOrder,
+    userBasicInfoFaOrder,
+    userMainInfoEngOrder,
+    userMainInfoFaOrder,
+} from "../constants/UserProfileConstants";
 
 const UserProfile = () => {
     const [profileData, setProfileData] = useState();
 
     const { id } = useParams();
 
-    const { userPlace, setUserPlace } = useContext(UserContext);
     const { userData } = useContext(AuthContext);
+    const { setToastifyObj } = useContext(CommonContext);
 
     useEffect(() => {
         if (id) {
@@ -72,42 +50,46 @@ const UserProfile = () => {
         }
     }, [id]);
 
-    // const changeRestaurantStatus = async (currentStatus) => {
-    //     let newState = "ACTIVE";
+    const changeUserStatus = async (currentStatus) => {
+        let newState = "ACTIVE";
 
-    //     if (currentStatus === "ACTIVE") {
-    //         newState = "INACTIVE";
-    //     }
+        if (currentStatus === "ACTIVE") {
+            newState = "INACTIVE";
+        }
 
-    //     const res = await patchRequest(
-    //         `/restaurants/${id}`,
-    //         {
-    //             adminStatus: newState,
-    //         },
-    //         true,
-    //         setToastifyObj
-    //     );
+        const res = await patchRequest(
+            `/users/${id}`,
+            {
+                adminStatus: newState,
+            },
+            true,
+            setToastifyObj
+        );
 
-    //     if (res.success) {
-    //         setRestaurantData((prevData) => ({
-    //             ...prevData,
-    //             adminStatus: newState,
-    //         }));
-    //     } else {
-    //         console.error("ERROR IN PATCH");
-    //     }
-    // };
+        if (res.success) {
+            setProfileData((prevData) => ({
+                ...prevData,
+                adminStatus: newState,
+            }));
 
-    const mainInfoFiller = (mode, item, index) => {
-        // console.log("item >>", item);
-        // console.log("mode >>", mode);
+            setToastifyObj(() => ({
+                title: res.message,
+                mode: "success",
+            }));
 
+            console.log("success-res >>", res);
+        } else {
+            console.error("ERROR IN PATCH");
+        }
+    };
+
+    const mainInfoFiller = (mode, item) => {
         switch (mode) {
             case "workExperiences":
                 return (
-                    <div className="work-detail" key={index}>
+                    <div className="work-detail" key={item.id}>
                         <div className="bag-icon">
-                            <Briefcase />
+                            <BriefcaseIcon />
                         </div>
 
                         <div className="work-title">{item.jobTitle}</div>
@@ -118,9 +100,9 @@ const UserProfile = () => {
 
             case "educations":
                 return (
-                    <div className="work-detail" key={index}>
+                    <div className="work-detail" key={item.id}>
                         <div className="bag-icon">
-                            <Briefcase />
+                            <BriefcaseIcon />
                         </div>
 
                         <div className="work-title">{item.option.value}</div>
@@ -131,9 +113,9 @@ const UserProfile = () => {
 
             case "languages":
                 return (
-                    <div className="work-detail" key={index}>
+                    <div className="work-detail" key={item.id}>
                         <div className="bag-icon">
-                            <Briefcase />
+                            <BriefcaseIcon />
                         </div>
 
                         <div className="work-title">{item.language}</div>
@@ -143,6 +125,39 @@ const UserProfile = () => {
 
             default:
                 return "default";
+        }
+    };
+
+    const changeVisibility = async (currentStatus) => {
+        let newState = true;
+
+        if (currentStatus === true) {
+            newState = false;
+        }
+
+        const res = await patchRequest(
+            `/users/${id}`,
+            {
+                jobStatusVisibil: newState,
+            },
+            true,
+            setToastifyObj
+        );
+
+        if (res.success) {
+            setProfileData((prevData) => ({
+                ...prevData,
+                jobStatusVisible: newState,
+            }));
+
+            setToastifyObj(() => ({
+                title: res.message,
+                mode: "success",
+            }));
+
+            console.log("success-res >>", res);
+        } else {
+            console.error("ERROR IN PATCH");
         }
     };
 
@@ -199,8 +214,19 @@ const UserProfile = () => {
                                             ""
                                         )}
 
-                                        <div className="eye-icon">
-                                            <Eye />
+                                        <div
+                                            className="eye-icon"
+                                            onClick={() =>
+                                                changeVisibility(
+                                                    profileData.jobStatusVisible
+                                                )
+                                            }
+                                        >
+                                            {profileData.jobStatusVisible ? (
+                                                <EyeIcon />
+                                            ) : (
+                                                <EyeSlashIcon />
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -217,25 +243,29 @@ const UserProfile = () => {
                                                 ? "#2EB85C"
                                                 : "#E45353",
                                     }}
-                                    // onClick={() =>
-                                    //     changeRestaurantStatus(
-                                    //         profileData.adminStatus
-                                    //     )
-                                    // }
+                                    onClick={() =>
+                                        changeUserStatus(
+                                            profileData.adminStatus
+                                        )
+                                    }
                                 >
                                     {profileData.adminStatus === "ACTIVE"
                                         ? "پروفایل فعال"
                                         : "پروفایل غیرفعال"}
                                 </Button>
 
-                                <a href={`tel:${profileData.phoneNumber}`}>
-                                    <Button
-                                        className="call-restaurant"
-                                        icon={<PhoneIcon />}
-                                    >
-                                        تماس با مجموعه
-                                    </Button>
-                                </a>
+                                {profileData.phoneNumber ? (
+                                    <a href={`tel:${profileData.phoneNumber}`}>
+                                        <Button
+                                            className="call-restaurant"
+                                            icon={<PhoneIcon />}
+                                        >
+                                            تماس با کارجو
+                                        </Button>
+                                    </a>
+                                ) : (
+                                    ""
+                                )}
                             </div>
                         </Card>
 
@@ -249,7 +279,10 @@ const UserProfile = () => {
                                         <>
                                             {userBasicInfoFaOrder.map(
                                                 (title, index) => (
-                                                    <div className="basic-info-row">
+                                                    <div
+                                                        className="basic-info-row"
+                                                        key={index}
+                                                    >
                                                         <div className="basic-info-title">
                                                             {title}
                                                         </div>
@@ -315,8 +348,7 @@ const UserProfile = () => {
                                     ].map((item) =>
                                         mainInfoFiller(
                                             userMainInfoEngOrder[index],
-                                            item,
-                                            index
+                                            item
                                         )
                                     )}
                                 </div>
