@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 
 import {
     Button,
@@ -19,6 +19,8 @@ import { getTableData } from "../../services/getTableData";
 import useTableData from "../../hooks/useTableData";
 import ImageWithFallback from "../Common/ImageWithFallback";
 import { InputDatePicker } from "jalaali-react-date-picker";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../store/UserContextProvider";
 
 const NewUsersList = () => {
     const {
@@ -40,6 +42,17 @@ const NewUsersList = () => {
         handleOpenChange,
     } = useTableData();
 
+    const { setUserPlace } = useContext(UserContext);
+
+    const navigate = useNavigate();
+
+    const detailBtnClickHandler = (id) => {
+        console.log("ID >>", id);
+
+        setUserPlace(`user-profile-${id}`);
+        navigate(`/user-profile/${id}`);
+    };
+
     const columns = [
         {
             title: "",
@@ -49,11 +62,6 @@ const NewUsersList = () => {
             render: (_, record, index) =>
                 index !== 0 &&
                 (record.imageUrl ? (
-                    // <img
-                    //     src={`${API_BASE_IMG}${record.imageUrl}`}
-                    //     className="table-image"
-                    //     onError={handleImageError}
-                    // />
                     <ImageWithFallback
                         imageUrl={record.imageUrl}
                         className={"table-image"}
@@ -236,6 +244,7 @@ const NewUsersList = () => {
                             icon={<Arrow />}
                             iconPosition={"end"}
                             className="details-btn"
+                            onClick={() => detailBtnClickHandler(record.id)}
                         >
                             جزئیات
                         </Button>

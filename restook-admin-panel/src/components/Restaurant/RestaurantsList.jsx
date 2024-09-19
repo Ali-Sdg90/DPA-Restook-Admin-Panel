@@ -29,12 +29,12 @@ const RestaurantsList = () => {
         tableData,
         totalPage,
         sortMode,
+        currentPage,
         sortTable,
         handleInputChange,
         setTableData,
         setTotalPage,
         handlePageChange,
-        currentPage,
         setPageFilter,
     } = useTableData();
 

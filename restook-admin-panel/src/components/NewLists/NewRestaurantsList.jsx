@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 
 import { Button, Card, Col, Input, Table, DatePicker, Pagination } from "antd";
 
@@ -10,6 +10,8 @@ import { getTableData } from "../../services/getTableData";
 import useTableData from "../../hooks/useTableData";
 import ImageWithFallback from "../Common/ImageWithFallback";
 import { InputDatePicker } from "jalaali-react-date-picker";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../store/UserContextProvider";
 
 const NewRestaurantsList = () => {
     const {
@@ -30,6 +32,17 @@ const NewRestaurantsList = () => {
         handleOpenChange,
         handlePageChange,
     } = useTableData();
+
+    const { setUserPlace } = useContext(UserContext);
+
+    const navigate = useNavigate();
+
+    const detailBtnClickHandler = (id) => {
+        console.log("ID >>", id);
+
+        setUserPlace(`restaurant-info-${id}`);
+        navigate(`/restaurant-profile/${id}`);
+    };
 
     const columns = [
         {
@@ -166,6 +179,7 @@ const NewRestaurantsList = () => {
                             icon={<Arrow />}
                             iconPosition={"end"}
                             className="details-btn"
+                            onClick={() => detailBtnClickHandler(record.id)}
                         >
                             جزئیات
                         </Button>

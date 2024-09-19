@@ -18,7 +18,7 @@ const RestaurantInfo = () => {
     } = useContext(ExternalAdvertContext);
 
     const { setToastifyObj } = useContext(CommonContext);
-    const { userPlace, setUserPlace } = useContext(UserContext);
+    const { setUserPlace } = useContext(UserContext);
 
     const submitForm = async () => {
         console.log("-- SUBMIT --");
