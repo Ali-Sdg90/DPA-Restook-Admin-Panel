@@ -117,6 +117,7 @@ export const ExternalAdvertContextProvider = ({
                     address: restaurant.contacts
                         ? restaurant.contacts.address
                         : null,
+                    advertisementUrl: advertisement.advertisementUrl || "",
                     ageLimit: advertisement.ageLimit || null,
                     alreadyExist: restaurant.alreadyExist || null,
                     branch: restaurant.branch || "",

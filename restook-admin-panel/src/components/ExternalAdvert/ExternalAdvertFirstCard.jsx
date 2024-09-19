@@ -53,6 +53,18 @@ const ExternalAdvertFirstCard = ({
                     ) : (
                         <div className="empty-address"></div>
                     )}
+
+                    {mappedData.alreadyExist ? (
+                        <a
+                            href={mappedData.advertisementUrl}
+                            className="open-jv-link"
+                            target="_blank"
+                        >
+                            مشاهده آگهی در سایت مرجع
+                        </a>
+                    ) : (
+                        ""
+                    )}
                 </div>
             </div>
 

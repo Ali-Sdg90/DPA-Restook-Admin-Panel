@@ -40,7 +40,7 @@ const NewRestaurantsList = () => {
     const detailBtnClickHandler = (id) => {
         console.log("ID >>", id);
 
-        setUserPlace(`restaurant-info-${id}`);
+        setUserPlace(`restaurant-profile-${id}`);
         navigate(`/restaurant-profile/${id}`);
     };
 
