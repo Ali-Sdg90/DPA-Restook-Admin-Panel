@@ -21,7 +21,7 @@ export const routes = [
     { path: "/advertisement-review/:id", element: <AdvertReview />, needWrapper: true },
     { path: "/users-list", element: <UsersList />, needWrapper: true },
     { path: "/user-profile/:id", element: <UserProfile />, needWrapper: true },
-    { path: "/resume-user-profile/:restaurantId/:id", element: <UserProfile />, needWrapper: true },
+    { path: "/resume-user-profile/:restaurantId/:urlId/:id", element: <UserProfile />, needWrapper: true },
     { path: "/external-advert", element: <ExternalAdvert />, needWrapper: true },
     { path: "/", element: <Navigate to="/login" replace /> },
     { path: "/page-not-found", element: <PageNotFound /> },

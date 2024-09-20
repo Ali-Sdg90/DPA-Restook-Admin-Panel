@@ -28,14 +28,15 @@ const UserProfile = () => {
     const [profileData, setProfileData] = useState();
     const [isResumeMode, setIsResumeMode] = useState(false);
 
-    const { restaurantId, id } = useParams();
+    const { restaurantId, urlId, id } = useParams();
     const location = useLocation();
     const navigate = useNavigate();
 
     useEffect(() => {
         console.log("restaurantId >>", restaurantId);
         console.log("id >>", id);
-    }, [restaurantId, id]);
+        console.log("urlId >>", urlId);
+    }, [restaurantId, id, urlId]);
 
     const { userData } = useContext(AuthContext);
     const { setToastifyObj } = useContext(CommonContext);
@@ -186,7 +187,7 @@ const UserProfile = () => {
 
     const backBtnClickHandler = () => {
         setUserPlace(`restaurant-resume-list-${restaurantId}`);
-        navigate(`/restaurant-profile/${restaurantId}`);
+        navigate(`/restaurant-profile/${urlId}`);
     };
 
     return (

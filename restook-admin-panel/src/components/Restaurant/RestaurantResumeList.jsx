@@ -57,7 +57,9 @@ const RestaurantResumeList = () => {
         console.log("resumeID >>", resumeID);
 
         setUserPlace(`user-profile-${resumeID}`);
-        navigate(`/resume-user-profile/${advertId}/${resumeID}`);
+        navigate(
+            `/resume-user-profile/${advertId}/${restaurantID}/${resumeID}`
+        );
     };
 
     const columns = [
