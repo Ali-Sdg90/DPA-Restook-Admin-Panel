@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { ReactComponent as LeftArrowIcon } from "../../assets/images/advertisement-review/Chevron - Left (2).svg";
 import { AdvertActionBtnsStyle } from "../../constants/AdvertActionBtnsConstants";
+import { UserContext } from "../../store/UserContextProvider";
 
-const AdvertActionBtns = ({ resumeCounter, setIsModalOpen }) => {
+const AdvertActionBtns = ({ resumeCounter, setIsModalOpen, advertId }) => {
+    const { setUserPlace } = useContext(UserContext);
+
     const actionBtnFunc = (index) => {
         switch (index) {
+            case 0:
+                setUserPlace(`restaurant-resume-list-${advertId}`);
+                break;
             case 3:
                 setIsModalOpen(true);
                 break;

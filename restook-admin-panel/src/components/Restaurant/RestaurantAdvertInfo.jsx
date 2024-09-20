@@ -60,6 +60,7 @@ const RestaurantAdvertInfo = () => {
                         <AdvertActionBtns
                             resumeCounter={advertData.resumeCounter}
                             setIsModalOpen={setIsModalOpen}
+                            advertId={id}
                         />
                         <AdvertReviewInfo
                             advertData={advertData}

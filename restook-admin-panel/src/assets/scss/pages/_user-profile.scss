@@ -8,6 +8,11 @@
             flex-flow: row nowrap;
             gap: 35px;
 
+            .back-arrow {
+                cursor: pointer;
+                margin-top: 20px;
+            }
+
             .user-image-container {
                 width: 104px;
                 height: 104px;

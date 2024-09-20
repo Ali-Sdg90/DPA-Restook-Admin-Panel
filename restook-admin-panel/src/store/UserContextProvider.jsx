@@ -7,6 +7,7 @@ const UserContextProvider = ({ children }) => {
     // const [userPlace, setUserPlace] = useState("external-advert-profile-1720");
     // const [userPlace, setUserPlace] = useState("create-new-restaurant");
     // const [userPlace, setUserPlace] = useState("restaurant-adverts-list-79");
+    // const [userPlace, setUserPlace] = useState("restaurant-resume-list");
 
     useEffect(() => {
         console.log("userPlace >>", userPlace);

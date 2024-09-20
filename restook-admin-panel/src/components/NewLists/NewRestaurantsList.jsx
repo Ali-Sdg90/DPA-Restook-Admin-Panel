@@ -12,6 +12,7 @@ import ImageWithFallback from "../Common/ImageWithFallback";
 import { InputDatePicker } from "jalaali-react-date-picker";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../store/UserContextProvider";
+import { getRequest } from "../../services/apiService";
 
 const NewRestaurantsList = () => {
     const {
@@ -191,15 +192,35 @@ const NewRestaurantsList = () => {
 
     useEffect(() => {
         const getData = async () => {
-            const res = await getTableData(
-                "restaurants",
-                pageFilter,
-                currentPage,
-                true
+            // const res = await getTableData(
+            //     "restaurants",
+            //     pageFilter,
+            //     currentPage,
+            //     true
+            // );
+
+            // setTableData(res[0]);
+            // setTotalPage(res[1] ? res[1] : 1);
+
+            const res = await getRequest(
+                `/${"restaurants"}?${"adminStatus"}=${
+                    pageFilter.status
+                }&sortBy=${pageFilter.sortBy}&sortOrder=${
+                    pageFilter.sortOrder
+                }&page=${currentPage}`
             );
 
-            setTableData(res[0]);
-            setTotalPage(res[1] ? res[1] : 1);
+            console.log("RESSSSS >>", res);
+
+            if (res.success) {
+                const restaurants = res.data["restaurants"];
+                restaurants.unshift({ id: -1 });
+
+                setTableData(restaurants);
+                setTotalPage(res.data.totalPages || 1);
+            } else {
+                console.log("ERROR IN FILTERING!", res);
+            }
         };
 
         getData();

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { Button, Card, Col, Spin, Row } from "antd";
 
@@ -11,6 +11,7 @@ import { ReactComponent as PowerIcon } from "../assets/images/restaurants-page/P
 import { ReactComponent as BriefcaseIcon } from "../assets/images/UserProfile/Briefcase.svg";
 import { ReactComponent as EyeSlashIcon } from "../assets/images/UserProfile/Eye - Slash.svg";
 import { ReactComponent as EyeIcon } from "../assets/images/UserProfile/Eye.svg";
+import { ReactComponent as RightArrowIcon } from "../assets/images/restaurants-page/Arrow - Right (1).svg";
 
 import { getRequest, patchRequest } from "../services/apiService";
 import ImageWithFallback from "../components/Common/ImageWithFallback";
@@ -21,18 +22,29 @@ import {
     userMainInfoEngOrder,
     userMainInfoFaOrder,
 } from "../constants/UserProfileConstants";
+import { UserContext } from "../store/UserContextProvider";
 
 const UserProfile = () => {
     const [profileData, setProfileData] = useState();
+    const [isResumeMode, setIsResumeMode] = useState(false);
 
-    const { id } = useParams();
+    const { restaurantId, id } = useParams();
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        console.log("restaurantId >>", restaurantId);
+        console.log("id >>", id);
+    }, [restaurantId, id]);
 
     const { userData } = useContext(AuthContext);
     const { setToastifyObj } = useContext(CommonContext);
+    const { setUserPlace } = useContext(UserContext);
 
     useEffect(() => {
         if (id) {
             console.log("id >>", id);
+            console.log("restaurantId >>", restaurantId);
 
             const getData = async () => {
                 const res = await getRequest(`/users/${id}`);
@@ -48,7 +60,18 @@ const UserProfile = () => {
 
             getData();
         }
-    }, [id]);
+    }, [id, restaurantId]);
+
+    useEffect(() => {
+        const fullPath = location.pathname;
+        console.log("LOCATION >>", fullPath);
+
+        if (fullPath.includes("resume-user-profile")) {
+            setIsResumeMode(true);
+        } else {
+            setIsResumeMode(false);
+        }
+    }, [location]);
 
     const changeUserStatus = async (currentStatus) => {
         let newState = "ACTIVE";
@@ -161,6 +184,11 @@ const UserProfile = () => {
         }
     };
 
+    const backBtnClickHandler = () => {
+        setUserPlace(`restaurant-resume-list-${restaurantId}`);
+        navigate(`/restaurant-profile/${restaurantId}`);
+    };
+
     return (
         <PageWrapper>
             {userData.access_token.length && profileData ? (
@@ -168,6 +196,17 @@ const UserProfile = () => {
                     <Col span={24} className="table-section">
                         <Card className="first-card">
                             <div className="right-side">
+                                {isResumeMode ? (
+                                    <div
+                                        className="back-arrow"
+                                        onClick={backBtnClickHandler}
+                                    >
+                                        <RightArrowIcon />
+                                    </div>
+                                ) : (
+                                    ""
+                                )}
+
                                 <div className="user-image-container">
                                     <ImageWithFallback
                                         imageUrl={profileData.imageUrl}
@@ -214,45 +253,54 @@ const UserProfile = () => {
                                             ""
                                         )}
 
-                                        <div
-                                            className="eye-icon"
-                                            onClick={() =>
-                                                changeVisibility(
-                                                    profileData.jobStatusVisible
-                                                )
-                                            }
-                                        >
-                                            {profileData.jobStatusVisible ? (
-                                                <EyeIcon />
-                                            ) : (
-                                                <EyeSlashIcon />
-                                            )}
-                                        </div>
+                                        {isResumeMode ? (
+                                            ""
+                                        ) : (
+                                            <div
+                                                className="eye-icon"
+                                                onClick={() =>
+                                                    changeVisibility(
+                                                        profileData.jobStatusVisible
+                                                    )
+                                                }
+                                            >
+                                                {profileData.jobStatusVisible ? (
+                                                    <EyeIcon />
+                                                ) : (
+                                                    <EyeSlashIcon />
+                                                )}
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
 
                             <div className="left-side">
-                                <Button
-                                    className="active-profile-btn"
-                                    type="primary"
-                                    icon={<PowerIcon />}
-                                    style={{
-                                        background:
-                                            profileData.adminStatus === "ACTIVE"
-                                                ? "#2EB85C"
-                                                : "#E45353",
-                                    }}
-                                    onClick={() =>
-                                        changeUserStatus(
-                                            profileData.adminStatus
-                                        )
-                                    }
-                                >
-                                    {profileData.adminStatus === "ACTIVE"
-                                        ? "پروفایل فعال"
-                                        : "پروفایل غیرفعال"}
-                                </Button>
+                                {isResumeMode ? (
+                                    ""
+                                ) : (
+                                    <Button
+                                        className="active-profile-btn"
+                                        type="primary"
+                                        icon={<PowerIcon />}
+                                        style={{
+                                            background:
+                                                profileData.adminStatus ===
+                                                "ACTIVE"
+                                                    ? "#2EB85C"
+                                                    : "#E45353",
+                                        }}
+                                        onClick={() =>
+                                            changeUserStatus(
+                                                profileData.adminStatus
+                                            )
+                                        }
+                                    >
+                                        {profileData.adminStatus === "ACTIVE"
+                                            ? "پروفایل فعال"
+                                            : "پروفایل غیرفعال"}
+                                    </Button>
+                                )}
 
                                 {profileData.phoneNumber ? (
                                     <a href={`tel:${profileData.phoneNumber}`}>

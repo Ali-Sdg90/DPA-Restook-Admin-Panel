@@ -15,7 +15,7 @@ const CommonContextProvider = ({ children }) => {
     );
 
     useEffect(() => {
-        console.timeLog("toastifyObj >>", toastifyObj);
+        console.log("toastifyObj >>", toastifyObj);
     }, [toastifyObj]);
 
     return (

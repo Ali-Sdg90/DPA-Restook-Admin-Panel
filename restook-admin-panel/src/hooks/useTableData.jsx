@@ -6,9 +6,8 @@ const useTableData = () => {
     const pageFilterMemo = useMemo(
         () => ({
             status: "PENDING",
-            sortBy: "jobTitle",
+            sortBy: "",
             sortOrder: "ASC",
-            search: "",
             date: "",
         }),
         []

@@ -9,6 +9,7 @@ import RestaurantInfo from "../components/Restaurant/RestaurantInfo";
 import RestaurantAdvertList from "../components/Restaurant/RestaurantAdvertList";
 import NewRestaurantAdvert from "../components/Restaurant/NewRestaurantAdvert";
 import RestaurantAdvertInfo from "../components/Restaurant/RestaurantAdvertInfo";
+import RestaurantResumeList from "../components/Restaurant/RestaurantResumeList";
 
 const ExternalAdver = () => {
     const { userPlace, setUserPlace } = useContext(UserContext);
@@ -19,7 +20,6 @@ const ExternalAdver = () => {
             userPlace === "default" ||
             userPlace.includes("restaurant-profile")
         ) {
-            // return <RestaurantProfileMenu />;
             return <RestaurantProfileMenu />;
         } else if (userPlace.includes("restaurant-info")) {
             return (
@@ -47,6 +47,8 @@ const ExternalAdver = () => {
             );
         } else if (userPlace.includes("restaurant-advert-info")) {
             return <RestaurantAdvertInfo />;
+        } else if (userPlace.includes("restaurant-resume-list")) {
+            return <RestaurantResumeList />;
         } else {
             console.log("ERROR IN RestaurantProfile-pageMode", userPlace);
         }
