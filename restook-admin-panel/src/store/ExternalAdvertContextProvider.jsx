@@ -135,7 +135,9 @@ export const ExternalAdvertContextProvider = ({
                     instagram: restaurant.contacts
                         ? restaurant.contacts.instagram
                         : null,
-                    jobTitle: restaurant.jobTitle || "",
+                    jobTitleAdvert: advertisement.jobTitle || "",
+                    jobTitleRestaurant: restaurant.jobTitle || "",
+                    jobTitleId: advertisement.jobTitleId || "",
                     jobTypeId: restaurant.jobTypeId || null,
                     languages: advertisement.languages
                         ? advertisement.languages

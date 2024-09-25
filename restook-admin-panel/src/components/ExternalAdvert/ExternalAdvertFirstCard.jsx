@@ -37,7 +37,9 @@ const ExternalAdvertFirstCard = ({
                 <div className="restaurant-title">
                     <div className="restaurant-info-text">اطلاعات مجموعه</div>
                     <div className="restaurant-name">
-                        {mappedData.jobTitle ? mappedData.jobTitle : "_"}
+                        {mappedData.jobTitleRestaurant
+                            ? mappedData.jobTitleRestaurant
+                            : "_"}
                     </div>
 
                     {mappedData.website ? (
@@ -54,17 +56,13 @@ const ExternalAdvertFirstCard = ({
                         <div className="empty-address"></div>
                     )}
 
-                    {mappedData.alreadyExist ? (
-                        <a
-                            href={mappedData.advertisementUrl}
-                            className="open-jv-link"
-                            target="_blank"
-                        >
-                            مشاهده آگهی در سایت مرجع
-                        </a>
-                    ) : (
-                        ""
-                    )}
+                    <a
+                        href={mappedData.advertisementUrl}
+                        className="open-jv-link"
+                        target="_blank"
+                    >
+                        مشاهده آگهی در سایت مرجع
+                    </a>
                 </div>
             </div>
 
@@ -75,7 +73,10 @@ const ExternalAdvertFirstCard = ({
 
                         <Row gutter={[48, 10]}>
                             <Col span={8}>
-                                <Form.Item label="عنوان مجموعه" name="jobTitle">
+                                <Form.Item
+                                    label="عنوان مجموعه"
+                                    name="jobTitleAdvert"
+                                >
                                     <Input />
                                 </Form.Item>
                             </Col>

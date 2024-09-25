@@ -7,7 +7,7 @@ export const convertToPostObj = (data, profileId, alreadyExist, postMode) => {
     switch (postMode) {
         case "ExternalAdvert":
             restaurantData = {
-                jobTitle: data.jobTitle,
+                jobTitle: data.jobTitleRestaurant,
                 phoneNumber: convertFAtoEN(data.phoneNumber),
                 branch: data.branch,
                 aboutUs: data.aboutUs,
@@ -27,8 +27,8 @@ export const convertToPostObj = (data, profileId, alreadyExist, postMode) => {
             advertisementData = {
                 // restaurantId: profileId, // ?
                 status: "published", // Static value
-                // jobTitleId: profileId, // ?
-                jobTitle: data.jobTitle,
+                jobTitleId: data.jobTitleId,
+                jobTitle: data.jobTitleAdvert,
                 skillLevels: data.skillLevels || "",
                 dutyStatus: data.dutyStatus || "",
                 genders: data.genders || "",
@@ -67,7 +67,7 @@ export const convertToPostObj = (data, profileId, alreadyExist, postMode) => {
 
         case "onlyRestaurant":
             restaurantData = {
-                jobTitle: data.jobTitle,
+                jobTitle: data.jobTitleRestaurant,
                 phoneNumber: convertFAtoEN(data.phoneNumber),
                 branch: data.branch,
                 aboutUs: data.aboutUs,
