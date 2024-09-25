@@ -1,26 +1,17 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
-import {
-    Button,
-    Card,
-    Col,
-    Input,
-    Table,
-    DatePicker,
-    Pagination,
-    Select,
-} from "antd";
+import { Button, Card, Col, Input, Table, Pagination, Select } from "antd";
 
 import { ReactComponent as Arrow } from "../../assets/images/home-page/Chevron - Left.svg";
-import { ReactComponent as Calender } from "../../assets/images/home-page/Calendar - Dates (1).svg";
 import { ReactComponent as BackIcon } from "../../assets/images/home-page/Arrow - Right.svg";
 import { sortIcon } from "../../utils/tableIconSort";
-import { getTableData } from "../../services/getTableData";
 import useTableData from "../../hooks/useTableData";
 import ImageWithFallback from "../Common/ImageWithFallback";
 import { InputDatePicker } from "jalaali-react-date-picker";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../store/UserContextProvider";
+import { getRequest } from "../../services/apiService";
+import { convertFAtoEN } from "../../utils/convertFAtoENNumbers";
 
 const NewUsersList = () => {
     const {
@@ -32,17 +23,32 @@ const NewUsersList = () => {
         selectedDate,
         isDateOpen,
         calendarRef,
+        isLoading,
+        dateValue,
         sortTable,
         handleInputChange,
         setTableData,
         setTotalPage,
         handlePageChange,
+        setCurrentPage,
+        setPageFilter,
         backBtnHandler,
         handleDateChange,
         handleOpenChange,
+        setIsLoading,
     } = useTableData();
 
     const { setUserPlace } = useContext(UserContext);
+
+    const [jobTitle, setJobTitle] = useState();
+    const [searchObj, setSearchObj] = useState({
+        jobStatus: "",
+        searchPhone: "",
+        searchJob: "",
+        searchName: "",
+        JobTitleId: "",
+        dateValue: dateValue,
+    });
 
     const navigate = useNavigate();
 
@@ -52,6 +58,19 @@ const NewUsersList = () => {
         setUserPlace(`user-profile-${id}`);
         navigate(`/user-profile/${id}`);
     };
+
+    useEffect(() => {
+        setSearchObj((prevState) => ({
+            ...prevState,
+            [dateValue]: dateValue,
+        }));
+    }, [dateValue]);
+
+    useEffect(() => {
+        console.log("searchObj >>", searchObj);
+
+        getData();
+    }, [searchObj, pageFilter, currentPage]);
 
     const columns = [
         {
@@ -87,10 +106,12 @@ const NewUsersList = () => {
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
-                        value={record.address}
+                        value={searchObj.searchName}
                         onChange={(e) => {
-                            handleInputChange(e, record.key, "fullName");
-                            console.log(e.target.value);
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                searchName: convertFAtoEN(e.target.value),
+                            }));
                         }}
                     />
                 ) : (
@@ -114,17 +135,21 @@ const NewUsersList = () => {
                 index === 0 ? (
                     <Select
                         defaultValue="همه"
-                        // onChange={handleChange}
+                        onChange={(value) =>
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                JobTitleId: value,
+                            }))
+                        }
                         style={{ width: "80%" }}
-                        options={[
-                            { value: "همه", label: "همه" },
-                            { value: "آشپز", label: "آشپز" },
-                            { value: "هد آشپزخانه", label: "هد آشپزخانه" },
-                            { value: "کباب زن", label: "کباب زن" },
-                            { value: "باریستا", label: "باریستا" },
-                            { value: "سالاد زن", label: "سالاد زن" },
-                            { value: "بارتندر", label: "بارتندر" },
-                        ]}
+                        options={
+                            jobTitle
+                                ? jobTitle.map((item) => ({
+                                      value: item.id,
+                                      label: item.title,
+                                  }))
+                                : ""
+                        }
                     />
                 ) : text ? (
                     text
@@ -148,10 +173,13 @@ const NewUsersList = () => {
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
-                        value={record.address}
-                        onChange={(e) =>
-                            handleInputChange(e, record.key, "phoneNumber")
-                        }
+                        value={searchObj.searchPhone}
+                        onChange={(e) => {
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                searchPhone: convertFAtoEN(e.target.value),
+                            }));
+                        }}
                     />
                 ) : (
                     text
@@ -201,20 +229,25 @@ const NewUsersList = () => {
                 index === 0 ? (
                     <Select
                         defaultValue="همه"
-                        // onChange={handleChange}
+                        onChange={(value) =>
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                jobStatus: value,
+                            }))
+                        }
                         options={[
-                            { value: "همه", label: "همه" },
-                            { value: "نا معلوم", label: "نا معلوم" },
+                            { value: "", label: "همه" },
+                            { value: "unknown", label: "نا معلوم" },
                             {
-                                value: "به دنبال کار بهتر",
+                                value: "better",
                                 label: "به دنبال کار بهتر",
                             },
                             {
-                                value: "آماده به کار",
+                                value: "ready",
                                 label: "آماده به کار",
                             },
                             {
-                                value: "مشغول به کار",
+                                value: "working",
                                 label: "مشغول به کار",
                             },
                         ]}
@@ -255,22 +288,62 @@ const NewUsersList = () => {
     ];
 
     useEffect(() => {
-        const getData = async () => {
-            const res = await getTableData(
-                "users",
-                pageFilter,
-                currentPage,
-                true
-            );
+        setPageFilter((prevState) => ({ ...prevState, status: "" }));
 
-            console.log("RESsSsSsSs >> ", res);
+        const getJobTitles = async () => {
+            try {
+                const res = await getRequest(`/options/jobTitles`);
 
-            setTableData(res[0]);
-            setTotalPage(res[1] ? res[1] : 1);
+                if (res.success) {
+                    setJobTitle([{ id: "", title: "همه" }, ...res.data]);
+                } else {
+                    throw new Error("Unsuccessful fetch /options/jobTitles");
+                }
+            } catch (error) {
+                console.log("Error in UsersList-getData: ", error);
+            }
         };
 
-        getData();
-    }, [pageFilter, currentPage]);
+        getJobTitles();
+    }, []);
+
+    const getData = async () => {
+        setIsLoading(true);
+
+        try {
+            const res = await getRequest(
+                `/${"users"}?jobStatus=${
+                    searchObj.jobStatus
+                }&adminStatus=${"PENDING"}&sortBy=${
+                    pageFilter.sortBy
+                }&sortOrder=${
+                    pageFilter.sortOrder
+                }&page=${currentPage}&searchPhone=${
+                    searchObj.searchPhone
+                }&searchJob=${searchObj.searchJob}&searchName=${
+                    searchObj.searchName
+                }&JobTitleId=${searchObj.JobTitleId}&date=${
+                    dateValue === "1348/10/11" ? "" : dateValue
+                }`
+            );
+
+            console.log("RESSSSS >>", res);
+
+            if (res.success) {
+                const restaurants = res.data["users"];
+                restaurants.unshift({ id: -1 });
+
+                setTableData(restaurants);
+                setTotalPage(res.data.totalPages ? res.data.totalPages : 1);
+            } else {
+                console.log("ERROR IN FILTERING!");
+            }
+        } catch (error) {
+            console.error("Error in ExternalAdvertList-getData: ", error);
+        }
+
+        setIsLoading(false);
+    };
 
     return (
         <>
@@ -289,7 +362,7 @@ const NewUsersList = () => {
                     }
                 >
                     <Table
-                        loading={!totalPage}
+                        loading={isLoading}
                         dataSource={tableData}
                         columns={columns}
                         pagination={false}

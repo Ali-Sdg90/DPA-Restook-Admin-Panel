@@ -1,18 +1,17 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { Button, Card, Col, Input, Table, DatePicker, Pagination } from "antd";
 
 import { ReactComponent as Arrow } from "../../assets/images/home-page/Chevron - Left.svg";
-import { ReactComponent as Calender } from "../../assets/images/home-page/Calendar - Dates (1).svg";
 import { ReactComponent as BackIcon } from "../../assets/images/home-page/Arrow - Right.svg";
 import { sortIcon } from "../../utils/tableIconSort";
-import { getTableData } from "../../services/getTableData";
 import useTableData from "../../hooks/useTableData";
 import ImageWithFallback from "../Common/ImageWithFallback";
 import { InputDatePicker } from "jalaali-react-date-picker";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../store/UserContextProvider";
 import { getRequest } from "../../services/apiService";
+import { convertFAtoEN } from "../../utils/convertFAtoENNumbers";
 
 const NewRestaurantsList = () => {
     const {
@@ -24,17 +23,28 @@ const NewRestaurantsList = () => {
         selectedDate,
         isDateOpen,
         calendarRef,
+        isLoading,
+        dateValue,
         sortTable,
-        handleInputChange,
         setTableData,
         setTotalPage,
+        handlePageChange,
+        setCurrentPage,
+        setPageFilter,
         backBtnHandler,
         handleDateChange,
         handleOpenChange,
-        handlePageChange,
+        setIsLoading,
     } = useTableData();
 
     const { setUserPlace } = useContext(UserContext);
+
+    const [searchObj, setSearchObj] = useState({
+        searchPhone: "",
+        searchBranch: "",
+        searchTitle: "",
+        dateValue: dateValue,
+    });
 
     const navigate = useNavigate();
 
@@ -44,6 +54,19 @@ const NewRestaurantsList = () => {
         setUserPlace(`restaurant-profile-${id}`);
         navigate(`/restaurant-profile/${id}`);
     };
+
+    useEffect(() => {
+        setSearchObj((prevState) => ({
+            ...prevState,
+            [dateValue]: dateValue,
+        }));
+    }, [dateValue]);
+
+    useEffect(() => {
+        console.log("searchObj >>", searchObj);
+
+        getData();
+    }, [searchObj, pageFilter, currentPage]);
 
     const columns = [
         {
@@ -79,10 +102,12 @@ const NewRestaurantsList = () => {
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
-                        value={record.address}
+                        value={searchObj.searchTitle}
                         onChange={(e) => {
-                            handleInputChange(e, record.key, "jobTitle");
-                            console.log(e.target.value);
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                searchTitle: convertFAtoEN(e.target.value),
+                            }));
                         }}
                     />
                 ) : (
@@ -105,10 +130,13 @@ const NewRestaurantsList = () => {
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
-                        value={record.address}
-                        onChange={(e) =>
-                            handleInputChange(e, record.key, "branch")
-                        }
+                        value={searchObj.searchBranch}
+                        onChange={(e) => {
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                searchBranch: convertFAtoEN(e.target.value),
+                            }));
+                        }}
                     />
                 ) : text ? (
                     text
@@ -132,10 +160,13 @@ const NewRestaurantsList = () => {
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
-                        value={record.address}
-                        onChange={(e) =>
-                            handleInputChange(e, record.key, "phoneNumber")
-                        }
+                        value={searchObj.searchPhone}
+                        onChange={(e) => {
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                searchPhone: convertFAtoEN(e.target.value),
+                            }));
+                        }}
                     />
                 ) : (
                     text
@@ -190,24 +221,20 @@ const NewRestaurantsList = () => {
         },
     ];
 
-    useEffect(() => {
-        const getData = async () => {
-            // const res = await getTableData(
-            //     "restaurants",
-            //     pageFilter,
-            //     currentPage,
-            //     true
-            // );
+    const getData = async () => {
+        setIsLoading(true);
 
-            // setTableData(res[0]);
-            // setTotalPage(res[1] ? res[1] : 1);
-
+        try {
             const res = await getRequest(
-                `/${"restaurants"}?${"adminStatus"}=${
-                    pageFilter.status
-                }&sortBy=${pageFilter.sortBy}&sortOrder=${
+                `/${"restaurants"}?adminStatus=PENDING&sortBy=${
+                    pageFilter.sortBy
+                }&sortOrder=${
                     pageFilter.sortOrder
-                }&page=${currentPage}`
+                }&page=${currentPage}&searchPhone=${
+                    searchObj.searchPhone
+                }&searchBranch=${searchObj.searchBranch}&searchTitle=${
+                    searchObj.searchTitle
+                }&date=${dateValue === "1348/10/11" ? "" : dateValue}`
             );
 
             console.log("RESSSSS >>", res);
@@ -217,14 +244,16 @@ const NewRestaurantsList = () => {
                 restaurants.unshift({ id: -1 });
 
                 setTableData(restaurants);
-                setTotalPage(res.data.totalPages || 1);
+                setTotalPage(res.data.totalPages ? res.data.totalPages : 1);
             } else {
-                console.log("ERROR IN FILTERING!", res);
+                console.log("ERROR IN FILTERING!");
             }
-        };
+        } catch (error) {
+            console.error("Error in ExternalAdvertList-getData: ", error);
+        }
 
-        getData();
-    }, [pageFilter, currentPage]);
+        setIsLoading(false);
+    };
 
     return (
         <>
@@ -243,7 +272,7 @@ const NewRestaurantsList = () => {
                     }
                 >
                     <Table
-                        loading={!totalPage}
+                        loading={isLoading}
                         dataSource={tableData}
                         columns={columns}
                         pagination={false}

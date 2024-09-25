@@ -21,13 +21,14 @@ import { ReactComponent as Plus } from "../../assets/images/restaurants-page/Plu
 import { PlusOutlined } from "@ant-design/icons";
 
 import { sortIcon } from "../../utils/tableIconSort";
-import { getTableData, getTableData2 } from "../../services/getTableData";
 import useTableData from "../../hooks/useTableData";
 import { AuthContext } from "../../store/AuthContextProvider";
 import { UserContext } from "../../store/UserContextProvider";
 import PageWrapper from "../../components/Common/PageWrapper";
 import { InputDatePicker } from "jalaali-react-date-picker";
 import { useParams } from "react-router-dom";
+import { convertFAtoEN } from "../../utils/convertFAtoENNumbers";
+import { getRequest } from "../../services/apiService";
 
 const RestaurantAdvertList = () => {
     const {
@@ -39,8 +40,10 @@ const RestaurantAdvertList = () => {
         selectedDate,
         isDateOpen,
         calendarRef,
+        isLoading,
+        dateValue,
+        setIsLoading,
         sortTable,
-        handleInputChange,
         setTableData,
         setTotalPage,
         handlePageChange,
@@ -54,9 +57,31 @@ const RestaurantAdvertList = () => {
 
     const { id } = useParams();
 
+    const [searchObj, setSearchObj] = useState({
+        status: "",
+        searchPhone: "",
+        searchAdTitle: "",
+        searchResTitle: "",
+        restaurantId: "",
+        dateValue: dateValue,
+    });
+
     const detailsBtnClickHandler = (advertId) => {
         setUserPlace(`restaurant-advert-info-${advertId}`);
     };
+
+    useEffect(() => {
+        setSearchObj((prevState) => ({
+            ...prevState,
+            [dateValue]: dateValue,
+        }));
+    }, [dateValue]);
+
+    useEffect(() => {
+        console.log("searchObj >>", searchObj);
+
+        getData();
+    }, [searchObj, pageFilter, currentPage]);
 
     const columns = [
         {
@@ -82,10 +107,12 @@ const RestaurantAdvertList = () => {
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
-                        value={record.address}
+                        value={searchObj.searchAdTitle}
                         onChange={(e) => {
-                            handleInputChange(e, record.key, "jobTitle");
-                            console.log(e.target.value);
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                searchAdTitle: convertFAtoEN(e.target.value),
+                            }));
                         }}
                     />
                 ) : (
@@ -96,8 +123,8 @@ const RestaurantAdvertList = () => {
             title: (
                 <Button
                     type="text"
-                    icon={sortIcon("date", sortMode)}
-                    onClick={() => sortTable("date")}
+                    icon={sortIcon("createdAt", sortMode)}
+                    onClick={() => sortTable("createdAt")}
                 >
                     تاریخ ثبت
                 </Button>
@@ -139,24 +166,20 @@ const RestaurantAdvertList = () => {
                     <Select
                         defaultValue="همه"
                         style={{ width: "80%" }}
+                        onChange={(value) =>
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                status: value,
+                            }))
+                        }
                         options={[
-                            { value: "همه", label: "همه" },
-                            {
-                                value: "در انتظار تایید",
-                                label: "در انتظار تایید",
-                            },
-                            {
-                                value: "تایید شده",
-                                label: "تایید شده",
-                            },
-                            {
-                                value: "منتشر شده",
-                                label: "منتشر شده",
-                            },
-                            {
-                                value: "others",
-                                label: "others",
-                            },
+                            { value: "", label: "همه" },
+                            { value: "published", label: "منتشر شده" },
+                            { value: "closed", label: "بسته شده" },
+                            { value: "draft", label: "پیش نویس" },
+                            { value: "expired", label: "منقضی شده" },
+                            { value: "pending", label: "در انتظار تایید" },
+                            { value: "holdOn", label: "ایست شده" },
                         ]}
                     />
                 ) : record.status ? (
@@ -190,10 +213,13 @@ const RestaurantAdvertList = () => {
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
-                        value={record.address}
-                        onChange={(e) =>
-                            handleInputChange(e, record.key, "resumeCounter")
-                        }
+                        value={searchObj.searchAdTitle}
+                        onChange={(e) => {
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                TEMP: convertFAtoEN(e.target.value),
+                            }));
+                        }}
                     />
                 ) : (
                     <div className="center-menu-item">{text}</div>
@@ -215,10 +241,13 @@ const RestaurantAdvertList = () => {
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
-                        value={record.address}
-                        onChange={(e) =>
-                            handleInputChange(e, record.key, "viewCounter")
-                        }
+                        value={searchObj.searchAdTitle}
+                        onChange={(e) => {
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                TEMP: convertFAtoEN(e.target.value),
+                            }));
+                        }}
                     />
                 ) : (
                     <div className="center-menu-item">{text}</div>
@@ -269,25 +298,45 @@ const RestaurantAdvertList = () => {
 
     useEffect(() => {
         setPageFilter((prevState) => ({ ...prevState, status: "" }));
-    }, []); // temp
+    }, []);
 
-    useEffect(() => {
-        const getData = async () => {
-            const res = await getTableData2(
-                `/advertisements?page=1&restaurantId=${id}`,
-                "advertisements"
-            ); // temp
+    const getData = async () => {
+        setIsLoading(true);
 
-            console.log("RESsSsSsSs >> ", res);
+        try {
+            if (pageFilter.status === "") {
+                const res = await getRequest(
+                    `/${"advertisements"}?status=${searchObj.status}&sortBy=${
+                        pageFilter.sortBy
+                    }&sortOrder=${
+                        pageFilter.sortOrder
+                    }&page=${currentPage}&searchPhone=${
+                        searchObj.searchPhone
+                    }&searchAdTitle=${searchObj.searchAdTitle}&searchResTitle=${
+                        searchObj.searchResTitle
+                    }&restaurantId=${id}&date=${
+                        dateValue === "1348/10/11" ? "" : dateValue
+                    }`
+                );
 
-            setTableData(res[0]);
-            setTotalPage(res[1] ? res[1] : 1);
-        };
+                console.log("RESSSSS >>", res);
 
-        if (pageFilter.status === "") {
-            getData();
+                if (res.success) {
+                    const restaurants = res.data["advertisements"];
+                    restaurants.unshift({ id: -1 });
+
+                    setTableData(restaurants);
+                    setTotalPage(res.data.totalPages ? res.data.totalPages : 1);
+                } else {
+                    console.log("ERROR IN FILTERING!");
+                }
+            }
+        } catch (error) {
+            console.error("Error in ExternalAdvertList-getData: ", error);
         }
-    }, [pageFilter, currentPage]);
+
+        setIsLoading(false);
+    };
 
     const backBtnHandler = () => {
         setUserPlace(`restaurant-profile-${id}`);
@@ -326,7 +375,7 @@ const RestaurantAdvertList = () => {
                                 </Button>
                             </div>
                             <Table
-                                loading={!totalPage}
+                                loading={isLoading}
                                 dataSource={tableData}
                                 columns={columns}
                                 pagination={false}

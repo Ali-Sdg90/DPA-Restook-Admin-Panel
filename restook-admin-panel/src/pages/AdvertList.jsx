@@ -14,9 +14,7 @@ import {
 } from "antd";
 
 import { ReactComponent as Arrow } from "../assets/images/home-page/Chevron - Left.svg";
-import { ReactComponent as Calender } from "../assets/images/home-page/Calendar - Dates (1).svg";
 import { sortIcon } from "../utils/tableIconSort";
-import { getTableData } from "../services/getTableData";
 import useTableData from "../hooks/useTableData";
 import { AuthContext } from "../store/AuthContextProvider";
 import { UserContext } from "../store/UserContextProvider";
@@ -25,6 +23,7 @@ import ImageWithFallback from "../components/Common/ImageWithFallback";
 import PageWrapper from "../components/Common/PageWrapper";
 import { InputDatePicker } from "jalaali-react-date-picker";
 import { useNavigate } from "react-router-dom";
+import { convertFAtoEN } from "../utils/convertFAtoENNumbers";
 
 const AdvertisementsList = () => {
     const {
@@ -36,8 +35,10 @@ const AdvertisementsList = () => {
         selectedDate,
         isDateOpen,
         calendarRef,
+        isLoading,
+        dateValue,
+        setIsLoading,
         sortTable,
-        handleInputChange,
         setTableData,
         setTotalPage,
         handlePageChange,
@@ -48,15 +49,38 @@ const AdvertisementsList = () => {
 
     const { userData } = useContext(AuthContext);
     const { userPlace, setUserPlace } = useContext(UserContext);
+
     const [jobTitle, setJobTitle] = useState();
 
     const navigate = useNavigate();
+
+    const [searchObj, setSearchObj] = useState({
+        status: "",
+        searchPhone: "",
+        searchAdTitle: "",
+        searchResTitle: "",
+        restaurantId: "",
+        dateValue: dateValue,
+    });
 
     const detailBtnClickHandler = (id) => {
         console.log("id >>", id);
 
         // navigate(`/advertisement-review/${id}`);
     };
+
+    useEffect(() => {
+        setSearchObj((prevState) => ({
+            ...prevState,
+            [dateValue]: dateValue,
+        }));
+    }, [dateValue]);
+
+    useEffect(() => {
+        console.log("searchObj >>", searchObj);
+
+        getData();
+    }, [searchObj, pageFilter, currentPage]);
 
     const columns = [
         {
@@ -93,10 +117,12 @@ const AdvertisementsList = () => {
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
-                        value={record.address}
+                        value={searchObj.searchResTitle}
                         onChange={(e) => {
-                            handleInputChange(e, record.key, "fullName");
-                            console.log(e.target.value);
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                searchResTitle: convertFAtoEN(e.target.value),
+                            }));
                         }}
                     />
                 ) : (
@@ -120,7 +146,12 @@ const AdvertisementsList = () => {
                 index === 0 ? (
                     <Select
                         defaultValue="همه"
-                        // onChange={handleChange}
+                        onChange={(value) =>
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                TEMP: value,
+                            }))
+                        }
                         style={{ width: "80%" }}
                         options={jobTitle.map((item) => ({
                             value: item.id,
@@ -149,10 +180,13 @@ const AdvertisementsList = () => {
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
-                        value={record.address}
-                        onChange={(e) =>
-                            handleInputChange(e, record.key, "phoneNumber")
-                        }
+                        value={searchObj.searchPhone}
+                        onChange={(e) => {
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                searchPhone: convertFAtoEN(e.target.value),
+                            }));
+                        }}
                     />
                 ) : (
                     text
@@ -202,22 +236,20 @@ const AdvertisementsList = () => {
                 index === 0 ? (
                     <Select
                         defaultValue="همه"
-                        // onChange={handleChange}
+                        onChange={(value) =>
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                status: value,
+                            }))
+                        }
                         options={[
-                            { value: "همه", label: "همه" },
-                            { value: "نا معلوم", label: "نا معلوم" },
-                            {
-                                value: "به دنبال کار بهتر",
-                                label: "به دنبال کار بهتر",
-                            },
-                            {
-                                value: "آماده به کار",
-                                label: "آماده به کار",
-                            },
-                            {
-                                value: "مشغول به کار",
-                                label: "مشغول به کار",
-                            },
+                            { value: "", label: "همه" },
+                            { value: "published", label: "منتشر شده" },
+                            { value: "closed", label: "بسته شده" },
+                            { value: "draft", label: "پیش نویس" },
+                            { value: "expired", label: "منقضی شده" },
+                            { value: "pending", label: "در انتظار تایید" },
+                            { value: "holdOn", label: "ایست شده" },
                         ]}
                     />
                 ) : (
@@ -275,25 +307,43 @@ const AdvertisementsList = () => {
         getData();
     }, []);
 
-    useEffect(() => {
-        const getData = async () => {
-            const res = await getTableData(
-                "advertisements",
-                pageFilter,
-                currentPage,
-                false
-            );
+    const getData = async () => {
+        setIsLoading(true);
 
-            console.log("RESsSsSsSs >> ", res);
+        try {
+            if (pageFilter.status === "") {
+                const res = await getRequest(
+                    `/${"advertisements"}?status=${searchObj.status}&sortBy=${
+                        pageFilter.sortBy
+                    }&sortOrder=${
+                        pageFilter.sortOrder
+                    }&page=${currentPage}&searchPhone=${
+                        searchObj.searchPhone
+                    }&searchAdTitle=${searchObj.searchAdTitle}&searchResTitle=${
+                        searchObj.searchResTitle
+                    }&restaurantId=${searchObj.restaurantId}&date=${
+                        dateValue === "1348/10/11" ? "" : dateValue
+                    }`
+                );
 
-            setTableData(res[0]);
-            setTotalPage(res[1] ? res[1] : 1);
-        };
+                console.log("RESSSSS >>", res);
 
-        if (pageFilter.status === "") {
-            getData();
+                if (res.success) {
+                    const restaurants = res.data["advertisements"];
+                    restaurants.unshift({ id: -1 });
+
+                    setTableData(restaurants);
+                    setTotalPage(res.data.totalPages ? res.data.totalPages : 1);
+                } else {
+                    console.log("ERROR IN FILTERING!");
+                }
+            }
+        } catch (error) {
+            console.error("Error in ExternalAdvertList-getData: ", error);
         }
-    }, [pageFilter, currentPage]);
+
+        setIsLoading(false);
+    };
 
     useEffect(() => {
         if (userPlace === "default") {
@@ -308,7 +358,7 @@ const AdvertisementsList = () => {
                     <Col span={24} className="table-section">
                         <Card title="لیست آگهی‌ها">
                             <Table
-                                loading={!totalPage}
+                                loading={isLoading}
                                 dataSource={tableData}
                                 columns={columns}
                                 pagination={false}

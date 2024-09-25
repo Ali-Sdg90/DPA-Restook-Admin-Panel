@@ -1,25 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import {
-    Button,
-    Card,
-    Col,
-    Input,
-    Table,
-    Pagination,
-    Select,
-    Row,
-    // DatePicker,
-} from "antd";
+import { Button, Card, Col, Input, Table, Pagination, Select, Row } from "antd";
+
 import { InputDatePicker } from "jalaali-react-date-picker";
-import { ReactComponent as Calender } from "../../assets/images/home-page/Calendar - Dates (1).svg";
 import { ReactComponent as Arrow } from "../../assets/images/home-page/Chevron - Left.svg";
 import { sortIcon } from "../../utils/tableIconSort";
-import { getTableData } from "../../services/getTableData";
 import useTableData from "../../hooks/useTableData";
 import { UserContext } from "../../store/UserContextProvider";
 import { getRequest } from "../../services/apiService";
 import ImageWithFallback from "../Common/ImageWithFallback";
+import { convertFAtoEN } from "../../utils/convertFAtoENNumbers";
 
 const ExternalAdvertList = () => {
     const {
@@ -31,8 +21,10 @@ const ExternalAdvertList = () => {
         selectedDate,
         isDateOpen,
         calendarRef,
+        isLoading,
+        dateValue,
+        setIsLoading,
         sortTable,
-        handleInputChange,
         setTableData,
         setTotalPage,
         handlePageChange,
@@ -43,12 +35,30 @@ const ExternalAdvertList = () => {
 
     const { userPlace, setUserPlace } = useContext(UserContext);
 
+    const [searchObj, setSearchObj] = useState({
+        searchPhone: "",
+        searchAdTitle: "",
+        searchResTitle: "",
+        dateValue: dateValue,
+    });
+
     const detailsHandler = (id) => {
         console.log("id >>", id);
         setUserPlace(`external-advert-profile-${id}`);
     };
 
-    const [jobTitle, setJobTitle] = useState();
+    useEffect(() => {
+        setSearchObj((prevState) => ({
+            ...prevState,
+            [dateValue]: dateValue,
+        }));
+    }, [dateValue]);
+
+    useEffect(() => {
+        console.log("searchObj >>", searchObj);
+
+        getData();
+    }, [searchObj, pageFilter, currentPage]);
 
     const columns = [
         {
@@ -85,10 +95,12 @@ const ExternalAdvertList = () => {
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
-                        value={record.address}
+                        value={searchObj.searchResTitle}
                         onChange={(e) => {
-                            handleInputChange(e, record.key, "restaurantTitle");
-                            console.log(e.target.value);
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                searchResTitle: convertFAtoEN(e.target.value),
+                            }));
                         }}
                     />
                 ) : (
@@ -110,13 +122,14 @@ const ExternalAdvertList = () => {
             width: "15%",
             render: (text, record, index) =>
                 index === 0 ? (
-                    <Select
-                        defaultValue="همه"
-                        style={{ width: "80%" }}
-                        options={jobTitle.map((item) => ({
-                            value: item.id,
-                            label: item.title,
-                        }))}
+                    <Input
+                        value={searchObj.searchAdTitle}
+                        onChange={(e) => {
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                searchAdTitle: convertFAtoEN(e.target.value),
+                            }));
+                        }}
                     />
                 ) : text ? (
                     text
@@ -140,10 +153,13 @@ const ExternalAdvertList = () => {
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
-                        value={record.address}
-                        onChange={(e) =>
-                            handleInputChange(e, record.key, "phoneNumber")
-                        }
+                        value={searchObj.searchPhone}
+                        onChange={(e) => {
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                searchPhone: convertFAtoEN(e.target.value),
+                            }));
+                        }}
                     />
                 ) : (
                     text
@@ -243,55 +259,60 @@ const ExternalAdvertList = () => {
         setPageFilter((prevState) => ({
             ...prevState,
             status: "",
-            sortBy: "", // temp until its API write
         }));
         console.log("RESET --------------------------------");
     }, []);
 
-    useEffect(() => {
-        const getData = async () => {
-            try {
-                const jobTitleRes = await getRequest(`/options/jobTitles`);
+    const getData = async () => {
+        setIsLoading(true);
 
-                if (jobTitleRes.success) {
-                    setJobTitle([
-                        { id: "", title: "همه" },
-                        ...jobTitleRes.data,
-                    ]);
+        try {
+            if (pageFilter.status === "") {
+                const res = await getRequest(
+                    `/${"temp/tempAds"}?&sortBy=${
+                        pageFilter.sortBy
+                    }&sortOrder=${pageFilter.sortOrder}&date=${
+                        dateValue === "1348/10/11" ? "" : dateValue
+                    }&page=${currentPage}&searchPhone=${
+                        searchObj.searchPhone
+                    }&searchAdTitle=${searchObj.searchAdTitle}&searchResTitle=${
+                        searchObj.searchResTitle
+                    }`
+                );
+
+                console.log("RESSSSS >>", res);
+
+                if (res.success) {
+                    const restaurants = res.data["advertisements"];
+                    restaurants.unshift({ id: -1 });
+
+                    setTableData(restaurants);
+                    setTotalPage(res.data.totalPages ? res.data.totalPages : 1);
                 } else {
-                    throw new Error("Unsuccessful fetch /options/jobTitles");
+                    console.log("ERROR IN FILTERING!");
                 }
-
-                if (pageFilter.status === "") {
-                    const tableDataRes = await getTableData(
-                        "temp/tempAds",
-                        pageFilter,
-                        currentPage,
-                        true,
-                        "advertisements"
-                    );
-
-                    setTableData(tableDataRes[0]);
-                    setTotalPage(tableDataRes[1]);
-                }
-            } catch (error) {
-                console.error("Error in ExternalAdvertList-getData: ", error);
             }
-        };
+        } catch (error) {
+            console.error("Error in ExternalAdvertList-getData: ", error);
+        }
 
+        setIsLoading(false);
+    };
+
+    useEffect(() => {
         if (userPlace === "default") {
             setUserPlace("external-advert-list");
         }
 
-        getData();
-    }, [pageFilter, currentPage]);
+        setIsLoading(true);
+    }, []);
 
     return (
         <Row gutter={[24, 24]} className="content">
             <Col span={24} className="table-section">
                 <Card title="لیست آگهی‌ها">
                     <Table
-                        loading={!totalPage}
+                        loading={isLoading}
                         dataSource={tableData}
                         columns={columns}
                         pagination={false}

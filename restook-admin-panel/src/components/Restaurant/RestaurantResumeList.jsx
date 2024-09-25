@@ -15,7 +15,6 @@ import {
 import { ReactComponent as Arrow } from "../../assets/images/home-page/Chevron - Left.svg";
 import { ReactComponent as BackIcon } from "../../assets/images/home-page/Arrow - Right.svg";
 import { sortIcon } from "../../utils/tableIconSort";
-import { getTableData } from "../../services/getTableData";
 import useTableData from "../../hooks/useTableData";
 import ImageWithFallback from "../Common/ImageWithFallback";
 import { InputDatePicker } from "jalaali-react-date-picker";
@@ -24,6 +23,7 @@ import { UserContext } from "../../store/UserContextProvider";
 import PageWrapper from "../Common/PageWrapper";
 import { AuthContext } from "../../store/AuthContextProvider";
 import { getRequest } from "../../services/apiService";
+import { convertFAtoEN } from "../../utils/convertFAtoENNumbers";
 
 const RestaurantResumeList = () => {
     const {
@@ -35,11 +35,14 @@ const RestaurantResumeList = () => {
         selectedDate,
         isDateOpen,
         calendarRef,
+        isLoading,
+        dateValue,
+        setIsLoading,
         sortTable,
-        handleInputChange,
         setTableData,
         setTotalPage,
         handlePageChange,
+        setPageFilter,
         handleDateChange,
         handleOpenChange,
     } = useTableData();
@@ -53,6 +56,14 @@ const RestaurantResumeList = () => {
 
     const navigate = useNavigate();
 
+    const [jobTitle, setJobTitle] = useState();
+    const [searchObj, setSearchObj] = useState({
+        status: "",
+        search: "",
+        jobTitleId: "",
+        dateValue: dateValue,
+    });
+
     const detailBtnClickHandler = (resumeID) => {
         console.log("resumeID >>", resumeID);
 
@@ -61,6 +72,21 @@ const RestaurantResumeList = () => {
             `/resume-user-profile/${advertId}/${restaurantID}/${resumeID}`
         );
     };
+
+    useEffect(() => {
+        setSearchObj((prevState) => ({
+            ...prevState,
+            [dateValue]: dateValue,
+        }));
+    }, [dateValue]);
+
+    useEffect(() => {
+        console.log("searchObj >>", searchObj);
+
+        if (advertId) {
+            getData();
+        }
+    }, [searchObj, pageFilter, currentPage, advertId]);
 
     const columns = [
         {
@@ -97,10 +123,12 @@ const RestaurantResumeList = () => {
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
-                        value={record.address}
+                        value={searchObj.search}
                         onChange={(e) => {
-                            handleInputChange(e, record.key, "fullName");
-                            console.log(e.target.value);
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                search: convertFAtoEN(e.target.value),
+                            }));
                         }}
                     />
                 ) : (
@@ -124,17 +152,17 @@ const RestaurantResumeList = () => {
                 index === 0 ? (
                     <Select
                         defaultValue="همه"
-                        // onChange={handleChange}
+                        onChange={(value) =>
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                jobTitleId: value,
+                            }))
+                        }
                         style={{ width: "80%" }}
-                        options={[
-                            { value: "همه", label: "همه" },
-                            { value: "آشپز", label: "آشپز" },
-                            { value: "هد آشپزخانه", label: "هد آشپزخانه" },
-                            { value: "کباب زن", label: "کباب زن" },
-                            { value: "باریستا", label: "باریستا" },
-                            { value: "سالاد زن", label: "سالاد زن" },
-                            { value: "بارتندر", label: "بارتندر" },
-                        ]}
+                        options={jobTitle.map((item) => ({
+                            value: item.id,
+                            label: item.title,
+                        }))}
                     />
                 ) : text ? (
                     text
@@ -158,10 +186,13 @@ const RestaurantResumeList = () => {
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
-                        value={record.address}
-                        onChange={(e) =>
-                            handleInputChange(e, record.key, "phoneNumber")
-                        }
+                        value={searchObj.searchResTitle}
+                        onChange={(e) => {
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                TEMP: convertFAtoEN(e.target.value),
+                            }));
+                        }}
                     />
                 ) : (
                     text
@@ -211,16 +242,20 @@ const RestaurantResumeList = () => {
                 index === 0 ? (
                     <Select
                         defaultValue="همه"
-                        // onChange={handleChange}
+                        onChange={(value) =>
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                status: value,
+                            }))
+                        }
                         options={[
                             { value: "", label: "همه" },
-                            { value: "1", label: "?" },
-                            { value: "2", label: "?" },
+                            { value: "1", label: "دیده نشده" },
+                            { value: "2", label: "دیده شده" },
                             { value: "3", label: "رد شده" },
-                            { value: "4", label: "?" },
+                            { value: "4", label: "تماس تلفن" },
                             { value: "5", label: "تایید شده" },
                             { value: "6", label: "زمان مصاحبه" },
-                            { value: "7", label: "?" },
                         ]}
                     />
                 ) : (
@@ -269,11 +304,39 @@ const RestaurantResumeList = () => {
     ];
 
     useEffect(() => {
+        setPageFilter((prevState) => ({ ...prevState, status: "" }));
+
         const getData = async () => {
+            try {
+                const res = await getRequest(`/options/jobTitles`);
+
+                if (res.success) {
+                    setJobTitle([{ id: "", title: "همه" }, ...res.data]);
+                } else {
+                    throw new Error("Unsuccessful fetch /options/jobTitles");
+                }
+            } catch (error) {
+                console.log("Error in UsersList-getData: ", error);
+            }
+        };
+
+        getData();
+    }, []);
+
+    const getData = async () => {
+        setIsLoading(true);
+
+        try {
             const res = await getRequest(
                 `/${"sent-resumes"}?sortBy=${pageFilter.sortBy}&sortOrder=${
                     pageFilter.sortOrder
-                }&status=${""}&page=${currentPage}&search=${""}&jobTitleId=${""}&advertisementId=${advertId}&date=${""}`
+                }&status=${searchObj.status}&page=${currentPage}&search=${
+                    searchObj.search
+                }&jobTitleId=${
+                    searchObj.jobTitleId
+                }&advertisementId=${advertId}&date=${
+                    dateValue === "1348/10/11" ? "" : dateValue
+                }`
             );
 
             console.log("RESSSSS >>", res);
@@ -283,16 +346,16 @@ const RestaurantResumeList = () => {
                 restaurants.unshift({ id: -1 });
 
                 setTableData(restaurants);
-                setTotalPage(res.data.totalPages || 1);
+                setTotalPage(res.data.totalPages ? res.data.totalPages : 1);
             } else {
-                console.log("ERROR IN FILTERING!", res);
+                console.log("ERROR IN FILTERING!");
             }
-        };
-
-        if (advertId) {
-            getData();
+        } catch (error) {
+            console.error("Error in ExternalAdvertList-getData: ", error);
         }
-    }, [pageFilter, currentPage, advertId]);
+
+        setIsLoading(false);
+    };
 
     useEffect(() => {
         setAdvertId(userPlace.match(/\d+/g));
@@ -321,7 +384,7 @@ const RestaurantResumeList = () => {
                             }
                         >
                             <Table
-                                loading={!totalPage}
+                                loading={isLoading}
                                 dataSource={tableData}
                                 columns={columns}
                                 pagination={false}

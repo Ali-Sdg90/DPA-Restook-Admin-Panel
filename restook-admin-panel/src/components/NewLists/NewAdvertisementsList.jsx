@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { Button, Card, Col, Input, Table, DatePicker, Pagination } from "antd";
 import QuickAccess from "./QuickAccess";
@@ -7,11 +7,12 @@ import { ReactComponent as Arrow } from "../../assets/images/home-page/Chevron -
 import { ReactComponent as BackIcon } from "../../assets/images/home-page/Arrow - Right.svg";
 import { sortIcon } from "../../utils/tableIconSort";
 import useTableData from "../../hooks/useTableData";
-import { getTableData } from "../../services/getTableData";
 import ImageWithFallback from "../Common/ImageWithFallback";
 import { UserContext } from "../../store/UserContextProvider";
 import { InputDatePicker } from "jalaali-react-date-picker";
 import { useNavigate } from "react-router-dom";
+import { getRequest } from "../../services/apiService";
+import { convertFAtoEN } from "../../utils/convertFAtoENNumbers";
 
 const NewAdvertisementsList = () => {
     const {
@@ -23,19 +24,31 @@ const NewAdvertisementsList = () => {
         selectedDate,
         isDateOpen,
         calendarRef,
+        isLoading,
+        dateValue,
         sortTable,
         handleInputChange,
         setTableData,
         setTotalPage,
+        handlePageChange,
+        setCurrentPage,
+        setPageFilter,
         backBtnHandler,
         handleDateChange,
         handleOpenChange,
-        handlePageChange,
+        setIsLoading,
     } = useTableData();
 
     const navigate = useNavigate();
 
     const { userPlace, setUserPlace } = useContext(UserContext);
+
+    const [searchObj, setSearchObj] = useState({
+        searchPhone: "",
+        searchAdTitle: "",
+        searchResTitle: "",
+        dateValue: dateValue,
+    });
 
     const detailBtnClickHandler = (id) => {
         console.log("id >>", id);
@@ -43,6 +56,19 @@ const NewAdvertisementsList = () => {
         setUserPlace("advertisement-review");
         navigate(`/advertisement-review/${id}`);
     };
+
+    useEffect(() => {
+        setSearchObj((prevState) => ({
+            ...prevState,
+            [dateValue]: dateValue,
+        }));
+    }, [dateValue]);
+
+    useEffect(() => {
+        console.log("searchObj >>", searchObj);
+
+        getData();
+    }, [searchObj, pageFilter, currentPage]);
 
     const columns = [
         {
@@ -57,6 +83,7 @@ const NewAdvertisementsList = () => {
                         imageUrl={record.imageUrl}
                         className={"table-image"}
                         alt={"table-image"}
+                        needPrefix={true}
                     />
                 ) : (
                     <div className="gray-circle"></div>
@@ -78,10 +105,12 @@ const NewAdvertisementsList = () => {
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
-                        value={record.address}
+                        value={searchObj.searchResTitle}
                         onChange={(e) => {
-                            handleInputChange(e, record.key, "restaurantTitle");
-                            console.log(e.target.value);
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                searchResTitle: convertFAtoEN(e.target.value),
+                            }));
                         }}
                     />
                 ) : (
@@ -104,10 +133,13 @@ const NewAdvertisementsList = () => {
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
-                        value={record.address}
-                        onChange={(e) =>
-                            handleInputChange(e, record.key, "jobTitle")
-                        }
+                        value={searchObj.searchAdTitle}
+                        onChange={(e) => {
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                searchAdTitle: convertFAtoEN(e.target.value),
+                            }));
+                        }}
                     />
                 ) : text ? (
                     text
@@ -131,10 +163,13 @@ const NewAdvertisementsList = () => {
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
-                        value={record.address}
-                        onChange={(e) =>
-                            handleInputChange(e, record.key, "phoneNumber")
-                        }
+                        value={searchObj.searchPhone}
+                        onChange={(e) => {
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                searchPhone: convertFAtoEN(e.target.value),
+                            }));
+                        }}
                     />
                 ) : (
                     text
@@ -189,21 +224,41 @@ const NewAdvertisementsList = () => {
         },
     ];
 
-    useEffect(() => {
-        const getData = async () => {
-            const res = await getTableData(
-                "advertisements",
-                pageFilter,
-                currentPage,
-                false
+    const getData = async () => {
+        setIsLoading(true);
+
+        try {
+            const res = await getRequest(
+                `/${"advertisements"}?status=pending&sortBy=${
+                    pageFilter.sortBy
+                }&sortOrder=${
+                    pageFilter.sortOrder
+                }&page=${currentPage}&searchPhone=${
+                    searchObj.searchPhone
+                }&searchAdTitle=${searchObj.searchAdTitle}&searchResTitle=${
+                    searchObj.searchResTitle
+                }&restaurantId=${""}&date=${
+                    dateValue === "1348/10/11" ? "" : dateValue
+                }`
             );
 
-            setTableData(res[0]);
-            setTotalPage(res[1] ? res[1] : 1);
-        };
+            console.log("RESSSSS >>", res);
 
-        getData();
-    }, [pageFilter, currentPage]);
+            if (res.success) {
+                const restaurants = res.data["advertisements"];
+                restaurants.unshift({ id: -1 });
+
+                setTableData(restaurants);
+                setTotalPage(res.data.totalPages ? res.data.totalPages : 1);
+            } else {
+                console.log("ERROR IN FILTERING!");
+            }
+        } catch (error) {
+            console.error("Error in ExternalAdvertList-getData: ", error);
+        }
+
+        setIsLoading(false);
+    };
 
     return (
         <>
@@ -227,7 +282,7 @@ const NewAdvertisementsList = () => {
                     }
                 >
                     <Table
-                        loading={!totalPage}
+                        loading={isLoading}
                         dataSource={tableData}
                         columns={columns}
                         pagination={false}

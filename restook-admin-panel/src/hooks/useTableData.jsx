@@ -20,6 +20,8 @@ const useTableData = () => {
     const [sortMode, setSortMode] = useState({ mode: "", isASC: false });
     const [selectedDate, setSelectedDate] = useState(null);
     const [isDateOpen, setIsDateOpen] = useState(false);
+    const [dateValue, setDateValue] = useState("");
+    const [isLoading, setIsLoading] = useState(true);
 
     const { setUserPlace } = useContext(UserContext);
 
@@ -33,7 +35,8 @@ const useTableData = () => {
             new Intl.DateTimeFormat("fa-IR").format(date)
         );
 
-        console.log(sendDate); // temp
+        setDateValue(sendDate);
+        console.log("DATE >>", sendDate);
     };
 
     const handleOpenChange = (open) => {
@@ -101,6 +104,8 @@ const useTableData = () => {
         selectedDate,
         isDateOpen,
         calendarRef,
+        isLoading,
+        dateValue,
         sortTable,
         handleInputChange,
         setTableData,
@@ -111,6 +116,7 @@ const useTableData = () => {
         backBtnHandler,
         handleDateChange,
         handleOpenChange,
+        setIsLoading,
     };
 };
 

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import {
     Button,
@@ -16,12 +16,13 @@ import { PlusOutlined } from "@ant-design/icons";
 
 import { ReactComponent as Arrow } from "../../assets/images/home-page/Chevron - Left.svg";
 import { sortIcon } from "../../utils/tableIconSort";
-import { getTableData } from "../../services/getTableData";
 import useTableData from "../../hooks/useTableData";
 import { AuthContext } from "../../store/AuthContextProvider";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../store/UserContextProvider";
 import ImageWithFallback from "../Common/ImageWithFallback";
+import { getRequest } from "../../services/apiService";
+import { convertFAtoEN } from "../../utils/convertFAtoENNumbers";
 
 const RestaurantsList = () => {
     const {
@@ -30,16 +31,35 @@ const RestaurantsList = () => {
         totalPage,
         sortMode,
         currentPage,
+        selectedDate,
+        isDateOpen,
+        calendarRef,
+        isLoading,
+        dateValue,
         sortTable,
         handleInputChange,
         setTableData,
         setTotalPage,
         handlePageChange,
+        setCurrentPage,
         setPageFilter,
+        backBtnHandler,
+        handleDateChange,
+        handleOpenChange,
+        setIsLoading,
     } = useTableData();
 
     const { userData } = useContext(AuthContext);
     const { userPlace, setUserPlace } = useContext(UserContext);
+
+    const [searchObj, setSearchObj] = useState({
+        // adminStatus: "ACTIVE",
+        adminStatus: "",
+        searchPhone: "",
+        searchBranch: "",
+        searchTitle: "",
+        dateValue: dateValue,
+    });
 
     const navigate = useNavigate();
 
@@ -47,6 +67,19 @@ const RestaurantsList = () => {
         setUserPlace(`restaurant-profile${id}`);
         navigate(`/restaurant-profile/${id}`);
     };
+
+    useEffect(() => {
+        setSearchObj((prevState) => ({
+            ...prevState,
+            [dateValue]: dateValue,
+        }));
+    }, [dateValue]);
+
+    useEffect(() => {
+        console.log("searchObj >>", searchObj);
+
+        getData();
+    }, [searchObj, pageFilter, currentPage]);
 
     const columns = [
         {
@@ -82,10 +115,12 @@ const RestaurantsList = () => {
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
-                        value={record.address}
+                        value={searchObj.searchTitle}
                         onChange={(e) => {
-                            handleInputChange(e, record.key, "jobTitle");
-                            console.log(e.target.value);
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                searchTitle: convertFAtoEN(e.target.value),
+                            }));
                         }}
                     />
                 ) : (
@@ -108,10 +143,13 @@ const RestaurantsList = () => {
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
-                        value={record.address}
-                        onChange={(e) =>
-                            handleInputChange(e, record.key, "branch")
-                        }
+                        value={searchObj.searchBranch}
+                        onChange={(e) => {
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                searchBranch: convertFAtoEN(e.target.value),
+                            }));
+                        }}
                     />
                 ) : text ? (
                     text
@@ -135,10 +173,13 @@ const RestaurantsList = () => {
             render: (text, record, index) =>
                 index === 0 ? (
                     <Input
-                        value={record.address}
-                        onChange={(e) =>
-                            handleInputChange(e, record.key, "phoneNumber")
-                        }
+                        value={searchObj.searchPhone}
+                        onChange={(e) => {
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                searchPhone: convertFAtoEN(e.target.value),
+                            }));
+                        }}
                     />
                 ) : (
                     text
@@ -161,11 +202,19 @@ const RestaurantsList = () => {
                 index === 0 ? (
                     <Select
                         defaultValue="همه"
-                        // onChange={handleChange}
+                        onChange={(value) =>
+                            setSearchObj((prevState) => ({
+                                ...prevState,
+                                adminStatus: value,
+                            }))
+                        }
                         options={[
-                            { value: "همه", label: "همه" },
-                            { value: "فعال", label: "فعال" },
-                            { value: "غیرفعال", label: "غیرفعال" },
+                            { value: "", label: "همه" },
+                            { value: "ACTIVE", label: "فعال" },
+                            { value: "INACTIVE", label: "غیر فعال" },
+                            { value: "SUSPENDED", label: "تعلیق شده" },
+                            { value: "PENDING", label: "در انتظار تایید" },
+                            { value: "NOT_OFFICIAL", label: "غیر رسمی" },
                         ]}
                     />
                 ) : (
@@ -206,32 +255,45 @@ const RestaurantsList = () => {
         setPageFilter((prevState) => ({ ...prevState, status: "" }));
     }, []);
 
-    useEffect(() => {
-        const getData = async () => {
-            const res = await getTableData(
-                "restaurants",
-                pageFilter,
-                currentPage,
-                true
-            );
+    const getData = async () => {
+        setIsLoading(true);
 
-            console.log("RESsSsSsSs >> ", res);
+        try {
+            if (pageFilter.status === "") {
+                const res = await getRequest(
+                    `/${"restaurants"}?adminStatus=${
+                        searchObj.adminStatus
+                    }&sortBy=${pageFilter.sortBy}&sortOrder=${
+                        pageFilter.sortOrder
+                    }&page=${currentPage}&searchPhone=${
+                        searchObj.searchPhone
+                    }&searchBranch=${searchObj.searchBranch}&searchTitle=${
+                        searchObj.searchTitle
+                    }&date=${dateValue === "1348/10/11" ? "" : dateValue}`
+                );
 
-            setTableData(res[0]);
-            setTotalPage(res[1] ? res[1] : 1);
-        };
+                console.log("RESSSSS >>", res);
 
-        if (pageFilter.status === "") {
-            getData();
+                if (res.success) {
+                    const restaurants = res.data["restaurants"];
+                    restaurants.unshift({ id: -1 });
+
+                    setTableData(restaurants);
+                    setTotalPage(res.data.totalPages ? res.data.totalPages : 1);
+                } else {
+                    console.log("ERROR IN FILTERING!");
+                }
+            }
+        } catch (error) {
+            console.error("Error in ExternalAdvertList-getData: ", error);
         }
-    }, [pageFilter, currentPage]);
+
+        setIsLoading(false);
+    };
 
     useEffect(() => {
         if (userPlace === "default") {
             setUserPlace("restaurants-list");
-        }
-
-        if (userPlace === "new-restaurant") {
         }
     }, [userPlace]);
 
@@ -255,7 +317,7 @@ const RestaurantsList = () => {
                     </div>
 
                     <Table
-                        loading={!totalPage}
+                        loading={isLoading}
                         dataSource={tableData}
                         columns={columns}
                         pagination={false}
