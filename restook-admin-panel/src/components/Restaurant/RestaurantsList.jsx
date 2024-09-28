@@ -212,16 +212,14 @@ const RestaurantsList = () => {
                             { value: "", label: "همه" },
                             { value: "ACTIVE", label: "فعال" },
                             { value: "INACTIVE", label: "غیر فعال" },
-                            { value: "SUSPENDED", label: "تعلیق شده" },
-                            { value: "PENDING", label: "در انتظار تایید" },
+                            { value: "PENDING", label: "در حال بررسی" },
                             { value: "NOT_OFFICIAL", label: "غیر رسمی" },
                         ]}
                     />
                 ) : (
                     <div
                         style={{
-                            backgroundColor:
-                                text === "غیر فعال" ? "#F5D6D6" : "#AAE9CE",
+                            backgroundColor: record.adminStatusColor,
                         }}
                         className="activity-status-tag"
                     >
@@ -329,6 +327,7 @@ const RestaurantsList = () => {
                         total={10 * totalPage}
                         disabled={!totalPage}
                         onChange={handlePageChange}
+                        current={currentPage}
                     />
                 </Card>
             </Col>

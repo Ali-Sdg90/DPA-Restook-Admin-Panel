@@ -36,6 +36,7 @@ const ExternalAdvertList = () => {
     const { userPlace, setUserPlace } = useContext(UserContext);
 
     const [searchObj, setSearchObj] = useState({
+        status: "",
         searchPhone: "",
         searchAdTitle: "",
         searchResTitle: "",
@@ -210,10 +211,16 @@ const ExternalAdvertList = () => {
                     return (
                         <Select
                             defaultValue="همه"
+                            onChange={(value) =>
+                                setSearchObj((prevState) => ({
+                                    ...prevState,
+                                    status: value,
+                                }))
+                            }
                             options={[
-                                { value: "همه", label: "همه" },
-                                { value: "ثبت نشده", label: "ثبت نشده" },
-                                { value: "ثبت شده", label: "ثبت شده" },
+                                { value: "", label: "همه" },
+                                { value: "NOT_REGISTERED", label: "ثبت نشده" },
+                                { value: "REGISTERED", label: "ثبت شده" },
                             ]}
                         />
                     );
@@ -271,7 +278,9 @@ const ExternalAdvertList = () => {
                 const res = await getRequest(
                     `/${"temp/tempAds"}?&sortBy=${
                         pageFilter.sortBy
-                    }&sortOrder=${pageFilter.sortOrder}&date=${
+                    }&sortOrder=${pageFilter.sortOrder}&status=${
+                        searchObj.status
+                    }&date=${
                         dateValue === "1348/10/11" ? "" : dateValue
                     }&page=${currentPage}&searchPhone=${
                         searchObj.searchPhone
@@ -324,6 +333,7 @@ const ExternalAdvertList = () => {
                         total={10 * totalPage}
                         disabled={!totalPage}
                         onChange={handlePageChange}
+                        current={currentPage}
                     />
                 </Card>
             </Col>

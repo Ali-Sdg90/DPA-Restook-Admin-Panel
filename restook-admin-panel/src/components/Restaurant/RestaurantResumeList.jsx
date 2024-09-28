@@ -61,6 +61,7 @@ const RestaurantResumeList = () => {
         status: "",
         search: "",
         jobTitleId: "",
+        searchPhoneNumber: "",
         dateValue: dateValue,
     });
 
@@ -190,7 +191,9 @@ const RestaurantResumeList = () => {
                         onChange={(e) => {
                             setSearchObj((prevState) => ({
                                 ...prevState,
-                                TEMP: convertFAtoEN(e.target.value),
+                                searchPhoneNumber: convertFAtoEN(
+                                    e.target.value
+                                ),
                             }));
                         }}
                     />
@@ -330,9 +333,11 @@ const RestaurantResumeList = () => {
             const res = await getRequest(
                 `/${"sent-resumes"}?sortBy=${pageFilter.sortBy}&sortOrder=${
                     pageFilter.sortOrder
-                }&status=${searchObj.status}&page=${currentPage}&search=${
-                    searchObj.search
-                }&jobTitleId=${
+                }&status=${
+                    searchObj.status
+                }&page=${currentPage}&searchPhoneNumber=${
+                    searchObj.searchPhoneNumber
+                }&search=${searchObj.search}&jobTitleId=${
                     searchObj.jobTitleId
                 }&advertisementId=${advertId}&date=${
                     dateValue === "1348/10/11" ? "" : dateValue
@@ -395,6 +400,7 @@ const RestaurantResumeList = () => {
                                 total={10 * totalPage}
                                 disabled={!totalPage}
                                 onChange={handlePageChange}
+                                current={currentPage}
                             />
                         </Card>
                     </Col>

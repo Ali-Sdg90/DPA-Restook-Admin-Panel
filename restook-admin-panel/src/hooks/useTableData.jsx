@@ -8,7 +8,6 @@ const useTableData = () => {
             status: "PENDING",
             sortBy: "",
             sortOrder: "ASC",
-            date: "",
         }),
         []
     );
@@ -38,6 +37,12 @@ const useTableData = () => {
         setDateValue(sendDate);
         console.log("DATE >>", sendDate);
     };
+
+    // useEffect(() => {
+    //     console.log("change");
+
+    //     setCurrentPage(1);
+    // }, [pageFilter.sortBy, pageFilter.sortOrder]);
 
     const handleOpenChange = (open) => {
         setIsDateOpen(open);
@@ -77,6 +82,8 @@ const useTableData = () => {
             sortBy: mode,
             sortOrder,
         }));
+
+        setCurrentPage(1);
     };
 
     const handleInputChange = (e, column) => {

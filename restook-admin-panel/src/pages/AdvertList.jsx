@@ -59,6 +59,7 @@ const AdvertisementsList = () => {
         searchPhone: "",
         searchAdTitle: "",
         searchResTitle: "",
+        jobTitleId: "",
         restaurantId: "",
         dateValue: dateValue,
     });
@@ -149,7 +150,7 @@ const AdvertisementsList = () => {
                         onChange={(value) =>
                             setSearchObj((prevState) => ({
                                 ...prevState,
-                                TEMP: value,
+                                jobTitleId: value,
                             }))
                         }
                         style={{ width: "80%" }}
@@ -321,9 +322,9 @@ const AdvertisementsList = () => {
                         searchObj.searchPhone
                     }&searchAdTitle=${searchObj.searchAdTitle}&searchResTitle=${
                         searchObj.searchResTitle
-                    }&restaurantId=${searchObj.restaurantId}&date=${
-                        dateValue === "1348/10/11" ? "" : dateValue
-                    }`
+                    }&jobTitleId=${searchObj.jobTitleId}&restaurantId=${
+                        searchObj.restaurantId
+                    }&date=${dateValue === "1348/10/11" ? "" : dateValue}`
                 );
 
                 console.log("RESSSSS >>", res);
@@ -369,6 +370,7 @@ const AdvertisementsList = () => {
                                 total={10 * totalPage}
                                 disabled={!totalPage}
                                 onChange={handlePageChange}
+                                current={currentPage}
                             />
                         </Card>
                     </Col>

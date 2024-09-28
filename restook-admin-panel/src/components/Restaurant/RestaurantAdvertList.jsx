@@ -229,8 +229,8 @@ const RestaurantAdvertList = () => {
             title: (
                 <Button
                     type="text"
-                    icon={sortIcon("viewCounter", sortMode)}
-                    onClick={() => sortTable("viewCounter")}
+                    icon={sortIcon("counter", sortMode)}
+                    onClick={() => sortTable("counter")}
                 >
                     تعداد بازدید
                 </Button>
@@ -386,6 +386,7 @@ const RestaurantAdvertList = () => {
                                 total={10 * totalPage}
                                 disabled={!totalPage}
                                 onChange={handlePageChange}
+                                current={currentPage}
                             />
                         </Card>
                     </Col>

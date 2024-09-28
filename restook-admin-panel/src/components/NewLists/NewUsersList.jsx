@@ -373,6 +373,7 @@ const NewUsersList = () => {
                         total={10 * totalPage}
                         disabled={!totalPage}
                         onChange={handlePageChange}
+                        current={currentPage}
                     />
                 </Card>
             </Col>
