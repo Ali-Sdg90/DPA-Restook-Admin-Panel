@@ -218,7 +218,14 @@
     margin-bottom: 24px;
 }
 
-.submit-btn {
+.footer-btns {
+    .ant-form-item {
+        margin-bottom: 0px !important;
+    }
+}
+
+.submit-btn,
+.delete-btn {
     border-radius: 5px;
     background: #5d6af2;
     height: 40px;
@@ -230,4 +237,16 @@
     color: #f0f4f7 !important;
     border: none !important;
     margin-top: 14px;
+}
+
+.delete-btn {
+    background: #b3261e;
+
+    &:hover {
+        background-color: #d52e25 !important;
+    }
+
+    &:active {
+        background-color: #8b1d17 !important;
+    }
 }

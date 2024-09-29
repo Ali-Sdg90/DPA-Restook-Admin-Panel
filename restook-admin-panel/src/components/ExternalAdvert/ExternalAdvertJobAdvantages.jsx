@@ -22,7 +22,7 @@ const ExternalAdvertJobAdvantages = () => {
             <Row gutter={[48, 0]}>
                 {jobAdvantages.jobAdvantages.map((item, index) => (
                     <Col span={12} key={index}>
-                        <Form.Item name={item.key} valuePropName="checked">
+                        <Form.Item valuePropName="checked">
                             <Flex justify="space-between">
                                 <Text>{item.value}</Text>
                                 <Switch

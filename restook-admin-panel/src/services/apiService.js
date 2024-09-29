@@ -128,3 +128,22 @@ export const patchRequest = async (
         return handleError(error, setToastifyObj);
     }
 };
+
+// DELETE request
+export const deleteRequest = async (
+    endpoint,
+    needToken = true,
+    setToastifyObj
+) => {
+    console.log("DELETE request >>", endpoint);
+
+    try {
+        const res = await axios.delete(`${API_BASE_URL}${endpoint}`, {
+            headers: createHeaders(needToken),
+        });
+
+        return res.data;
+    } catch (error) {
+        return handleError(error, setToastifyObj);
+    }
+};

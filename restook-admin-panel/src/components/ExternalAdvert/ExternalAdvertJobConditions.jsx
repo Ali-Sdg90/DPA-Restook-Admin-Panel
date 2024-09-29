@@ -65,7 +65,6 @@ const ExternalAdvertJobConditions = () => {
                     <Col span={8} key={index}>
                         <Form.Item
                             label={jobConditionsTitleNames[index]}
-                            name="dutyStatus"
                         >
                             {field !== "adEducation"
                                 ? jobConditions[field].map((item) => (
@@ -150,13 +149,13 @@ const ExternalAdvertJobConditions = () => {
                         <Form.Item label="حداقل تحصیلات" name="educationLevel">
                             <Select>
                                 {jobConditions["adEducation"].map((item) => (
-                                    <Button
+                                    <Option
                                         key={item.key}
                                         item={"default"}
                                         className="card-btn"
                                     >
                                         {item.value}
-                                    </Button>
+                                    </Option>
                                 ))}
                             </Select>
                         </Form.Item>

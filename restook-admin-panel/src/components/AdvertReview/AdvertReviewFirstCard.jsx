@@ -40,6 +40,14 @@ const AdvertReviewFirstCard = ({ advertData, id, showBtns, backAddress }) => {
         navigate("/home-page");
     };
 
+    const backBtnHandler = (backAddress) => {
+        setUserPlace(backAddress);
+
+        if (backAddress === "advertisements-list") {
+            navigate("/advertisements-list");
+        }
+    };
+
     return (
         <Card className="first-card">
             <Flex justify="space-between" gap={"14px"}>
@@ -48,7 +56,7 @@ const AdvertReviewFirstCard = ({ advertData, id, showBtns, backAddress }) => {
                         {backAddress ? (
                             <div
                                 className="back-arrow-btn"
-                                onClick={() => setUserPlace(backAddress)}
+                                onClick={() => backBtnHandler(backAddress)}
                             >
                                 <BackIcon />
                             </div>

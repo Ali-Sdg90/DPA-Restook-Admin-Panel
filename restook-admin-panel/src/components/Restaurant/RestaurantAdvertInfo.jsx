@@ -55,7 +55,11 @@ const RestaurantAdvertInfo = () => {
                         <AdvertReviewFirstCard
                             advertData={advertData}
                             showBtns={false}
-                            backAddress={"restaurant-adverts-list"}
+                            backAddress={
+                                userPlace.includes("adver-list")
+                                    ? "advertisements-list"
+                                    : "restaurant-adverts-list"
+                            }
                         />
                         <AdvertActionBtns
                             resumeCounter={advertData.resumeCounter}

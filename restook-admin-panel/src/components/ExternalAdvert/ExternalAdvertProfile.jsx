@@ -5,10 +5,11 @@ import ExternalAdvertJobConditions from "./ExternalAdvertJobConditions";
 import ExternalAdvertJobAdvantages from "./ExternalAdvertJobAdvantages";
 import ExternalAdvertAdditionalInfo from "./ExternalAdvertAdditionalInfo";
 import { ExternalAdvertContext } from "../../store/ExternalAdvertContextProvider";
-import { postRequest } from "../../services/apiService";
+import { deleteRequest, postRequest } from "../../services/apiService";
 import { CommonContext } from "../../store/CommonContextProvider";
 import { mergeObjectFunc } from "../../utils/mergeObjectFuncExternalAdvert";
 import { convertToPostObj } from "../../utils/convertToPostObjExternalAdvert";
+import { UserContext } from "../../store/UserContextProvider";
 
 const ExternalAdvertProfile = () => {
     const {
@@ -19,6 +20,34 @@ const ExternalAdvertProfile = () => {
     } = useContext(ExternalAdvertContext);
 
     const { setToastifyObj } = useContext(CommonContext);
+    const { setUserPlace } = useContext(UserContext);
+
+    const deleteBtnHandler = async () => {
+        console.log("-- DELETE --");
+
+        try {
+            const res = await deleteRequest(
+                `/temp/deleteTempRestaurant?id=${mappedData.restaurantId}`,
+                true,
+                setToastifyObj
+            );
+
+            if (res.success) {
+                setToastifyObj(() => ({
+                    title: res.message,
+                    mode: "success",
+                }));
+
+                console.log("success-res >>", res);
+
+                setUserPlace("external-advert-list");
+            } else {
+                throw new Error();
+            }
+        } catch (error) {
+            console.log("ERROR >>", error);
+        }
+    };
 
     const submitForm = async () => {
         console.log("-- SUBMIT --");
@@ -32,6 +61,7 @@ const ExternalAdvertProfile = () => {
             mappedData.alreadyExist,
             "ExternalAdvert"
         );
+
         console.log("postObject >>", postObject);
 
         try {
@@ -44,9 +74,13 @@ const ExternalAdvertProfile = () => {
 
             if (res.success) {
                 setToastifyObj(() => ({
-                    title: `ثبت اطلاعات با موفقیت انجام شد`,
+                    title: res.message,
                     mode: "success",
                 }));
+
+                console.log("success-res >>", res);
+
+                setUserPlace("external-advert-list");
             } else {
                 throw new Error();
             }
@@ -57,7 +91,7 @@ const ExternalAdvertProfile = () => {
 
     return (
         <>
-            {isAllDataFetched === true ? (
+            {isAllDataFetched === true && form ? (
                 <Row gutter={[24, 24]} className="content">
                     <Col span={24} className="external-advert-card">
                         {mappedData ? (
@@ -78,11 +112,29 @@ const ExternalAdvertProfile = () => {
                                     <ExternalAdvertAdditionalInfo />
                                 </Form>
 
-                                <Flex justify="flex-end">
+                                <Flex
+                                    justify="space-between"
+                                    className="footer-btns"
+                                >
+                                    <Form.Item>
+                                        {mappedData.alreadyExist ? (
+                                            ""
+                                        ) : (
+                                            <Button
+                                                type="primary"
+                                                className="delete-btn"
+                                                onClick={() =>
+                                                    deleteBtnHandler()
+                                                }
+                                            >
+                                                حذف مجموعه
+                                            </Button>
+                                        )}
+                                    </Form.Item>
+
                                     <Form.Item>
                                         <Button
                                             type="primary"
-                                            htmlType="submit"
                                             className="submit-btn"
                                             onClick={() => submitForm()}
                                         >

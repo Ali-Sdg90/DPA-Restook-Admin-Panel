@@ -135,7 +135,7 @@ export const ExternalAdvertContextProvider = ({
                     instagram: restaurant.contacts
                         ? restaurant.contacts.instagram
                         : null,
-                    jobTitleAdvert: advertisement.jobTitle || "",
+                    jobTitleAdvert: restaurant.jobTitle || "",
                     jobTitleRestaurant: restaurant.jobTitle || "",
                     jobTitleId: advertisement.jobTitleId || "",
                     jobTypeId: restaurant.jobTypeId || null,
@@ -147,6 +147,7 @@ export const ExternalAdvertContextProvider = ({
                     minSalary: advertisement.minSalary * 1000000 || null,
                     nation: advertisement.nation || null,
                     phoneNumber: restaurant.phoneNumber || null,
+                    restaurantId: restaurant.id,
                     salary: advertisement.salary || null,
                     skillLevels: advertisement.skillLevels
                         ? advertisement.skillLevels.map((item) => item.key)

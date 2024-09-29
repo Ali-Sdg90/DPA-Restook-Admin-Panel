@@ -118,25 +118,30 @@ const ExternalAdvertFirstCard = ({
 
                             <Col span={24}>
                                 <Form.Item label="نوع کسب و کار">
-                                    {jobTypes.map((type) => (
-                                        <Button
-                                            type="default"
-                                            key={type.id}
-                                            className={`${
-                                                mappedData.jobTypeId === type.id
-                                                    ? "active-button"
-                                                    : ""
-                                            } card-btn`}
-                                            onClick={() =>
-                                                setMappedData((prevState) => ({
-                                                    ...prevState,
-                                                    jobTypeId: type.id,
-                                                }))
-                                            }
-                                        >
-                                            {type.title}
-                                        </Button>
-                                    ))}
+                                    <div>
+                                        {jobTypes.map((type) => (
+                                            <Button
+                                                type="default"
+                                                key={type.id}
+                                                className={`${
+                                                    mappedData.jobTypeId ===
+                                                    type.id
+                                                        ? "active-button"
+                                                        : ""
+                                                } card-btn`}
+                                                onClick={() =>
+                                                    setMappedData(
+                                                        (prevState) => ({
+                                                            ...prevState,
+                                                            jobTypeId: type.id,
+                                                        })
+                                                    )
+                                                }
+                                            >
+                                                {type.title}
+                                            </Button>
+                                        ))}
+                                    </div>
                                 </Form.Item>
                             </Col>
                         </Row>

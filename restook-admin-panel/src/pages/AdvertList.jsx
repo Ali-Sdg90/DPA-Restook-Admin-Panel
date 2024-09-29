@@ -64,10 +64,12 @@ const AdvertisementsList = () => {
         dateValue: dateValue,
     });
 
-    const detailBtnClickHandler = (id) => {
-        console.log("id >>", id);
+    const detailBtnClickHandler = (id, restaurantId) => {
+        console.log(`Advert id >> ${id} - Restaurant id >> ${restaurantId}`);
 
-        // navigate(`/advertisement-review/${id}`);
+        setUserPlace(`restaurant-advert-info-${id}-adver-list`);
+
+        navigate(`/restaurant-profile/${restaurantId}`);
     };
 
     useEffect(() => {
@@ -278,7 +280,12 @@ const AdvertisementsList = () => {
                             icon={<Arrow />}
                             iconPosition={"end"}
                             className="details-btn"
-                            onClick={() => detailBtnClickHandler(record.id)}
+                            onClick={() =>
+                                detailBtnClickHandler(
+                                    record.id,
+                                    record.restaurantId
+                                )
+                            }
                         >
                             جزئیات
                         </Button>

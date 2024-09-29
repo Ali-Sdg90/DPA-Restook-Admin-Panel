@@ -38,7 +38,7 @@ const AdvertActionBtns = ({ resumeCounter, setIsModalOpen, advertId }) => {
                             <div className="main-text">{btn.text}</div>
                             {index === 0 ? (
                                 <div className="secondary-text">
-                                    رزومه {resumeCounter}
+                                 {resumeCounter} رزومه 
                                 </div>
                             ) : (
                                 ""

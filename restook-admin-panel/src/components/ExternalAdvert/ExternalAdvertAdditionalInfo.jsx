@@ -36,7 +36,7 @@ const ExternalAdvertAdditionalInfo = () => {
                         </div>
 
                         <div className="left-side">
-                            <Form.Item name="salary">
+                            <Form.Item>
                                 <Flex justify="space-between">
                                     <Switch
                                         checked={isSalaryAgreed}
