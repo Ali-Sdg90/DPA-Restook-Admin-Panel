@@ -7,6 +7,7 @@ import { ReactComponent as Hat } from "../../assets/images/quick-access/chef's h
 import { ReactComponent as Arrow } from "../../assets/images/quick-access/Chevron - Left.svg";
 import { getRequest } from "../../services/apiService";
 import { UserContext } from "../../store/UserContextProvider";
+import { CommonContext } from "../../store/CommonContextProvider";
 
 const QuickAccess = () => {
     const [quickAccessData, setQuickAccessData] = useState({
@@ -16,10 +17,15 @@ const QuickAccess = () => {
     });
 
     const { userPlace, setUserPlace } = useContext(UserContext);
+    const { setToastifyObj } = useContext(CommonContext);
 
     useEffect(() => {
         const getData = async () => {
-            const res = await getRequest("/options/quickAccess");
+            const res = await getRequest(
+                "/options/quickAccess",
+                true,
+                setToastifyObj
+            );
 
             const { newRestaurantsFormat, newAdsFormat, newUsersFormat } =
                 res.data;

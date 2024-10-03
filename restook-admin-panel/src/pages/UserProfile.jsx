@@ -48,7 +48,11 @@ const UserProfile = () => {
             console.log("restaurantId >>", restaurantId);
 
             const getData = async () => {
-                const res = await getRequest(`/users/${id}`);
+                const res = await getRequest(
+                    `/users/${id}`,
+                    true,
+                    setToastifyObj
+                );
 
                 console.log("User-res >>", res);
 

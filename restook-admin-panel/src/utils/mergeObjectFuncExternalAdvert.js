@@ -1,6 +1,11 @@
 export const mergeObjectFunc = (primary, secondary) => {
     const merged = {};
 
+    console.log("FORM >>", primary);
+    console.log("MAPPED >>", secondary);
+
+    // debugger;
+
     Object.keys(primary).forEach((key) => {
         merged[key] = primary[key];
     });
@@ -12,6 +17,10 @@ export const mergeObjectFunc = (primary, secondary) => {
             merged[key] = secondary[key];
         }
     });
+
+    console.log("MERGED >>", merged);
+
+    // debugger;
 
     return merged;
 };

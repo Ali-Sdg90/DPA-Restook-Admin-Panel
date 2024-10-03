@@ -11,10 +11,12 @@ import AdvertReviewConditions from "../AdvertReview/AdvertReviewConditions";
 import AdvertReviewAdvantages from "../AdvertReview/AdvertReviewAdvantages";
 import AdvertActionBtns from "../AdvertReview/AdvertActionBtns";
 import AdvertActionModal from "./../AdvertReview/AdvertActionModal";
+import { CommonContext } from "../../store/CommonContextProvider";
 
 const RestaurantAdvertInfo = () => {
     const { userPlace, setUserPlace } = useContext(UserContext);
     const { userData } = useContext(AuthContext);
+    const { setToastifyObj } = useContext(CommonContext);
 
     const [id, setId] = useState();
 
@@ -31,7 +33,11 @@ const RestaurantAdvertInfo = () => {
             console.log("id >>", id);
 
             const getData = async () => {
-                const res = await getRequest(`/advertisements/${id}`);
+                const res = await getRequest(
+                    `/advertisements/${id}`,
+                    true,
+                    setToastifyObj
+                );
 
                 console.log("Advert-Prof >>", res);
 

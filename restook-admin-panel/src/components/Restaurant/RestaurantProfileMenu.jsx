@@ -28,7 +28,11 @@ const RestaurantProfileMenu = () => {
             console.log("id >>", id);
 
             const getData = async () => {
-                const res = await getRequest(`/restaurants/${id}`);
+                const res = await getRequest(
+                    `/restaurants/${id}`,
+                    true,
+                    setToastifyObj
+                );
 
                 console.log("REST-Prof >>", res);
 

@@ -6,13 +6,21 @@ import { ReactComponent as BackIcon } from "../../assets/images/home-page/Arrow 
 import { ExternalAdvertContext } from "../../store/ExternalAdvertContextProvider";
 import TextArea from "antd/es/input/TextArea";
 import ImageWithFallback from "../Common/ImageWithFallback";
+import UploadImage from "../Common/UploadImage";
 
 const ExternalAdvertFirstCard = ({
     usePrefixForImage,
     forceFalseAlreadyExist = false,
 }) => {
-    const { profileImg, jobTypes, mappedData, backBtnHandler, setMappedData } =
-        useContext(ExternalAdvertContext);
+    const {
+        profileImg,
+        jobTypes,
+        mappedData,
+        backBtnHandler,
+        setMappedData,
+        setImageName,
+        imageName,
+    } = useContext(ExternalAdvertContext);
 
     return (
         <Card className="first-card">
@@ -110,9 +118,11 @@ const ExternalAdvertFirstCard = ({
                             <Col span={8}>
                                 <Form.Item
                                     label="تصویر پروفایل"
-                                    name="imageFileName"
                                 >
-                                    <Input />
+                                    <UploadImage
+                                        imageName={imageName}
+                                        setImageName={setImageName}
+                                    />
                                 </Form.Item>
                             </Col>
 

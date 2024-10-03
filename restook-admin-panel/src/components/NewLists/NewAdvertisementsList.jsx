@@ -13,6 +13,7 @@ import { InputDatePicker } from "jalaali-react-date-picker";
 import { useNavigate } from "react-router-dom";
 import { getRequest } from "../../services/apiService";
 import { convertFAtoEN } from "../../utils/convertFAtoENNumbers";
+import { CommonContext } from "../../store/CommonContextProvider";
 
 const NewAdvertisementsList = () => {
     const {
@@ -42,6 +43,7 @@ const NewAdvertisementsList = () => {
     const navigate = useNavigate();
 
     const { userPlace, setUserPlace } = useContext(UserContext);
+    const { setToastifyObj } = useContext(CommonContext);
 
     const [searchObj, setSearchObj] = useState({
         searchPhone: "",
@@ -239,7 +241,9 @@ const NewAdvertisementsList = () => {
                     searchObj.searchResTitle
                 }&restaurantId=${""}&date=${
                     dateValue === "1348/10/11" ? "" : dateValue
-                }`
+                }`,
+                true,
+                setToastifyObj
             );
 
             console.log("RESSSSS >>", res);

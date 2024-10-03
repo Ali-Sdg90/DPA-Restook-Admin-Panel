@@ -1,6 +1,12 @@
 import { convertFAtoEN } from "./convertFAtoENNumbers";
 
-export const convertToPostObj = (data, profileId, alreadyExist, postMode) => {
+export const convertToPostObj = (
+    data,
+    profileId,
+    alreadyExist,
+    postMode,
+    imageName
+) => {
     let restaurantData = {};
     let advertisementData = {};
 
@@ -11,7 +17,7 @@ export const convertToPostObj = (data, profileId, alreadyExist, postMode) => {
                 phoneNumber: convertFAtoEN(data.phoneNumber),
                 branch: data.branch,
                 aboutUs: data.aboutUs,
-                imageFileName: data.imageFileName,
+                imageFileName: imageName,
                 jobTypeId: data.jobTypeId,
                 // cityId: 1, // ?
                 contacts: {
@@ -25,7 +31,7 @@ export const convertToPostObj = (data, profileId, alreadyExist, postMode) => {
             };
 
             advertisementData = {
-                // restaurantId: profileId, // ?
+                restaurantId: +profileId[0] || null,
                 status: "published", // Static value
                 jobTitleId: data.jobTitleId,
                 jobTitle: data.jobTitleAdvert,
@@ -71,7 +77,7 @@ export const convertToPostObj = (data, profileId, alreadyExist, postMode) => {
                 phoneNumber: convertFAtoEN(data.phoneNumber),
                 branch: data.branch,
                 aboutUs: data.aboutUs,
-                imageFileName: data.imageFileName,
+                imageFileName: imageName,
                 jobTypeId: data.jobTypeId,
                 // cityId: 1, // ?
                 contacts: {
@@ -88,7 +94,7 @@ export const convertToPostObj = (data, profileId, alreadyExist, postMode) => {
 
         case "newAdvertForRestaurant":
             restaurantData = {
-                restaurantId: profileId || null,
+                restaurantId: +profileId[0] || null,
                 status: "published",
                 jobTitleId: data.jobTypeId,
                 jobTitle: data.jobTitle,

@@ -11,10 +11,12 @@ import AdvertReviewInfo from "../components/AdvertReview/AdvertReviewInfo";
 import AdvertReviewConditions from "../components/AdvertReview/AdvertReviewConditions";
 import AdvertReviewAdvantages from "../components/AdvertReview/AdvertReviewAdvantages";
 import AdvertReviewModal from "../components/AdvertReview/AdvertReviewModal";
+import { CommonContext } from "../store/CommonContextProvider";
 
 const AdvertisementReview = () => {
     const { userPlace, setUserPlace } = useContext(UserContext);
     const { userData } = useContext(AuthContext);
+    const { setToastifyObj } = useContext(CommonContext);
 
     const { id } = useParams();
 
@@ -27,7 +29,11 @@ const AdvertisementReview = () => {
             console.log("id >>", id);
 
             const getData = async () => {
-                const res = await getRequest(`/advertisements/${id}`);
+                const res = await getRequest(
+                    `/advertisements/${id}`,
+                    true,
+                    setToastifyObj
+                );
 
                 console.log("Advert-Prof >>", res);
 

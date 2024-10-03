@@ -17,6 +17,7 @@ const ExternalAdvertProfile = () => {
         form,
         mappedData,
         profileId,
+        imageName,
     } = useContext(ExternalAdvertContext);
 
     const { setToastifyObj } = useContext(CommonContext);
@@ -52,14 +53,18 @@ const ExternalAdvertProfile = () => {
     const submitForm = async () => {
         console.log("-- SUBMIT --");
 
-        const mergedObject = mergeObjectFunc(form.getFieldsValue(), mappedData);
+        const mergedObject = mergeObjectFunc(
+            form.getFieldsValue(),
+            mappedData,
+        );
         console.log("mergedObject >> ", mergedObject);
 
         const postObject = convertToPostObj(
             mergedObject,
             profileId,
             mappedData.alreadyExist,
-            "ExternalAdvert"
+            "ExternalAdvert",
+            imageName,
         );
 
         console.log("postObject >>", postObject);

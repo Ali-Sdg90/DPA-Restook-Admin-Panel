@@ -5,7 +5,7 @@ import { getRequest } from "../../services/apiService";
 import { useNavigate } from "react-router-dom";
 
 const PageWrapper = ({ children }) => {
-    const { localToken } = useContext(CommonContext);
+    const { localToken, setToastifyObj } = useContext(CommonContext);
     const { userData, setUserData } = useContext(AuthContext);
 
     const navigate = useNavigate();
@@ -13,7 +13,11 @@ const PageWrapper = ({ children }) => {
     useEffect(() => {
         const getProfile = async () => {
             if (localToken) {
-                const res = await getRequest("/auth/profile");
+                const res = await getRequest(
+                    "/auth/profile",
+                    true,
+                    setToastifyObj
+                );
 
                 setUserData({
                     access_token: localToken,

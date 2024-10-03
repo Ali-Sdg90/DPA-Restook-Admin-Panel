@@ -24,6 +24,7 @@ import PageWrapper from "../components/Common/PageWrapper";
 import { InputDatePicker } from "jalaali-react-date-picker";
 import { useNavigate } from "react-router-dom";
 import { convertFAtoEN } from "../utils/convertFAtoENNumbers";
+import { CommonContext } from "../store/CommonContextProvider";
 
 const UsersList = () => {
     const {
@@ -49,6 +50,7 @@ const UsersList = () => {
 
     const { userData } = useContext(AuthContext);
     const { userPlace, setUserPlace } = useContext(UserContext);
+    const { setToastifyObj } = useContext(CommonContext);
 
     const [jobTitle, setJobTitle] = useState();
 
@@ -300,7 +302,11 @@ const UsersList = () => {
 
         const getData = async () => {
             try {
-                const res = await getRequest(`/options/jobTitles`);
+                const res = await getRequest(
+                    `/options/jobTitles`,
+                    true,
+                    setToastifyObj
+                );
 
                 if (res.success) {
                     setJobTitle([{ id: "", title: "همه" }, ...res.data]);
@@ -331,7 +337,9 @@ const UsersList = () => {
                         searchObj.searchName
                     }&JobTitleId=${searchObj.JobTitleId}&date=${
                         dateValue === "1348/10/11" ? "" : dateValue
-                    }`
+                    }`,
+                    true,
+                    setToastifyObj
                 );
 
                 console.log("RESSSSS >>", res);

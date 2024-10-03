@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../store/UserContextProvider";
 import { getRequest } from "../../services/apiService";
 import { convertFAtoEN } from "../../utils/convertFAtoENNumbers";
+import { CommonContext } from "../../store/CommonContextProvider";
 
 const NewRestaurantsList = () => {
     const {
@@ -38,6 +39,7 @@ const NewRestaurantsList = () => {
     } = useTableData();
 
     const { setUserPlace } = useContext(UserContext);
+    const { setToastifyObj } = useContext(CommonContext);
 
     const [searchObj, setSearchObj] = useState({
         searchPhone: "",
@@ -234,7 +236,9 @@ const NewRestaurantsList = () => {
                     searchObj.searchPhone
                 }&searchBranch=${searchObj.searchBranch}&searchTitle=${
                     searchObj.searchTitle
-                }&date=${dateValue === "1348/10/11" ? "" : dateValue}`
+                }&date=${dateValue === "1348/10/11" ? "" : dateValue}`,
+                true,
+                setToastifyObj
             );
 
             console.log("RESSSSS >>", res);

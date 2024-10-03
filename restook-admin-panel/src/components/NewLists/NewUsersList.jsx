@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../store/UserContextProvider";
 import { getRequest } from "../../services/apiService";
 import { convertFAtoEN } from "../../utils/convertFAtoENNumbers";
+import { CommonContext } from "../../store/CommonContextProvider";
 
 const NewUsersList = () => {
     const {
@@ -39,6 +40,7 @@ const NewUsersList = () => {
     } = useTableData();
 
     const { setUserPlace } = useContext(UserContext);
+    const { setToastifyObj } = useContext(CommonContext);
 
     const [jobTitle, setJobTitle] = useState();
     const [searchObj, setSearchObj] = useState({
@@ -292,7 +294,11 @@ const NewUsersList = () => {
 
         const getJobTitles = async () => {
             try {
-                const res = await getRequest(`/options/jobTitles`);
+                const res = await getRequest(
+                    `/options/jobTitles`,
+                    true,
+                    setToastifyObj
+                );
 
                 if (res.success) {
                     setJobTitle([{ id: "", title: "همه" }, ...res.data]);
@@ -324,7 +330,9 @@ const NewUsersList = () => {
                     searchObj.searchName
                 }&JobTitleId=${searchObj.JobTitleId}&date=${
                     dateValue === "1348/10/11" ? "" : dateValue
-                }`
+                }`,
+                true,
+                setToastifyObj
             );
 
             console.log("RESSSSS >>", res);

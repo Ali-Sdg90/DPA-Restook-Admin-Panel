@@ -29,6 +29,7 @@ import { InputDatePicker } from "jalaali-react-date-picker";
 import { useParams } from "react-router-dom";
 import { convertFAtoEN } from "../../utils/convertFAtoENNumbers";
 import { getRequest } from "../../services/apiService";
+import { CommonContext } from "../../store/CommonContextProvider";
 
 const RestaurantAdvertList = () => {
     const {
@@ -54,6 +55,7 @@ const RestaurantAdvertList = () => {
 
     const { userData } = useContext(AuthContext);
     const { setUserPlace } = useContext(UserContext);
+    const { setToastifyObj } = useContext(CommonContext);
 
     const { id } = useParams();
 
@@ -316,7 +318,9 @@ const RestaurantAdvertList = () => {
                         searchObj.searchResTitle
                     }&restaurantId=${id}&date=${
                         dateValue === "1348/10/11" ? "" : dateValue
-                    }`
+                    }`,
+                    true,
+                    setToastifyObj
                 );
 
                 console.log("RESSSSS >>", res);

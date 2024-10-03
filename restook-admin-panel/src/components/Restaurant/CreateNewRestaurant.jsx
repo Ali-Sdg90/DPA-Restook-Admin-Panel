@@ -5,13 +5,17 @@ import TextArea from "antd/es/input/TextArea";
 import { UserContext } from "../../store/UserContextProvider";
 import { getRequest, postRequest } from "../../services/apiService";
 import { CommonContext } from "../../store/CommonContextProvider";
+import UploadImage from "../Common/UploadImage";
 
 const CreateNewRestaurant = () => {
     const { setUserPlace } = useContext(UserContext);
+    const { setToastifyObj } = useContext(CommonContext);
+
     const [form] = Form.useForm();
+
     const [jobTypesData, setJobTypesData] = useState();
     const [selectedJobTypeId, setSelectedJobTypeId] = useState();
-    const { setToastifyObj } = useContext(CommonContext);
+    const [imageName, setImageName] = useState();
 
     const backBtnHandler = () => {
         setUserPlace("restaurants-list");
@@ -25,7 +29,7 @@ const CreateNewRestaurant = () => {
             phoneNumber: formData.phoneNumber,
             branch: formData.branch,
             aboutUs: formData.aboutUs,
-            imageFileName: formData.imageFileName,
+            imageFileName: imageName || null,
             jobTypeId: selectedJobTypeId,
             cityId: 1, // ?
             contacts: {
@@ -62,9 +66,10 @@ const CreateNewRestaurant = () => {
 
             if (res.success) {
                 setToastifyObj(() => ({
-                    title: `ثبت اطلاعات با موفقیت انجام شد`,
+                    title: res.message,
                     mode: "success",
                 }));
+
                 console.log("success-res >> ", res);
             } else {
                 throw new Error();
@@ -77,7 +82,11 @@ const CreateNewRestaurant = () => {
     useEffect(() => {
         const getData = async () => {
             try {
-                const res = await getRequest("/options/jobTypes");
+                const res = await getRequest(
+                    "/options/jobTypes",
+                    true,
+                    setToastifyObj
+                );
 
                 if (res && res.success) {
                     setJobTypesData(res.data);
@@ -164,9 +173,10 @@ const CreateNewRestaurant = () => {
                                     <Col span={8}>
                                         <Form.Item
                                             label="تصویر پروفایل"
-                                            name="imageFileName"
                                         >
-                                            <Input />
+                                            <UploadImage
+                                                setImageName={setImageName}
+                                            />
                                         </Form.Item>
                                     </Col>
 

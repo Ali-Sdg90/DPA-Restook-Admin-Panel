@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect, useContext } from "react";
 import { getRequest } from "../services/apiService";
 import { UserContext } from "../store/UserContextProvider";
 import { Form } from "antd";
+import { CommonContext } from "./CommonContextProvider";
 
 export const ExternalAdvertContext = createContext();
 
@@ -13,22 +14,26 @@ export const ExternalAdvertContextProvider = ({
     rootUserPlace,
 }) => {
     const [form] = Form.useForm();
-    const [profileImg, setProfileImg] = useState();
+
     const { userPlace, setUserPlace } = useContext(UserContext);
-    const [profileId, setProfileId] = useState();
-    const [apiResponse, setApiResponse] = useState(null);
+    const { setToastifyObj } = useContext(CommonContext);
+
     const [jobTypes, setJobTypes] = useState();
+    const [profileId, setProfileId] = useState();
     const [jobTitles, setJobTitles] = useState();
-    const [jobConditions, setJobConditions] = useState();
-    const [jobAdvantages, setJobAdvantages] = useState();
     const [languages, setLanguages] = useState();
-    const [isAllDataFetched, setIsAllDataFetched] = useState(false);
-    const [isSalaryAgreed, setIsSalaryAgreed] = useState(false);
+    const [imageName, setImageName] = useState();
     const [mappedData, setMappedData] = useState();
+    const [profileImg, setProfileImg] = useState();
+    const [jobAdvantages, setJobAdvantages] = useState();
+    const [jobConditions, setJobConditions] = useState();
+    const [apiResponse, setApiResponse] = useState(null);
+    const [isSalaryAgreed, setIsSalaryAgreed] = useState(false);
+    const [isAllDataFetched, setIsAllDataFetched] = useState(false);
 
     const fetchData = async (url, setStateFunction, errorMessage) => {
         try {
-            const res = await getRequest(url);
+            const res = await getRequest(url, true, setToastifyObj);
 
             if (res && res.success) {
                 setStateFunction(res.data);
@@ -42,9 +47,7 @@ export const ExternalAdvertContextProvider = ({
 
     useEffect(() => {
         setProfileId(userPlace.match(/\d+/g));
-    }, [userPlace]);
 
-    useEffect(() => {
         setIsAllDataFetched(false);
     }, [userPlace]);
 
@@ -77,8 +80,19 @@ export const ExternalAdvertContextProvider = ({
     }, [userPlace, profileId]);
 
     useEffect(() => {
+        console.log("imageName >>", imageName);
+    }, [imageName]);
+
+    useEffect(() => {
         if (apiResponse) {
             console.log("apiResponse >>", apiResponse);
+
+            if (
+                apiResponse.restaurant &&
+                apiResponse.restaurant.imageFileName
+            ) {
+                setImageName(apiResponse.restaurant.imageFileName);
+            }
 
             let localMappedData;
 
@@ -191,6 +205,10 @@ export const ExternalAdvertContextProvider = ({
         }
     }, [apiResponse, onlyFirstCard, haveAdvertData]);
 
+    // useEffect(() => {
+    //     console.log("mappedData >>", mappedData);
+    // }, [mappedData]);
+
     useEffect(() => {
         if (userPlace === rootUserPlace) {
             setIsAllDataFetched(false);
@@ -220,6 +238,8 @@ export const ExternalAdvertContextProvider = ({
                 isSalaryAgreed,
                 mappedData,
                 profileId,
+                imageName,
+                setImageName,
                 backBtnHandler,
                 handleSalarySwitchChange,
                 setMappedData,

@@ -10,6 +10,7 @@ import { UserContext } from "../../store/UserContextProvider";
 import { getRequest } from "../../services/apiService";
 import ImageWithFallback from "../Common/ImageWithFallback";
 import { convertFAtoEN } from "../../utils/convertFAtoENNumbers";
+import { CommonContext } from "../../store/CommonContextProvider";
 
 const ExternalAdvertList = () => {
     const {
@@ -34,6 +35,7 @@ const ExternalAdvertList = () => {
     } = useTableData();
 
     const { userPlace, setUserPlace } = useContext(UserContext);
+    const { setToastifyObj } = useContext(CommonContext);
 
     const [searchObj, setSearchObj] = useState({
         status: "",
@@ -286,7 +288,9 @@ const ExternalAdvertList = () => {
                         searchObj.searchPhone
                     }&searchAdTitle=${searchObj.searchAdTitle}&searchResTitle=${
                         searchObj.searchResTitle
-                    }`
+                    }`,
+                    true,
+                    setToastifyObj
                 );
 
                 console.log("RESSSSS >>", res);

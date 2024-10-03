@@ -24,6 +24,7 @@ import PageWrapper from "../Common/PageWrapper";
 import { AuthContext } from "../../store/AuthContextProvider";
 import { getRequest } from "../../services/apiService";
 import { convertFAtoEN } from "../../utils/convertFAtoENNumbers";
+import { CommonContext } from "../../store/CommonContextProvider";
 
 const RestaurantResumeList = () => {
     const {
@@ -49,6 +50,7 @@ const RestaurantResumeList = () => {
 
     const { userData } = useContext(AuthContext);
     const { userPlace, setUserPlace } = useContext(UserContext);
+    const { setToastifyObj } = useContext(CommonContext);
 
     const [advertId, setAdvertId] = useState();
 
@@ -311,7 +313,11 @@ const RestaurantResumeList = () => {
 
         const getData = async () => {
             try {
-                const res = await getRequest(`/options/jobTitles`);
+                const res = await getRequest(
+                    `/options/jobTitles`,
+                    true,
+                    setToastifyObj
+                );
 
                 if (res.success) {
                     setJobTitle([{ id: "", title: "همه" }, ...res.data]);
@@ -341,7 +347,9 @@ const RestaurantResumeList = () => {
                     searchObj.jobTitleId
                 }&advertisementId=${advertId}&date=${
                     dateValue === "1348/10/11" ? "" : dateValue
-                }`
+                }`,
+                true,
+                setToastifyObj
             );
 
             console.log("RESSSSS >>", res);
