@@ -92,6 +92,8 @@ export const ExternalAdvertContextProvider = ({
                 apiResponse.restaurant.imageFileName
             ) {
                 setImageName(apiResponse.restaurant.imageFileName);
+            } else if (apiResponse.imageUrl) {
+                setImageName(apiResponse.imageUrl.split("/").pop());
             }
 
             let localMappedData;
@@ -113,7 +115,7 @@ export const ExternalAdvertContextProvider = ({
                     instagram: apiResponse.contacts[0]
                         ? apiResponse.contacts[0].instagram
                         : null,
-                    jobTitle: apiResponse.jobTitle || "",
+                    jobTitleRestaurant: apiResponse.jobTitle || "",
                     jobTypeId: apiResponse.jobTypeId || null,
                     phoneNumber: apiResponse.phoneNumber || null,
                     telegram: apiResponse.contacts[0]

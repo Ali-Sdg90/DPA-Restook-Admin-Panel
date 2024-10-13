@@ -91,6 +91,8 @@ const CreateNewRestaurant = () => {
 
                 if (res && res.success) {
                     setJobTypesData(res.data);
+
+                    console.log("success res >>", res);
                 } else {
                     throw new Error();
                 }
@@ -174,6 +176,7 @@ const CreateNewRestaurant = () => {
                                     <Col span={8}>
                                         <Form.Item label="تصویر پروفایل">
                                             <UploadImage
+                                                imageName={imageName}
                                                 setImageName={setImageName}
                                             />
                                         </Form.Item>
