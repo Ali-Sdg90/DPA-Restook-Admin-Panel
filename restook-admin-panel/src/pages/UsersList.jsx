@@ -13,7 +13,6 @@ import {
 } from "antd";
 
 import { ReactComponent as Arrow } from "../assets/images/home-page/Chevron - Left.svg";
-import { ReactComponent as Calender } from "../assets/images/home-page/Calendar - Dates (1).svg";
 import { sortIcon } from "../utils/tableIconSort";
 import useTableData from "../hooks/useTableData";
 import { AuthContext } from "../store/AuthContextProvider";

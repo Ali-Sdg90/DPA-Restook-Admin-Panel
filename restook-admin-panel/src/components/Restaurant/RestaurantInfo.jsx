@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Row, Col, Spin, Form, Flex, Button } from "antd";
 import ExternalAdvertFirstCard from "../ExternalAdvert/ExternalAdvertFirstCard";
 import { ExternalAdvertContext } from "../../store/ExternalAdvertContextProvider";

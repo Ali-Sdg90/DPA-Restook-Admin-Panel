@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import PageWrapper from "../components/Common/PageWrapper";
 import { Col, Row, Spin } from "antd";
-import { UserContext } from "../store/UserContextProvider";
 import { AuthContext } from "../store/AuthContextProvider";
 import { useParams } from "react-router-dom";
 import { getRequest } from "../services/apiService";
@@ -14,7 +13,6 @@ import AdvertReviewModal from "../components/AdvertReview/AdvertReviewModal";
 import { CommonContext } from "../store/CommonContextProvider";
 
 const AdvertisementReview = () => {
-    const { userPlace, setUserPlace } = useContext(UserContext);
     const { userData } = useContext(AuthContext);
     const { setToastifyObj } = useContext(CommonContext);
 

@@ -19,6 +19,7 @@ const HomePage = () => {
                 return <CreateNewRestaurant />;
             default:
                 console.log("ERROR IN RestaurantsPage-pageMode", userPlace);
+                setUserPlace("restaurants-list");
         }
     };
 

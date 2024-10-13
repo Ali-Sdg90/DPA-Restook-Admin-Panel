@@ -96,7 +96,7 @@ export const getRequest = async (
     needToken = true,
     setToastifyObj
 ) => {
-    console.log("GET request >>", endpoint);
+    // console.log("GET request >>", endpoint);
 
     try {
         const res = await axios.get(`${API_BASE_URL}${endpoint}`, {
@@ -135,7 +135,7 @@ export const deleteRequest = async (
     needToken = true,
     setToastifyObj
 ) => {
-    console.log("DELETE request >>", endpoint);
+    // console.log("DELETE request >>", endpoint);
 
     try {
         const res = await axios.delete(`${API_BASE_URL}${endpoint}`, {

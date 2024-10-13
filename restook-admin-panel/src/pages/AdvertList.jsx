@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 
 import {
     Button,
@@ -6,7 +6,6 @@ import {
     Col,
     Input,
     Table,
-    DatePicker,
     Pagination,
     Select,
     Spin,
@@ -87,6 +86,15 @@ const AdvertisementsList = () => {
         getData();
     }, [searchObj, pageFilter, currentPage]);
 
+    const jobTitleOptions = useMemo(
+        () =>
+            jobTitle?.map((item) => ({
+                value: item.id,
+                label: item.title,
+            })),
+        [jobTitle]
+    );
+
     const columns = [
         {
             title: "",
@@ -158,10 +166,7 @@ const AdvertisementsList = () => {
                             }))
                         }
                         style={{ width: "80%" }}
-                        options={jobTitle.map((item) => ({
-                            value: item.id,
-                            label: item.title,
-                        }))}
+                        options={jobTitleOptions}
                     />
                 ) : text ? (
                     text

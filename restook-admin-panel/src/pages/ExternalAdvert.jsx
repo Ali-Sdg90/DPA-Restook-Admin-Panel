@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { Spin } from "antd";
 import { AuthContext } from "../store/AuthContextProvider";
 import { UserContext } from "../store/UserContextProvider";
@@ -18,6 +18,7 @@ const ExternalAdver = () => {
             return <ExternalAdvertProfile />;
         } else {
             console.log("ERROR IN ExternalAdvert-pageMode", userPlace);
+            setUserPlace("external-advert-list");
         }
     };
 

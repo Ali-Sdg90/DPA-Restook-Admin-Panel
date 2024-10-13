@@ -269,7 +269,6 @@ const ExternalAdvertList = () => {
             ...prevState,
             status: "",
         }));
-        console.log("RESET --------------------------------");
     }, []);
 
     const getData = async () => {

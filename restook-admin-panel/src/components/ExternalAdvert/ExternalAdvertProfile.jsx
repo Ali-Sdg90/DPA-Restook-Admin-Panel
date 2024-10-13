@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Row, Col, Card, Spin, Form, Flex, Button } from "antd";
+import { Row, Col, Spin, Form, Flex, Button } from "antd";
 import ExternalAdvertFirstCard from "./ExternalAdvertFirstCard";
 import ExternalAdvertJobConditions from "./ExternalAdvertJobConditions";
 import ExternalAdvertJobAdvantages from "./ExternalAdvertJobAdvantages";

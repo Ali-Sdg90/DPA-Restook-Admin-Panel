@@ -19,7 +19,7 @@ export const convertToPostObj = (
                 aboutUs: data.aboutUs,
                 imageFileName: imageName,
                 jobTypeId: data.jobTypeId,
-                // cityId: 1, // ?
+                cityId: 1, // ?
                 contacts: {
                     phoneNumber: convertFAtoEN(data.connectionPhoneNumber),
                     instagram: data.instagram,
@@ -35,7 +35,7 @@ export const convertToPostObj = (
                 status: "published", // Static value
                 jobTitleId: data.jobTitleId,
                 jobTitle: data.jobTitleAdvert,
-                skillLevels: data.skillLevels || "",
+                skillLevels: data.skillLevels || null,
                 dutyStatus: data.dutyStatus || "",
                 genders: data.genders || "",
                 nation: data.nation || "",
@@ -43,7 +43,7 @@ export const convertToPostObj = (
                 languages: data.languages || "",
                 workExperience: data.workExperience,
                 ageLimit: data.ageLimit,
-                educationLevel: data.educationLevel,
+                educationLevel: +data.educationLevel,
                 insurance: data.insurance,
                 residence: data.residence,
                 meal: data.meal,

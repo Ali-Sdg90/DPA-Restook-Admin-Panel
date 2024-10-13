@@ -21,7 +21,7 @@ const RestaurantProfileMenu = () => {
 
     const { userData } = useContext(AuthContext);
     const { setToastifyObj } = useContext(CommonContext);
-    const { userPlace, setUserPlace } = useContext(UserContext);
+    const { setUserPlace } = useContext(UserContext);
 
     useEffect(() => {
         if (id) {

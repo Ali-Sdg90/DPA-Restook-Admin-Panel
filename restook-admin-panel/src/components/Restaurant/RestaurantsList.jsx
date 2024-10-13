@@ -1,16 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import {
-    Button,
-    Card,
-    Col,
-    Input,
-    Table,
-    Pagination,
-    Select,
-    Row,
-    Spin,
-} from "antd";
+import { Button, Card, Col, Input, Table, Pagination, Select, Row } from "antd";
 
 import { PlusOutlined } from "@ant-design/icons";
 
@@ -32,25 +22,16 @@ const RestaurantsList = () => {
         totalPage,
         sortMode,
         currentPage,
-        selectedDate,
-        isDateOpen,
-        calendarRef,
         isLoading,
         dateValue,
         sortTable,
-        handleInputChange,
         setTableData,
         setTotalPage,
         handlePageChange,
-        setCurrentPage,
         setPageFilter,
-        backBtnHandler,
-        handleDateChange,
-        handleOpenChange,
         setIsLoading,
     } = useTableData();
 
-    const { userData } = useContext(AuthContext);
     const { userPlace, setUserPlace } = useContext(UserContext);
     const { setToastifyObj } = useContext(CommonContext);
 

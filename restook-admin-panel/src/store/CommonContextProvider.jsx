@@ -14,10 +14,6 @@ const CommonContextProvider = ({ children }) => {
         ""
     );
 
-    useEffect(() => {
-        console.log("toastifyObj >>", toastifyObj);
-    }, [toastifyObj]);
-
     return (
         <CommonContext.Provider
             value={{ toastifyObj, setToastifyObj, localToken, setLocalToken }}

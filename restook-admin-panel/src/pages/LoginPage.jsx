@@ -97,6 +97,7 @@ const LoginPage = () => {
                 );
             default:
                 console.log("ERROR IN LoginPage-pageMode", userPlace);
+                setUserPlace("login-page");
         }
     };
 

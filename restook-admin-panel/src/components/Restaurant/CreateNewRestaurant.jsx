@@ -6,6 +6,7 @@ import { UserContext } from "../../store/UserContextProvider";
 import { getRequest, postRequest } from "../../services/apiService";
 import { CommonContext } from "../../store/CommonContextProvider";
 import UploadImage from "../Common/UploadImage";
+import { convertFAtoEN } from "../../utils/convertFAtoENNumbers";
 
 const CreateNewRestaurant = () => {
     const { setUserPlace } = useContext(UserContext);
@@ -26,14 +27,14 @@ const CreateNewRestaurant = () => {
 
         return {
             jobTitle: formData.jobTitle || null,
-            phoneNumber: formData.phoneNumber,
+            phoneNumber: convertFAtoEN(formData.phoneNumber),
             branch: formData.branch,
             aboutUs: formData.aboutUs,
             imageFileName: imageName || null,
             jobTypeId: selectedJobTypeId,
             cityId: 1, // ?
             contacts: {
-                phoneNumber: formData.connectionPhoneNumber,
+                phoneNumber: convertFAtoEN(formData.connectionPhoneNumber),
                 instagram: formData.instagram,
                 telegram: formData.telegram,
                 lat: 35.770722, // Static value
@@ -171,9 +172,7 @@ const CreateNewRestaurant = () => {
                                     </Col>
 
                                     <Col span={8}>
-                                        <Form.Item
-                                            label="تصویر پروفایل"
-                                        >
+                                        <Form.Item label="تصویر پروفایل">
                                             <UploadImage
                                                 setImageName={setImageName}
                                             />

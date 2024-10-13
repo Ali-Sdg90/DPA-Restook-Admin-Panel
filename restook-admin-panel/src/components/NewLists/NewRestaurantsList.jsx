@@ -30,8 +30,6 @@ const NewRestaurantsList = () => {
         setTableData,
         setTotalPage,
         handlePageChange,
-        setCurrentPage,
-        setPageFilter,
         backBtnHandler,
         handleDateChange,
         handleOpenChange,

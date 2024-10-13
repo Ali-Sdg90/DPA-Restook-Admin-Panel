@@ -23,6 +23,7 @@ const HomePage = () => {
                 return <NewUsersList />;
             default:
                 console.log("ERROR IN HomePage-pageMode", userPlace);
+                setUserPlace("home-page");
         }
     };
 

@@ -16,7 +16,7 @@ const QuickAccess = () => {
         newUsersFormat: "",
     });
 
-    const { userPlace, setUserPlace } = useContext(UserContext);
+    const { setUserPlace } = useContext(UserContext);
     const { setToastifyObj } = useContext(CommonContext);
 
     useEffect(() => {

@@ -71,7 +71,7 @@ const ForgetPass = ({
     }, [sendAgainCounter]);
 
     const sendAgainHandler = () => {
-        setSendAgainCounter(120); // 10
+        setSendAgainCounter(120);
 
         postRequest(
             "/auth/forgetPass",

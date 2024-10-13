@@ -1,11 +1,11 @@
 import React, { lazy } from "react";
 import { Navigate } from "react-router-dom";
-import UserProfile from "../pages/UserProfile";
 
 const HomePage = lazy(() => import("../pages/HomePage"));
 const LoginPage = lazy(() => import("../pages/LoginPage"));
 const UsersList = lazy(() => import("../pages/UsersList"));
 const AdvertList = lazy(() => import("../pages/AdvertList"));
+const UserProfile = lazy(() => import("../pages/UserProfile"));
 const AdvertReview = lazy(() => import("../pages/AdvertReview"));
 const PageNotFound = lazy(() => import("../pages/PageNotFound"));
 const ExternalAdvert = lazy(() => import("../pages/ExternalAdvert"));

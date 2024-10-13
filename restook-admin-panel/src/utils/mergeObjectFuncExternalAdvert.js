@@ -1,26 +1,18 @@
-export const mergeObjectFunc = (primary, secondary) => {
+export const mergeObjectFunc = (form, mapped) => {
     const merged = {};
 
-    console.log("FORM >>", primary);
-    console.log("MAPPED >>", secondary);
+    // console.log("FORM >>", form);
+    // console.log("MAPPED >>", mapped);
 
-    // debugger;
-
-    Object.keys(primary).forEach((key) => {
-        merged[key] = primary[key];
+    Object.keys(mapped).forEach((key) => {
+        merged[key] = mapped[key];
     });
 
-    Object.keys(secondary).forEach((key) => {
-        if (secondary[key] === undefined || secondary[key] === null) {
-            merged[key] = primary[key];
-        } else {
-            merged[key] = secondary[key];
-        }
+    Object.keys(form).forEach((key) => {
+        merged[key] = form[key];
     });
 
     console.log("MERGED >>", merged);
-
-    // debugger;
 
     return merged;
 };

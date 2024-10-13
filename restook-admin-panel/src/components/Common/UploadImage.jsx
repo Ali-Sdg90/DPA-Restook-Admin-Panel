@@ -26,6 +26,7 @@ function UploadImage({ imageName, setImageName }) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.readAsDataURL(file);
+
             reader.onload = () => resolve(reader.result.split(",")[1]);
             reader.onerror = (error) => reject(error);
         });
@@ -35,6 +36,7 @@ function UploadImage({ imageName, setImageName }) {
         if (!base64 || !fileName) return;
 
         setLoading(true);
+        
         try {
             const imgName = `${new Date().getTime().toString()}.png`;
             const res = await postRequest(
