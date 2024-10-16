@@ -66,7 +66,6 @@ const ExternalAdvertProfile = () => {
             "ExternalAdvert",
             imageName,
         );
-
         console.log("postObject >>", postObject);
 
         try {

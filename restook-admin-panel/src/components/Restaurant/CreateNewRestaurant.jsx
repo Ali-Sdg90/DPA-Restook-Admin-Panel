@@ -72,6 +72,8 @@ const CreateNewRestaurant = () => {
                 }));
 
                 console.log("success-res >> ", res);
+
+                setUserPlace("restaurants-list");
             } else {
                 throw new Error();
             }

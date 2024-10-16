@@ -36,15 +36,15 @@ function UploadImage({ imageName, setImageName }) {
         if (!base64 || !fileName) return;
 
         setLoading(true);
-        
+
         try {
             const imgName = `${new Date().getTime().toString()}.png`;
             const res = await postRequest(
                 "/upload",
                 {
                     name: imgName,
-                    destinationName: "restaurant",
-                    // destinationName: "profile",
+                    // destinationName: "restaurant",
+                    destinationName: "profile",
                     base64: base64,
                 },
                 true,
@@ -59,7 +59,7 @@ function UploadImage({ imageName, setImageName }) {
 
                 console.log("success-res >>", res);
 
-                setImageName(imgName);
+                setImageName(res.response);
                 setShowFileName(fileName);
             } else {
                 throw new Error();

@@ -48,7 +48,7 @@ const ExternalAdvertJobConditions = () => {
         <Card title="شرایط شغلی" className="second-card">
             <Row>
                 <Col span={8}>
-                    <Form.Item label="عنوان شغلی" name="jobTypeId">
+                    <Form.Item label="عنوان شغلی" name="jobTitleId">
                         <Select>
                             {jobTitles.map((title, index) => (
                                 <Option value={title.id} key={index}>

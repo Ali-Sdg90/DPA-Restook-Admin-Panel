@@ -15,6 +15,7 @@ const RestaurantInfo = () => {
         form,
         mappedData,
         profileId,
+        imageName
     } = useContext(ExternalAdvertContext);
 
     const { setToastifyObj } = useContext(CommonContext);
@@ -28,14 +29,15 @@ const RestaurantInfo = () => {
 
         console.log("- - - - - - - -");
 
-        const mergedObject = mergeObjectFunc(mappedData, form.getFieldsValue());
+        const mergedObject = mergeObjectFunc(form.getFieldsValue(), mappedData);
         console.log("mergedObject >> ", mergedObject);
 
         const postObject = convertToPostObj(
             mergedObject,
             profileId,
             mappedData.alreadyExist,
-            "onlyRestaurant"
+            "onlyRestaurant",
+            imageName
         );
         console.log("postObject >>", postObject);
 
@@ -53,7 +55,7 @@ const RestaurantInfo = () => {
                     mode: "success",
                 }));
 
-                console.log(res);
+                console.log("success RES >>", res);
 
                 setUserPlace("restaurant-profile");
             } else {
@@ -63,6 +65,12 @@ const RestaurantInfo = () => {
             console.log("ERROR >>", error);
         }
     };
+
+    // For Testing Form Data
+    // const handleFormChange = (changedValues, allValues) => {
+    //     console.log("Changed values:", changedValues);
+    //     console.log("All form values:", allValues);
+    // };
 
     return (
         <>
@@ -77,6 +85,7 @@ const RestaurantInfo = () => {
                                     layout="vertical"
                                     autoComplete="off"
                                     initialValues={mappedData}
+                                    // onValuesChange={handleFormChange}
                                 >
                                     <ExternalAdvertFirstCard
                                         usePrefixForImage={true}

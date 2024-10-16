@@ -35,7 +35,7 @@ const ExternalAdvertFirstCard = ({
                             imageUrl={profileImg}
                             className={"restaurant-img"}
                             alt={"restaurant-img"}
-                            needPrefix={usePrefixForImage}
+                            needPrefix={profileImg.includes("/uploads/images")}
                         />
                     ) : (
                         <div className="restaurant-img-placeholder"></div>
@@ -116,9 +116,7 @@ const ExternalAdvertFirstCard = ({
                             </Col>
 
                             <Col span={8}>
-                                <Form.Item
-                                    label="تصویر پروفایل"
-                                >
+                                <Form.Item label="تصویر پروفایل">
                                     <UploadImage
                                         imageName={imageName}
                                         setImageName={setImageName}

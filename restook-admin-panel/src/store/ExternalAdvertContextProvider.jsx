@@ -80,7 +80,14 @@ export const ExternalAdvertContextProvider = ({
     }, [userPlace, profileId]);
 
     useEffect(() => {
-        console.log("imageName >>", imageName);
+        if (imageName !== profileImg) {
+            // console.log("imageName >>", imageName);
+            // console.log("profileImg >>", profileImg);
+
+            setProfileImg("/uploads/images/profile/" + imageName);
+
+            // console.log("/uploads/images/profile/" + imageName);
+        }
     }, [imageName]);
 
     useEffect(() => {
@@ -115,6 +122,7 @@ export const ExternalAdvertContextProvider = ({
                     instagram: apiResponse.contacts[0]
                         ? apiResponse.contacts[0].instagram
                         : null,
+                    jobTitleAdvert: apiResponse.jobTitle || "",
                     jobTitleRestaurant: apiResponse.jobTitle || "",
                     jobTypeId: apiResponse.jobTypeId || null,
                     phoneNumber: apiResponse.phoneNumber || null,

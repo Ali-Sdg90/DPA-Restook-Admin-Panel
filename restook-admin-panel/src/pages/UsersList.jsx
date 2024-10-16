@@ -80,7 +80,7 @@ const UsersList = () => {
     }, [dateValue]);
 
     useEffect(() => {
-        console.log("searchObj >>", searchObj);
+        // console.log("searchObj >>", searchObj);
 
         getData();
     }, [searchObj, pageFilter, currentPage]);

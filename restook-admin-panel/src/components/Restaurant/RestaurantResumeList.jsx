@@ -84,7 +84,7 @@ const RestaurantResumeList = () => {
     }, [dateValue]);
 
     useEffect(() => {
-        console.log("searchObj >>", searchObj);
+        // console.log("searchObj >>", searchObj);
 
         if (advertId) {
             getData();
