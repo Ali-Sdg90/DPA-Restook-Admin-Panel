@@ -19,7 +19,7 @@ export const convertToPostObj = (
                 aboutUs: data.aboutUs,
                 imageFileName: imageName,
                 jobTypeId: data.jobTypeId,
-                cityId: 1, // ?
+                // cityId: 1, // ?
                 contacts: {
                     phoneNumber: convertFAtoEN(data.connectionPhoneNumber),
                     instagram: data.instagram,
@@ -73,7 +73,7 @@ export const convertToPostObj = (
 
         case "onlyRestaurant":
             restaurantData = {
-                jobTitle: data.jobTitleRestaurant,
+                jobTitle: data.jobTitleAdvert,
                 phoneNumber: convertFAtoEN(data.phoneNumber),
                 branch: data.branch,
                 aboutUs: data.aboutUs,
@@ -96,7 +96,7 @@ export const convertToPostObj = (
             restaurantData = {
                 restaurantId: +profileId[0] || null,
                 status: "published",
-                jobTitleId: data.jobTypeId,
+                jobTitleId: data.jobTitleId,
                 jobTitle: data.jobTitle,
                 skillLevels: data.skillLevels || [],
                 dutyStatus: data.dutyStatus || null,

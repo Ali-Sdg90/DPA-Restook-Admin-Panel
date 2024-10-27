@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Row, Col, Card, Spin, Form, Flex, Button } from "antd";
 import { ExternalAdvertContext } from "../../store/ExternalAdvertContextProvider";
 import { postRequest } from "../../services/apiService";

@@ -267,10 +267,6 @@
         padding: 0 8px;
     }
 
-    .hidden-input {
-        display: none !important;
-    }
-
     .upload-btn {
         border: none !important;
         border-right: 1px solid #707070 !important;
@@ -283,4 +279,8 @@
         line-height: normal;
         width: 114px;
     }
+}
+
+.hidden-input {
+    display: none !important;
 }

@@ -32,7 +32,7 @@ const CreateNewRestaurant = () => {
             aboutUs: formData.aboutUs,
             imageFileName: imageName || null,
             jobTypeId: selectedJobTypeId,
-            cityId: 1, // ?
+            // cityId: 1, // ?
             contacts: {
                 phoneNumber: convertFAtoEN(formData.connectionPhoneNumber),
                 instagram: formData.instagram,

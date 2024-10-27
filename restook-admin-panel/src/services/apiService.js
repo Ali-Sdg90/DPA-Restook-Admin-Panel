@@ -96,7 +96,7 @@ export const getRequest = async (
     needToken = true,
     setToastifyObj
 ) => {
-    // console.log("GET request >>", endpoint);
+    console.log("GET request >>", endpoint);
 
     try {
         const res = await axios.get(`${API_BASE_URL}${endpoint}`, {

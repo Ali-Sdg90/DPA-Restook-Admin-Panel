@@ -70,6 +70,144 @@
     }
 }
 
+.image-video-card {
+    .ant-card-body {
+        padding: 40px 23px 43px !important;
+    }
+
+    .image-video-section {
+        .section-title {
+            color: #000;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            margin-bottom: 18px;
+        }
+
+        .video-section {
+            box-shadow: 0px 6.317px 25.268px 0px rgba(0, 0, 0, 0.04);
+            height: calc(100% - 40px);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0px 6.317px 25.268px 0px rgba(0, 0, 0, 0.04);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            object-fit: cover;
+            transition: background-color 0.15s;
+            cursor: pointer;
+
+            &:hover {
+                background-color: rgb(244, 244, 244);
+            }
+
+            &:active {
+                background-color: rgb(232, 232, 232);
+            }
+
+            .add-video-box-contents {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-flow: column nowrap;
+                gap: 20px;
+
+                div {
+                    color: #1e1e1e;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: normal;
+                    user-select: none;
+                }
+            }
+        }
+
+        .image-gallery-section {
+            display: flex;
+            gap: 18px 25px;
+
+            .image-box {
+                position: relative;
+                width: 156px !important;
+                height: 156px !important;
+
+                .image-delete-btn {
+                    position: absolute;
+                    z-index: 10;
+                    background-color: rgba(30, 30, 30, 0.5);
+                    width: 36px;
+                    height: 36px;
+                    left: 0;
+                    top: 0;
+                    border-radius: 16px 0 8px 0;
+                    transition: background-color 0.15s;
+                    cursor: pointer;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    &:hover {
+                        background-color: rgba(30, 30, 30, 0.8);
+                    }
+
+                    &:active {
+                        background-color: rgba(30, 30, 30, 0.9);
+                    }
+                }
+
+                .ant-image,
+                .empty-image-box,
+                .add-new-image-box {
+                    width: 156px !important;
+                    height: 156px !important;
+                    border-radius: 16px;
+                    overflow: hidden;
+                    box-shadow: 0px 6.317px 25.268px 0px rgba(0, 0, 0, 0.04);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    object-fit: cover;
+
+                    img {
+                        width: auto;
+                        height: 100%;
+                    }
+                }
+
+                .add-new-image-box {
+                    flex-flow: column nowrap;
+                    gap: 15px;
+                    cursor: pointer;
+                    transition: background-color 0.15s;
+
+                    .add-img-div{
+                        position: absolute;
+                    }
+
+                    div {
+                        color: #1e1e1e;
+                        font-size: 14px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: normal;
+                        user-select: none;
+                    }
+
+                    &:hover {
+                        background-color: rgb(244, 244, 244);
+                    }
+
+                    &:active {
+                        background-color: rgb(232, 232, 232);
+                    }
+                }
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 1110px) {
     .advert-action-btns {
         grid-template-columns: repeat(1, 1fr);
