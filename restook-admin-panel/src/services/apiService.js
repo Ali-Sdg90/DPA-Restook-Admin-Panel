@@ -135,7 +135,7 @@ export const deleteRequest = async (
     needToken = true,
     setToastifyObj
 ) => {
-    // console.log("DELETE request >>", endpoint);
+    console.log("DELETE request >>", endpoint);
 
     try {
         const res = await axios.delete(`${API_BASE_URL}${endpoint}`, {

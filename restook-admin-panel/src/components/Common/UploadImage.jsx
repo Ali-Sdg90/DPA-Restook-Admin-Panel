@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { postRequest } from "../../services/apiService";
 import { CommonContext } from "../../store/CommonContextProvider";
 import { Button } from "antd";
+import { convertToBase64 } from "../../utils/convertToBase64";
 
 function UploadImage({ imageName, setImageName }) {
     const [loading, setLoading] = useState(false);
@@ -19,17 +20,6 @@ function UploadImage({ imageName, setImageName }) {
                 console.error("Error converting file to base64:", error);
             }
         }
-    };
-
-    // Convert file to base64
-    const convertToBase64 = (file) => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-
-            reader.onload = () => resolve(reader.result.split(",")[1]);
-            reader.onerror = (error) => reject(error);
-        });
     };
 
     const handleUpload = async (base64, fileName) => {

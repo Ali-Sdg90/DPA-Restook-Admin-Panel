@@ -1,6 +1,6 @@
 export const convertFAtoEN = (input) => {
     if (input) {
-        console.log("INPUT >>", input);
+        // console.log("INPUT >>", input);
 
         const persianNumbers = [
             "۰",

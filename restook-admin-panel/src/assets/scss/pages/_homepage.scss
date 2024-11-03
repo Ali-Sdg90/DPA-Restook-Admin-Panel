@@ -287,3 +287,58 @@
         }
     }
 }
+
+.expanded-row {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 60px;
+    padding-right: 3%;
+
+    div {
+        color: #000;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+}
+
+.expandable-table .ant-col .ant-card .ant-card-body {
+    .ant-table-row {
+        height: 56px !important;
+
+        .ant-table-cell {
+            padding: 5px;
+        }
+
+        &:nth-child(even) {
+            background-color: white !important;
+        }
+
+        .ant-table-cell:nth-last-child(2) {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: none;
+            height: 56px;
+        }
+    }
+}
+
+.down-btn {
+    width: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+
+    * {
+        transition: transform 0.2s;
+    }
+}
+
+.rotate-icon {
+    transform: rotate(180deg);
+}

@@ -11,6 +11,7 @@ import NewRestaurantAdvert from "../components/Restaurant/NewRestaurantAdvert";
 import RestaurantAdvertInfo from "../components/Restaurant/RestaurantAdvertInfo";
 import RestaurantResumeList from "../components/Restaurant/RestaurantResumeList";
 import RestaurantGallery from "../components/Restaurant/RestaurantGallery";
+import RestaurantTransactionsList from "../components/Restaurant/RestaurantTransactionsList";
 
 const ExternalAdver = () => {
     const { userPlace, setUserPlace } = useContext(UserContext);
@@ -50,9 +51,10 @@ const ExternalAdver = () => {
             return <RestaurantAdvertInfo />;
         } else if (userPlace.includes("restaurant-resume-list")) {
             return <RestaurantResumeList />;
-        }else if (userPlace.includes("restaurant-gallery")){
+        } else if (userPlace.includes("restaurant-gallery")) {
             return <RestaurantGallery />;
-
+        } else if (userPlace.includes("restaurant-transactions")) {
+            return <RestaurantTransactionsList />;
         } else {
             console.log("ERROR IN RestaurantProfile-pageMode", userPlace);
             setUserPlace("restaurant-profile");

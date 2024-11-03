@@ -94,6 +94,9 @@ const RestaurantProfileMenu = () => {
             case 2:
                 setUserPlace(`restaurant-gallery-${id}`);
                 break;
+            case 3:
+                setUserPlace(`restaurant-transactions-${id}`);
+                break;
             default:
                 console.log("You click on", index);
         }

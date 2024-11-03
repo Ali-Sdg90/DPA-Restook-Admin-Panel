@@ -11,6 +11,7 @@ const PageNotFound = lazy(() => import("../pages/PageNotFound"));
 const ExternalAdvert = lazy(() => import("../pages/ExternalAdvert"));
 const RestaurantsPage = lazy(() => import("../pages/RestaurantsPage"));
 const RestaurantProfile = lazy(() => import("../pages/RestaurantProfile"));
+const TransactionsListPage = lazy(() => import("../pages/TransactionsListPage"));
 
 export const routes = [
     { path: "/login", element: <LoginPage />, needWrapper: false },
@@ -23,6 +24,7 @@ export const routes = [
     { path: "/user-profile/:id", element: <UserProfile />, needWrapper: true },
     { path: "/resume-user-profile/:restaurantId/:urlId/:id", element: <UserProfile />, needWrapper: true },
     { path: "/external-advert", element: <ExternalAdvert />, needWrapper: true },
+    { path: "/transaction-list", element: <TransactionsListPage />, needWrapper: true },
     { path: "/", element: <Navigate to="/login" replace /> },
     { path: "/page-not-found", element: <PageNotFound /> },
     { path: "*", element: <Navigate to="/page-not-found" replace /> },
